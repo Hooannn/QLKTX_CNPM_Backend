@@ -3,29 +3,24 @@ package com.ht.qlktx.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Builder
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "rooms")
-public class Room {
+@Table(name = "services")
+public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne
-    private Region region;
+    private ServiceProvider serviceProvider;
 
     @ManyToOne
-    private RoomType roomType;
-
-    @OneToMany(mappedBy = "room", targetEntity = RoomStatus.class)
-    private List<RoomStatus> roomStatuses;
+    private Staff staff;
 }

@@ -18,7 +18,7 @@ public class RoomType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String name;
 
     private int maxPeople;

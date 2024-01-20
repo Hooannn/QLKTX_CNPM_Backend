@@ -1,10 +1,7 @@
 package com.ht.qlktx.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Builder
 @Setter
@@ -12,16 +9,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "regions")
-public class Region {
+@Table(name = "statuses")
+public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "region", targetEntity = Room.class)
-    private List<Room> rooms;
 }
