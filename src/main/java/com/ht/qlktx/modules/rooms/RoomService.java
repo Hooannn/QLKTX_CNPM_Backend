@@ -2,8 +2,8 @@ package com.ht.qlktx.modules.rooms;
 
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Room;
+import com.ht.qlktx.enums.RoomStatus;
 import com.ht.qlktx.modules.region.RegionService;
-import com.ht.qlktx.modules.room_type.RoomTypeService;
 import com.ht.qlktx.modules.rooms.dtos.CreateRoomDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,24 +15,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoomService {
     private final RoomRepository roomRepository;
-    private final RoomTypeService roomTypeService;
     private final RegionService regionService;
 
     public Room create(CreateRoomDto createRoomDto) {
         var region = regionService.findById(createRoomDto.getRegionId());
-        var roomType = roomTypeService.findById(createRoomDto.getRoomTypeId());
 
         var room = Room.builder()
-                .name(createRoomDto.getName())
-                .roomType(roomType)
+                .id(createRoomDto.getId())
                 .region(region)
+                .capacity(createRoomDto.getCapacity())
+                .status(RoomStatus.AVAILABLE)
                 .build();
 
         return roomRepository.save(room);
     }
 
     public Room findById(String id) {
-        return roomRepository.findById(Long.valueOf(id)).orElseThrow(() -> new HttpException("Room not found", HttpStatus.NOT_FOUND));
+        return roomRepository.findById(id).orElseThrow(() -> new HttpException("Room not found", HttpStatus.NOT_FOUND));
     }
 
     public List<Room> findAll() {

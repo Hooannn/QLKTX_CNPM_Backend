@@ -7,11 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateRoomDto {
-    private String name;
+    private String id;
+
+    private int capacity;
 
     @JsonProperty("region_id")
     private String regionId;
-
-    @JsonProperty("room_type_id")
-    private String roomTypeId;
 }

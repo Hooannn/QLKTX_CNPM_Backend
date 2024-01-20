@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.Set;
 
 @Builder
 @Setter
@@ -29,4 +30,26 @@ public class Booking {
 
     @ManyToOne
     private Staff staff;
+
+    @ManyToOne
+    private Room room;
+
+    @ManyToOne
+    private Student student;
+
+    @ManyToMany
+    @JoinTable(
+            name = "booking_services",
+            joinColumns = @JoinColumn(name = "booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    private Set<Service> service;
+
+    @ManyToMany
+    @JoinTable(
+            name = "booking_extra_charges",
+            joinColumns = @JoinColumn(name = "booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "extra_charge_id")
+    )
+    private Set<ExtraCharge> extraCharge;
 }

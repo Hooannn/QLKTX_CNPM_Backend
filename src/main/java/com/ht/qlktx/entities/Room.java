@@ -1,9 +1,8 @@
 package com.ht.qlktx.entities;
 
+import com.ht.qlktx.enums.RoomStatus;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Builder
 @Setter
@@ -14,18 +13,15 @@ import java.util.List;
 @Table(name = "rooms")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String name;
+    private String id;
 
     @ManyToOne
     private Region region;
 
-    @ManyToOne
-    private RoomType roomType;
+    @Column(nullable = false, columnDefinition = "int default 1 check (capacity >= 1)")
+    private int capacity;
 
-    @OneToMany(mappedBy = "room", targetEntity = RoomStatus.class)
-    private List<RoomStatus> roomStatuses;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RoomStatus status;
 }

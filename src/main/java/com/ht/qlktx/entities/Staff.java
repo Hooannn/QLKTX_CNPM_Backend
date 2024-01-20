@@ -1,11 +1,8 @@
 package com.ht.qlktx.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.ht.qlktx.enums.Sex;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -29,16 +26,17 @@ public class Staff {
     @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+
     @JsonProperty("date_of_birth")
     private Date dateOfBirth;
 
-    @JsonProperty("phone_number")
-    private String phoneNumber;
+    private String address;
 
-    @JsonProperty("job_description")
-    private String jobDescription;
+    private String phone;
 
-    @JsonProperty("citizen_id")
-    @Column(unique = true, nullable = false)
-    private String citizenId;
+    @Column(nullable = false, unique = true)
+    private String email;
 }

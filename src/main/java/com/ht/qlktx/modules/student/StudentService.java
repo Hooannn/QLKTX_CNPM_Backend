@@ -23,10 +23,10 @@ public class StudentService {
                 .firstName(createStudentDto.getFirstName())
                 .lastName(createStudentDto.getLastName())
                 .dateOfBirth(createStudentDto.getDateOfBirth())
-                .phoneNumber(createStudentDto.getPhoneNumber())
-                .className(createStudentDto.getClassName())
-                .department(createStudentDto.getDepartment())
-                .citizenId(createStudentDto.getCitizenId())
+                .phone(createStudentDto.getPhone())
+                .sex(createStudentDto.getSex())
+                .email(createStudentDto.getEmail())
+                .address(createStudentDto.getAddress())
                 .build();
 
         return studentRepository.save(student);

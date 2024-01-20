@@ -1,6 +1,8 @@
 package com.ht.qlktx.modules.student.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ht.qlktx.enums.Sex;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,18 +19,15 @@ public class CreateStudentDto {
     @JsonProperty("last_name")
     private String lastName;
 
+    private String address;
+
     @JsonProperty("date_of_birth")
     private Date dateOfBirth;
 
-    @JsonProperty("phone_number")
-    private String phoneNumber;
+    private String phone;
 
-    @JsonProperty("class_name")
-    private String className;
+    private Sex sex;
 
-    @JsonProperty("department")
-    private String department;
-
-    @JsonProperty("citizen_id")
-    private String citizenId;
+    @Email(message = "Email is invalid")
+    private String email;
 }

@@ -1,6 +1,7 @@
 package com.ht.qlktx.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ht.qlktx.enums.Sex;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,13 +16,19 @@ import java.util.List;
 @Table(name = "regions")
 public class Region {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
     @Column(nullable = false)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private Sex target;
+
+    @Column(nullable = false)
+    private String type;
 
     @JsonIgnore
     @OneToMany(mappedBy = "region", targetEntity = Room.class)
     private List<Room> rooms;
+
+    @OneToMany(mappedBy = "region", targetEntity = RegionPrice.class)
+    private List<RegionPrice> prices;
 }

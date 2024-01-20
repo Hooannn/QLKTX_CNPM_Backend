@@ -14,7 +14,7 @@ import java.util.List;
 public class RegionService {
     private final RegionRepository regionRepository;
     public Region findById(String id) {
-        return regionRepository.findById(Long.valueOf(id)).orElseThrow(() -> new HttpException("Region not found", HttpStatus.NOT_FOUND));
+        return regionRepository.findById(id).orElseThrow(() -> new HttpException("Region not found", HttpStatus.NOT_FOUND));
     }
 
     public List<Region> findAll() {
@@ -23,7 +23,9 @@ public class RegionService {
 
     public Region create(CreateRegionDto createRegionDto) {
         var region = Region.builder()
-                .name(createRegionDto.getName())
+                .id(createRegionDto.getId())
+                .target(createRegionDto.getTarget())
+                .type(createRegionDto.getType())
                 .build();
 
         return regionRepository.save(region);

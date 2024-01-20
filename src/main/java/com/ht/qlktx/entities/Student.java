@@ -1,6 +1,7 @@
 package com.ht.qlktx.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ht.qlktx.enums.Sex;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,18 +26,18 @@ public class Student {
     @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+
     @JsonProperty("date_of_birth")
     private Date dateOfBirth;
 
-    @JsonProperty("phone_number")
-    private String phoneNumber;
+    private String address;
 
-    @JsonProperty("class_name")
-    private String className;
+    @JsonProperty("phone")
+    private String phone;
 
-    private String department;
-
-    @JsonProperty("citizen_id")
-    @Column(unique = true, nullable = false)
-    private String citizenId;
+    @Column(nullable = false, unique = true)
+    private String email;
 }
