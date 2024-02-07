@@ -11,20 +11,28 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@IdClass(DiscountPriceId.class)
 @Entity
-@Table(name = "discount_prices")
+@Table(name = "THAYDOIPHANTRAMGIAMGIA")
 public class DiscountPrice {
     @Id
+    @Column(name = "NGAYQUYETDINH")
     private Date date;
 
-    @JsonProperty
+    @Id
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "discount_id", referencedColumnName = "id")
+    @JoinColumn(name = "MAGG")
     private Discount discount;
 
     @ManyToOne
+    @JoinColumn(name = "MAQL")
     private Staff staff;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "PHANTRAMGIAM")
     private double percent;
+}
+
+class DiscountPriceId {
+    private String date;
+    private String discount;
 }

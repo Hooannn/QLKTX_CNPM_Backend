@@ -12,11 +12,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "extra_charges")
+@Table(name = "PHUTHU")
 public class ExtraCharge {
     @Id
+    @Column(name = "MAPT")
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "LYDO")
     private String reason;
 }

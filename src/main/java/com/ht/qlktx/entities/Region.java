@@ -13,16 +13,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "regions")
+@Table(name = "DAYPHONG")
 public class Region {
     @Id
+    @Column(name = "MADAY")
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "DOITUONGSUDUNG")
     @Enumerated(EnumType.STRING)
     private Sex target;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "LOAI")
     private String type;
 
     @JsonIgnore

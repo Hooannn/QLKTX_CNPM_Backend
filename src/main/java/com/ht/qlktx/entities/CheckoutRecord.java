@@ -12,19 +12,22 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "checkout_records")
+@Table(name = "PHIEUTRA")
 public class CheckoutRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MAPHIEUTRA")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "NGAYTRA")
     @JsonProperty("checkout_date")
     private Date checkoutDate;
 
     @OneToOne
+    @JoinColumn(name = "MAPHIEUTHUE", nullable = false, unique = true)
     private Booking booking;
 
     @ManyToOne
+    @JoinColumn(name = "MAQL")
     private Staff staff;
 }

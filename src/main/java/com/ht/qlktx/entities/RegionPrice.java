@@ -13,19 +13,27 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "region_prices")
+@IdClass(RegionPriceId.class)
+@Table(name = "THAYDOIGIADAYPHONG")
 public class RegionPrice {
     @Id
+    @Column(name = "NGAYQUYETDINH")
     private Date date;
 
-    @JsonProperty
+    @Id
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "region_id", referencedColumnName = "id")
+    @JoinColumn(name = "MADAY")
     private Region region;
 
     @ManyToOne
+    @JoinColumn(name = "MAQL")
     private Staff staff;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false, precision = 10, scale = 2, name = "GIAMOI")
     private BigDecimal price;
+}
+
+class RegionPriceId {
+    private String date;
+    private String region;
 }

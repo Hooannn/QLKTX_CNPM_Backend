@@ -10,18 +10,20 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "rooms")
+@Table(name = "PHONG")
 public class Room {
     @Id
+    @Column(name = "MAPHONG")
     private String id;
 
     @ManyToOne
+    @JoinColumn(name = "MADAY", nullable = false)
     private Region region;
 
-    @Column(nullable = false, columnDefinition = "int default 1 check (capacity >= 1)")
+    @Column(nullable = false, columnDefinition = "int default 1", name = "SONGUOIOTOIDA")
     private int capacity;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "TRANGTHAI")
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 }

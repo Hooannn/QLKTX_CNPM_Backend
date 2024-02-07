@@ -13,43 +13,48 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "bookings")
+@Table(name = "PHIEUTHUE")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MAPHIEUTHUE")
     private Long id;
 
     @CreationTimestamp
+    @Column(name = "NGAYLAP")
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "NGAYBATDAU")
     private Date startDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "NGAYKETTHUC")
     private Date endDate;
 
     @ManyToOne
+    @JoinColumn(name = "MAQL", nullable = false)
     private Staff staff;
 
     @ManyToOne
+    @JoinColumn(name = "MAPHONG", nullable = false)
     private Room room;
 
     @ManyToOne
+    @JoinColumn(name = "MASV", nullable = false)
     private Student student;
 
     @ManyToMany
     @JoinTable(
-            name = "booking_services",
-            joinColumns = @JoinColumn(name = "booking_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id")
+            name = "CT_PHIEUTHUE_DV",
+            joinColumns = @JoinColumn(name = "MAPHIEUTHUE"),
+            inverseJoinColumns = @JoinColumn(name = "MADV")
     )
-    private Set<Service> service;
+    private Set<Service> services;
 
     @ManyToMany
     @JoinTable(
-            name = "booking_extra_charges",
-            joinColumns = @JoinColumn(name = "booking_id"),
-            inverseJoinColumns = @JoinColumn(name = "extra_charge_id")
+            name = "CT_PHIEUTHUE_PT",
+            joinColumns = @JoinColumn(name = "MAPHIEUTHUE"),
+            inverseJoinColumns = @JoinColumn(name = "MAPT")
     )
-    private Set<ExtraCharge> extraCharge;
+    private Set<ExtraCharge> extraCharges;
 }
