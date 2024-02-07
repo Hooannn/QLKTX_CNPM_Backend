@@ -14,7 +14,7 @@ import java.util.List;
 public class RegionService {
     private final RegionRepository regionRepository;
     public Region findById(String id) {
-        return regionRepository.findById(id).orElseThrow(() -> new HttpException("Region not found", HttpStatus.NOT_FOUND));
+        return regionRepository.findById(id).orElseThrow(() -> new HttpException("Không tìm thấy dãy phòng với mã phòng này", HttpStatus.NOT_FOUND));
     }
 
     public List<Region> findAll() {
@@ -22,10 +22,12 @@ public class RegionService {
     }
 
     public Region create(CreateRegionDto createRegionDto) {
+        if (regionRepository.existsById(createRegionDto.getId())) {
+            throw new HttpException("Dãy phòng đã tồn tại", HttpStatus.BAD_REQUEST);
+        }
+
         var region = Region.builder()
                 .id(createRegionDto.getId())
-                .target(createRegionDto.getTarget())
-                .type(createRegionDto.getType())
                 .build();
 
         return regionRepository.save(region);

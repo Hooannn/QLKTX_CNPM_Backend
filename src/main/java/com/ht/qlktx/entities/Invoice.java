@@ -3,8 +3,10 @@ package com.ht.qlktx.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Builder
 @Setter
@@ -30,9 +32,14 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "MAQL")
-    private Staff staff;
+    private User staff;
 
     @ManyToOne
     @JoinColumn(name = "MAPHIEUTHUE")
     private Booking booking;
+
+    @CreationTimestamp
+    @Column(name = "NGAYLAP")
+    @JsonProperty("created_at")
+    private Date createdAt;
 }

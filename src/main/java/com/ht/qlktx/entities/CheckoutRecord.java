@@ -29,5 +29,5 @@ public class CheckoutRecord {
 
     @ManyToOne
     @JoinColumn(name = "MAQL")
-    private Staff staff;
+    private User staff;
 }

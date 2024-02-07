@@ -19,17 +19,7 @@ public class Region {
     @Column(name = "MADAY")
     private String id;
 
-    @Column(nullable = false, name = "DOITUONGSUDUNG")
-    @Enumerated(EnumType.STRING)
-    private Sex target;
-
-    @Column(nullable = false, name = "LOAI")
-    private String type;
-
     @JsonIgnore
     @OneToMany(mappedBy = "region", targetEntity = Room.class)
     private List<Room> rooms;
-
-    @OneToMany(mappedBy = "region", targetEntity = RegionPrice.class)
-    private List<RegionPrice> prices;
 }

@@ -16,5 +16,4 @@ public class QLKTXApplication {
 		//
 		SpringApplication.run(QLKTXApplication.class, args);
 	}
-
 }

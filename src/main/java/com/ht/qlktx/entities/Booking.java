@@ -1,5 +1,6 @@
 package com.ht.qlktx.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,17 +23,20 @@ public class Booking {
 
     @CreationTimestamp
     @Column(name = "NGAYLAP")
+    @JsonProperty("created_at")
     private Date createdAt;
 
     @Column(nullable = false, name = "NGAYBATDAU")
+    @JsonProperty("start_date")
     private Date startDate;
 
     @Column(nullable = false, name = "NGAYKETTHUC")
+    @JsonProperty("end_date")
     private Date endDate;
 
     @ManyToOne
     @JoinColumn(name = "MAQL", nullable = false)
-    private Staff staff;
+    private User staff;
 
     @ManyToOne
     @JoinColumn(name = "MAPHONG", nullable = false)
@@ -40,7 +44,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "MASV", nullable = false)
-    private Student student;
+    private User student;
 
     @ManyToMany
     @JoinTable(
@@ -52,9 +56,18 @@ public class Booking {
 
     @ManyToMany
     @JoinTable(
+            name = "CT_PHIEUTHUE_GG",
+            joinColumns = @JoinColumn(name = "MAPHIEUTHUE"),
+            inverseJoinColumns = @JoinColumn(name = "MAGG")
+    )
+    private Set<Discount> discounts;
+
+    @ManyToMany
+    @JoinTable(
             name = "CT_PHIEUTHUE_PT",
             joinColumns = @JoinColumn(name = "MAPHIEUTHUE"),
             inverseJoinColumns = @JoinColumn(name = "MAPT")
     )
+    @JsonProperty("extra_charges")
     private Set<ExtraCharge> extraCharges;
 }

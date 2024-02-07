@@ -1,6 +1,8 @@
 package com.ht.qlktx.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.enums.Sex;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,10 +15,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "SINHVIEN")
-public class Student {
+@Table(name = "NGUOIDUNG")
+public class User {
     @Id
-    @Column(name = "MASV")
+    @Column(name = "MAND")
     private String id;
 
     @JsonProperty("first_name")
@@ -44,9 +46,12 @@ public class Student {
 
     @Column(nullable = false, unique = true, name = "EMAIL")
     private String email;
-    /*
-    @OneToOne
-    @JoinColumn(name = "MATAIKHOAN", nullable = false, unique = true)
-    private Account account;
-    */
+
+    @Column(nullable = false, name = "MATKHAU")
+    @JsonIgnore
+    private String password;
+
+    @Column(nullable = false, name = "ROLE")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

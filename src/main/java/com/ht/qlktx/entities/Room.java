@@ -20,8 +20,9 @@ public class Room {
     @JoinColumn(name = "MADAY", nullable = false)
     private Region region;
 
-    @Column(nullable = false, columnDefinition = "int default 1", name = "SONGUOIOTOIDA")
-    private int capacity;
+    @ManyToOne
+    @JoinColumn(name = "MALOAIPHONG", nullable = false)
+    private RoomType type;
 
     @Column(nullable = false, name = "TRANGTHAI")
     @Enumerated(EnumType.STRING)

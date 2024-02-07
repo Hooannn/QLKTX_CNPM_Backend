@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Builder
 @Setter
 @Getter
@@ -20,4 +22,7 @@ public class Discount {
 
     @Column(nullable = false, name = "NOIDUNG")
     private String description;
+
+    @Column(nullable = false, precision = 10, scale = 2, name = "PHANTRAM")
+    private BigDecimal percentage;
 }

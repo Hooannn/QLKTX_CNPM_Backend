@@ -1,5 +1,4 @@
 package com.ht.qlktx.entities;
-/*
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,4 +26,3 @@ public class Payment {
     @JoinColumn(name = "MAHOADON", nullable = false, unique = true)
     private Invoice invoice;
 }
-*/

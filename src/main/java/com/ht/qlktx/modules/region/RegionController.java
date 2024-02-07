@@ -1,9 +1,13 @@
 package com.ht.qlktx.modules.region;
 
+import com.ht.qlktx.annotations.RequiredRole;
+import com.ht.qlktx.config.Response;
 import com.ht.qlktx.entities.Region;
+import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.region.dtos.CreateRegionDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +22,39 @@ public class RegionController {
     private final RegionService regionService;
 
     @PostMapping
-    public ResponseEntity<Region> create(@Valid @RequestBody CreateRegionDto createRegionDto) {
+    @RequiredRole({Role.STAFF})
+    public ResponseEntity<Response<Region>> create(@Valid @RequestBody CreateRegionDto createRegionDto) {
         var region = regionService.create(createRegionDto);
-        return ResponseEntity.created(null).body(region);
+        return ResponseEntity.created(null).body(
+                Response.<Region>builder()
+                        .status(HttpStatus.CREATED.value())
+                        .message("Tạo dãy phòng thành công")
+                        .data(region)
+                        .build()
+        );
     }
 
     @GetMapping
-    public ResponseEntity<List<Region>> findAll() {
+    public ResponseEntity<Response<List<Region>>> findAll() {
         var regions = regionService.findAll();
-        return ResponseEntity.ok(regions);
+        return ResponseEntity.ok(
+                Response.<List<Region>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("ok")
+                        .data(regions)
+                        .build()
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Region> findById(@PathVariable String id) {
+    public ResponseEntity<Response<Region>> findById(@PathVariable String id) {
         var region = regionService.findById(id);
-        return ResponseEntity.ok(region);
+        return ResponseEntity.ok(
+                Response.<Region>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("ok")
+                        .data(region)
+                        .build()
+        );
     }
 }

@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Builder
 @Setter
 @Getter
@@ -20,4 +22,7 @@ public class ExtraCharge {
 
     @Column(nullable = false, name = "LYDO")
     private String reason;
+
+    @Column(nullable = false, precision = 10, scale = 2, name = "SOTIEN")
+    private BigDecimal amount;
 }
