@@ -1,0 +1,62 @@
+[
+  {
+    "id": "QL001",
+    "first_name": "Thảo",
+    "last_name": "Vũ",
+    "sex": "FEMALE",
+    "date_of_birth": "1989-07-31",
+    "address": "Staff Address 1",
+    "phone": "0987654321",
+    "email": "ql001@staff.ptithcm.edu.vnn",
+    "password": "password371",
+    "role": "STAFF"
+  },
+  {
+    "id": "QL002",
+    "first_name": "Quân",
+    "last_name": "Lê",
+    "sex": "MALE",
+    "date_of_birth": "1988-08-01",
+    "address": "Staff Address 2",
+    "phone": "0987654321",
+    "email": "ql002@staff.ptithcm.edu.vnn",
+    "password": "password381",
+    "role": "STAFF"
+  },
+  {
+    "id": "QL003",
+    "first_name": "Thị",
+    "last_name": "Trần",
+    "sex": "FEMALE",
+    "date_of_birth": "1987-09-02",
+    "address": "Staff Address 3",
+    "phone": "0987654321",
+    "email": "ql003@staff.ptithcm.edu.vnn",
+    "password": "password391",
+    "role": "STAFF"
+  },
+  {
+    "id": "QL004",
+    "first_name": "Minh",
+    "last_name": "Nguyễn",
+    "sex": "MALE",
+    "date_of_birth": "1986-10-03",
+    "address": "Staff Address 4",
+    "phone": "0987654321",
+    "email": "ql004@staff.ptithcm.edu.vnn",
+    "password": "password401",
+    "role": "STAFF"
+  },
+  {
+    "id": "QL005",
+    "first_name": "Quân",
+    "last_name": "Lê",
+    "sex": "MALE",
+    "date_of_birth": "1985-11-04",
+    "address": "Staff Address 5",
+    "phone": "0987654321",
+    "email": "ql005@staff.ptithcm.edu.vnn",
+    "password": "password411",
+    "role": "STAFF"
+  }
+]
