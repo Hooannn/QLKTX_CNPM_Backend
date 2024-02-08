@@ -46,6 +46,10 @@ public class Booking {
     @JoinColumn(name = "MASV", nullable = false)
     private User student;
 
+    @Column(name = "NGAYTRA", nullable = true)
+    @JsonProperty("checked_out_at")
+    private Date checkedOutAt;
+
     @ManyToMany
     @JoinTable(
             name = "CT_PHIEUTHUE_DV",

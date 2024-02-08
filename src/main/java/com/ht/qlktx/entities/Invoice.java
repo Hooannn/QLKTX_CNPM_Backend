@@ -30,6 +30,10 @@ public class Invoice {
     @Column(nullable = false, precision = 10, scale = 2, name = "TONGTIENPHUTHU")
     private BigDecimal extraChargePrice;
 
+    @Column(nullable = true, name = "NGAYTHANHTOAN")
+    @JsonProperty("paid_at")
+    private Date paidAt;
+
     @ManyToOne
     @JoinColumn(name = "MAQL")
     private User staff;
