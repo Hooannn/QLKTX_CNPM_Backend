@@ -82,4 +82,17 @@ public class UserController {
                         .build()
         );
     }
+
+    @GetMapping(path = "/lookup")
+    @RequiredRole({Role.ADMIN})
+    public ResponseEntity<Response<Iterable<User>>> lookUpByIdOrName(@RequestParam() String keyword) {
+        var users = userService.lookUpByIdOrName(keyword);
+        return ResponseEntity.ok(
+                Response.<Iterable<User>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Tìm kiếm người dùng thành công")
+                        .data(users)
+                        .build()
+        );
+    }
 }
