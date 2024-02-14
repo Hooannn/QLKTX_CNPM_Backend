@@ -88,4 +88,8 @@ public class UserService {
                 () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
         );
     }
+
+    public List<User> lookUpByIdOrName(String keyword) {
+        return userRepository.lookUpByIdOrName(keyword);
+    }
 }
