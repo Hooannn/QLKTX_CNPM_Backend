@@ -1,10 +1,10 @@
-package com.ht.qlktx.modules.users;
+package com.ht.qlktx.modules.user;
 
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.User;
 import com.ht.qlktx.enums.Role;
-import com.ht.qlktx.modules.users.dtos.CreateUserDto;
-import com.ht.qlktx.modules.users.dtos.UpdateUserDto;
+import com.ht.qlktx.modules.user.dtos.CreateUserDto;
+import com.ht.qlktx.modules.user.dtos.UpdateUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;

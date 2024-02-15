@@ -1,11 +1,11 @@
-package com.ht.qlktx.modules.users;
+package com.ht.qlktx.modules.user;
 
 import com.ht.qlktx.annotations.RequiredRole;
 import com.ht.qlktx.config.Response;
 import com.ht.qlktx.entities.User;
 import com.ht.qlktx.enums.Role;
-import com.ht.qlktx.modules.users.dtos.CreateUserDto;
-import com.ht.qlktx.modules.users.dtos.UpdateUserDto;
+import com.ht.qlktx.modules.user.dtos.CreateUserDto;
+import com.ht.qlktx.modules.user.dtos.UpdateUserDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -4,7 +4,7 @@ import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.User;
 import com.ht.qlktx.filter.JwtService;
 import com.ht.qlktx.modules.auth.dtos.AuthenticateDto;
-import com.ht.qlktx.modules.users.UserRepository;
+import com.ht.qlktx.modules.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;

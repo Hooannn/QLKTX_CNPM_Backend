@@ -32,4 +32,16 @@ public class RegionService {
 
         return regionRepository.save(region);
     }
+
+    public void delete(String id) {
+        var region = findById(id);
+        if (!region.getRooms().isEmpty()) {
+            throw new HttpException("Không thể xóa dãy phòng này vì có phòng trong dãy phòng", HttpStatus.BAD_REQUEST);
+        }
+        regionRepository.delete(region);
+    }
+
+    public List<Region> lookUpById(String keyword) {
+        return regionRepository.findByIdContainingIgnoreCase(keyword);
+    }
 }

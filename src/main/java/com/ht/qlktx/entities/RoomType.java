@@ -1,12 +1,10 @@
 package com.ht.qlktx.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ht.qlktx.enums.Sex;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Builder
 @Setter
@@ -17,6 +15,7 @@ import java.util.List;
 @Table(name = "LOAIPHONG")
 public class RoomType {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MALOAIPHONG")
     private Long id;
 
@@ -31,8 +30,4 @@ public class RoomType {
 
     @Column(nullable = false, precision = 10, scale = 2, name = "DONGIA")
     private BigDecimal price;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "type", targetEntity = Room.class)
-    private List<Room> rooms;
 }

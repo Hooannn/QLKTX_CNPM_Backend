@@ -57,4 +57,29 @@ public class RegionController {
                         .build()
         );
     }
+
+    @DeleteMapping("/{id}")
+    @RequiredRole({Role.STAFF})
+    public ResponseEntity<Response<?>> delete(@PathVariable String id) {
+        regionService.delete(id);
+        return ResponseEntity.ok(
+                Response.<String>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Xóa dãy phòng thành công")
+                        .data(null)
+                        .build()
+        );
+    }
+
+    @GetMapping("/lookup")
+    public ResponseEntity<Response<List<Region>>> lookUpById(@RequestParam String keyword) {
+        var regions = regionService.lookUpById(keyword);
+        return ResponseEntity.ok(
+                Response.<List<Region>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("ok")
+                        .data(regions)
+                        .build()
+        );
+    }
 }

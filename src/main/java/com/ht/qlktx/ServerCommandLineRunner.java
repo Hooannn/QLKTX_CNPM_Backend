@@ -3,7 +3,7 @@ package com.ht.qlktx;
 import com.ht.qlktx.entities.User;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.enums.Sex;
-import com.ht.qlktx.modules.users.UserRepository;
+import com.ht.qlktx.modules.user.UserRepository;
 import com.ht.qlktx.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;

@@ -1,4 +1,4 @@
-package com.ht.qlktx.modules.users;
+package com.ht.qlktx.modules.user;
 
 import com.ht.qlktx.entities.User;
 import com.ht.qlktx.enums.Role;

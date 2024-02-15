@@ -1,7 +1,6 @@
-package com.ht.qlktx.modules.users.dtos;
+package com.ht.qlktx.modules.user.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.enums.Sex;
 import lombok.Getter;
 import lombok.Setter;
