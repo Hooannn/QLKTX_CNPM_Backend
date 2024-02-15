@@ -92,4 +92,16 @@ public class UserService {
     public List<User> lookUpByIdOrName(String keyword) {
         return userRepository.lookUpByIdOrName(keyword);
     }
+
+    public List<User> findAllStudents() {
+        return userRepository.findAllByRoleIs(Role.STUDENT);
+    }
+
+    public List<User> lookupStudentsByIdOrName(String keyword) {
+        return userRepository.lookupStudentsByIdOrName(keyword);
+    }
+
+    public User findStudentById(String studentId) {
+        return userRepository.findByIdAndRoleIs(studentId, Role.STUDENT).orElseThrow(() -> new HttpException("Người dùng không tồn tại", HttpStatus.BAD_REQUEST));
+    }
 }

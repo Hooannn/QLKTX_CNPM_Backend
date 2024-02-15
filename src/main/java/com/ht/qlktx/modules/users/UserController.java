@@ -32,6 +32,45 @@ public class UserController {
         );
     }
 
+    @GetMapping(path = "/student")
+    @RequiredRole({Role.ADMIN, Role.STAFF})
+    public ResponseEntity<Response<Iterable<User>>> findAllStudents() {
+        var users = userService.findAllStudents();
+        return ResponseEntity.ok(
+                Response.<Iterable<User>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Lấy danh sách người dùng thành công")
+                        .data(users)
+                        .build()
+        );
+    }
+
+    @GetMapping(path = "/student/lookup")
+    @RequiredRole({Role.ADMIN, Role.STAFF})
+    public ResponseEntity<Response<Iterable<User>>> lookupStudentsByIdOrName(@RequestParam String keyword) {
+        var users = userService.lookupStudentsByIdOrName(keyword);
+        return ResponseEntity.ok(
+                Response.<Iterable<User>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Tìm kiếm người dùng thành công")
+                        .data(users)
+                        .build()
+        );
+    }
+
+    @GetMapping(path = "/student/{studentId}")
+    @RequiredRole({Role.ADMIN, Role.STAFF})
+    public ResponseEntity<Response<User>> findStudentById(@PathVariable String studentId) {
+        var user = userService.findStudentById(studentId);
+        return ResponseEntity.ok(
+                Response.<User>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Tìm người dùng thành công")
+                        .data(user)
+                        .build()
+        );
+    }
+
     @GetMapping(path = "/{userId}")
     @RequiredRole({Role.ADMIN})
     public ResponseEntity<Response<User>> findById(@PathVariable String userId) {
