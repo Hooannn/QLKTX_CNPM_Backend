@@ -2,6 +2,8 @@ package com.ht.qlktx.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ht.qlktx.entities.Region;
+import com.ht.qlktx.entities.RoomType;
 import com.ht.qlktx.entities.User;
 
 import java.io.File;
@@ -16,6 +18,24 @@ public class Helper {
 
         // Use Base64 encoding to represent the random bytes as a string
         return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+    }
+
+    public static List<RoomType> createSeedRoomTypes() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/room_types.json"), new TypeReference<List<RoomType>>() {});
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static List<Region> createSeedRegions() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/regions.json"), new TypeReference<List<Region>>() {});
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static List<User> createSeedStudents() {

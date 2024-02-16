@@ -60,14 +60,6 @@ public class Booking {
 
     @ManyToMany
     @JoinTable(
-            name = "CT_PHIEUTHUE_GG",
-            joinColumns = @JoinColumn(name = "MAPHIEUTHUE"),
-            inverseJoinColumns = @JoinColumn(name = "MAGG")
-    )
-    private Set<Discount> discounts;
-
-    @ManyToMany
-    @JoinTable(
             name = "CT_PHIEUTHUE_PT",
             joinColumns = @JoinColumn(name = "MAPHIEUTHUE"),
             inverseJoinColumns = @JoinColumn(name = "MAPT")
