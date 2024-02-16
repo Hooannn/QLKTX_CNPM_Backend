@@ -19,13 +19,14 @@ public class RoomType {
     @Column(name = "MALOAIPHONG")
     private Long id;
 
-    @Column(nullable = false, name = "TENLOAIPHONG")
+    @Column(nullable = false, name = "TENLOAIPHONG", columnDefinition = "NVARCHAR(100)")
     private String name;
 
     @Column(nullable = false, name = "SONGUOI")
     private int capacity;
 
-    @Column(nullable = false, name = "GIOITINH")
+    @Column(nullable = false, name = "GIOITINH", length = 10)
+    @Enumerated(EnumType.STRING)
     private Sex sex;
 
     @Column(nullable = false, precision = 10, scale = 2, name = "DONGIA")

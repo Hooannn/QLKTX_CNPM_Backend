@@ -14,7 +14,7 @@ import lombok.*;
 @Table(name = "PHONG")
 public class Room {
     @Id
-    @Column(name = "MAPHONG")
+    @Column(name = "MAPHONG", length = 20)
     private String id;
 
     @ManyToOne
@@ -29,7 +29,7 @@ public class Room {
     @Column(nullable = false, name = "XOA")
     private boolean deleted;
 
-    @Column(nullable = false, name = "TRANGTHAI")
+    @Column(nullable = false, name = "TRANGTHAI", length = 20)
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 }

@@ -18,18 +18,18 @@ import java.util.Date;
 @Table(name = "NGUOIDUNG")
 public class User {
     @Id
-    @Column(name = "MAND")
+    @Column(name = "MAND", length = 50)
     private String id;
 
     @JsonProperty("first_name")
-    @Column(nullable = false, name = "TEN")
+    @Column(nullable = false, name = "TEN", columnDefinition = "NVARCHAR(50)")
     private String firstName;
 
     @JsonProperty("last_name")
-    @Column(nullable = false, name = "HO")
+    @Column(nullable = false, name = "HO", columnDefinition = "NVARCHAR(50)")
     private String lastName;
 
-    @Column(nullable = false, name = "PHAI")
+    @Column(nullable = false, name = "PHAI", length = 10)
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
@@ -37,11 +37,11 @@ public class User {
     @Column(name = "NGAYSINH")
     private Date dateOfBirth;
 
-    @Column(name = "DIACHI")
+    @Column(name = "DIACHI", columnDefinition = "NVARCHAR(255)")
     private String address;
 
     @JsonProperty("phone")
-    @Column(name = "SDT")
+    @Column(name = "SDT", length = 15)
     private String phone;
 
     @Column(nullable = false, unique = true, name = "EMAIL")
@@ -51,7 +51,7 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @Column(nullable = false, name = "ROLE")
+    @Column(nullable = false, name = "ROLE", length = 20)
     @Enumerated(EnumType.STRING)
     private Role role;
 }

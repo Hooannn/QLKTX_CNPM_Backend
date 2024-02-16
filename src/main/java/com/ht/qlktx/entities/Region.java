@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "DAYPHONG")
 public class Region {
     @Id
-    @Column(name = "MADAY")
+    @Column(name = "MADAY", length = 20)
     private String id;
 
     @OneToMany(mappedBy = "region", targetEntity = Room.class)

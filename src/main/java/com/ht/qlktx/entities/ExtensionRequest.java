@@ -32,11 +32,11 @@ public class ExtensionRequest {
     @JsonProperty("created_at")
     private String createdAt;
 
-    @Column(nullable = false, name = "TRANGTHAI")
+    @Column(nullable = false, name = "TRANGTHAI", length = 20)
     @Enumerated(EnumType.STRING)
     private RequestStatus status;
 
-    @Column(nullable = true, name = "LYDOTUCHOI")
+    @Column(nullable = true, name = "LYDOTUCHOI", columnDefinition = "NVARCHAR(255)")
     @JsonProperty("reject_reason")
     private String rejectReason;
 

@@ -22,13 +22,7 @@ public class Invoice {
     private Long id;
 
     @Column(nullable = false, precision = 10, scale = 2, name = "TONGTIENPHONG")
-    private BigDecimal roomPrice;
-
-    @Column(nullable = false, precision = 10, scale = 2, name = "TONGTIENDICHVU")
-    private BigDecimal servicePrice;
-
-    @Column(nullable = false, precision = 10, scale = 2, name = "TONGTIENPHUTHU")
-    private BigDecimal extraChargePrice;
+    private BigDecimal total;
 
     @Column(nullable = true, name = "NGAYTHANHTOAN")
     @JsonProperty("paid_at")

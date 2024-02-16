@@ -6,7 +6,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
-import java.util.Set;
 
 @Builder
 @Setter
@@ -49,21 +48,4 @@ public class Booking {
     @Column(name = "NGAYTRA", nullable = true)
     @JsonProperty("checked_out_at")
     private Date checkedOutAt;
-
-    @ManyToMany
-    @JoinTable(
-            name = "CT_PHIEUTHUE_DV",
-            joinColumns = @JoinColumn(name = "MAPHIEUTHUE"),
-            inverseJoinColumns = @JoinColumn(name = "MADV")
-    )
-    private Set<Service> services;
-
-    @ManyToMany
-    @JoinTable(
-            name = "CT_PHIEUTHUE_PT",
-            joinColumns = @JoinColumn(name = "MAPHIEUTHUE"),
-            inverseJoinColumns = @JoinColumn(name = "MAPT")
-    )
-    @JsonProperty("extra_charges")
-    private Set<ExtraCharge> extraCharges;
 }
