@@ -19,7 +19,7 @@ public class RoomType {
     @Column(name = "MALOAIPHONG")
     private Long id;
 
-    @Column(nullable = false, name = "TENLOAIPHONG", columnDefinition = "NVARCHAR(100)")
+    @Column(name = "TENLOAIPHONG", columnDefinition = "NVARCHAR(100) NOT NULL UNIQUE")
     private String name;
 
     @Column(nullable = false, name = "SONGUOI")
