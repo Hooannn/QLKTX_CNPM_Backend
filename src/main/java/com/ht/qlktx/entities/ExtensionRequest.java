@@ -23,9 +23,10 @@ public class ExtensionRequest {
     @JoinColumn(nullable = false, name = "MAPHIEUTHUE")
     private Booking booking;
 
-    @Column(nullable = false, name = "NGAYKETTHUC")
-    @JsonProperty("end_date")
-    private String endDate;
+    @OneToOne
+    @JoinColumn(name = "MATHOIGIANTHUE", nullable = false)
+    @JsonProperty("booking_time")
+    private BookingTime bookingTime;
 
     @CreationTimestamp
     @Column(nullable = false, name = "NGAYYEUCAU")

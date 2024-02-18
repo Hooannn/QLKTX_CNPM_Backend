@@ -21,17 +21,14 @@ public class Booking {
     private Long id;
 
     @CreationTimestamp
-    @Column(name = "NGAYLAP")
+    @Column(name = "NGAYLAP", nullable = false)
     @JsonProperty("created_at")
     private Date createdAt;
 
-    @Column(nullable = false, name = "NGAYBATDAU")
-    @JsonProperty("start_date")
-    private Date startDate;
-
-    @Column(nullable = false, name = "NGAYKETTHUC")
-    @JsonProperty("end_date")
-    private Date endDate;
+    @OneToOne
+    @JoinColumn(name = "MATHOIGIANTHUE", nullable = false)
+    @JsonProperty("booking_time")
+    private BookingTime bookingTime;
 
     @ManyToOne
     @JoinColumn(name = "MAQL", nullable = false)
@@ -48,4 +45,8 @@ public class Booking {
     @Column(name = "NGAYTRA", nullable = true)
     @JsonProperty("checked_out_at")
     private Date checkedOutAt;
+
+    @OneToOne
+    @JoinColumn(name = "MAGG", nullable = true)
+    private Discount discount;
 }

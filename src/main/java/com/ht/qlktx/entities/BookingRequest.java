@@ -27,13 +27,10 @@ public class BookingRequest {
     @JoinColumn(name = "MAPHONG", nullable = false)
     private Room room;
 
-    @Column(nullable = false, name = "NGAYBATDAU")
-    @JsonProperty("start_date")
-    private String startDate;
-
-    @Column(nullable = false, name = "NGAYKETTHUC")
-    @JsonProperty("end_date")
-    private String endDate;
+    @OneToOne
+    @JoinColumn(name = "MATHOIGIANTHUE", nullable = false)
+    @JsonProperty("booking_time")
+    private BookingTime bookingTime;
 
     @CreationTimestamp
     @Column(nullable = false, name = "NGAYYEUCAU")
