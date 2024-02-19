@@ -1,9 +1,10 @@
-package com.ht.qlktx.modules.booking;
+package com.ht.qlktx.modules.booking.controllers;
 
 import com.ht.qlktx.annotations.RequiredRole;
 import com.ht.qlktx.config.Response;
 import com.ht.qlktx.entities.BookingTime;
 import com.ht.qlktx.enums.Role;
+import com.ht.qlktx.modules.booking.services.BookingTimeService;
 import com.ht.qlktx.modules.booking.dtos.CreateBookingTimeDto;
 import com.ht.qlktx.modules.booking.dtos.UpdateBookingTimeDto;
 import jakarta.validation.Valid;

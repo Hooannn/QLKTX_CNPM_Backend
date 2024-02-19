@@ -1,6 +1,7 @@
-package com.ht.qlktx.modules.booking;
+package com.ht.qlktx.modules.booking.controllers;
 
 
+import com.ht.qlktx.modules.booking.services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

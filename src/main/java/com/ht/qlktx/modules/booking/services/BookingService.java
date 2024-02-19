@@ -1,5 +1,6 @@
-package com.ht.qlktx.modules.booking;
+package com.ht.qlktx.modules.booking.services;
 
+import com.ht.qlktx.modules.booking.repositories.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

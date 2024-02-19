@@ -1,4 +1,4 @@
-package com.ht.qlktx.modules.booking;
+package com.ht.qlktx.modules.booking.repositories;
 
 import com.ht.qlktx.entities.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;

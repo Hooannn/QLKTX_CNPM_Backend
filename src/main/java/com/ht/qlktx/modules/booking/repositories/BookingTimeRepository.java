@@ -1,11 +1,14 @@
-package com.ht.qlktx.modules.booking;
+package com.ht.qlktx.modules.booking.repositories;
 
 import com.ht.qlktx.entities.BookingTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingTimeRepository extends JpaRepository<BookingTime, Long> {
     List<BookingTime> findAllByOpenIsTrueAndStartDateIsAfter(Date date);
+
+    Optional<BookingTime> findByIdAndOpenIsTrueAndStartDateIsAfter(Long bookingTimeId, Date date);
 }

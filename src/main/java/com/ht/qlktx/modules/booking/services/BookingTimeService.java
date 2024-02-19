@@ -1,7 +1,9 @@
-package com.ht.qlktx.modules.booking;
+package com.ht.qlktx.modules.booking.services;
 
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.BookingTime;
+import com.ht.qlktx.modules.booking.repositories.BookingRepository;
+import com.ht.qlktx.modules.booking.repositories.BookingTimeRepository;
 import com.ht.qlktx.modules.booking.dtos.CreateBookingTimeDto;
 import com.ht.qlktx.modules.booking.dtos.UpdateBookingTimeDto;
 import com.ht.qlktx.modules.user.UserService;
@@ -64,5 +66,13 @@ public class BookingTimeService {
 
     public List<BookingTime> findAllAvailable() {
         return bookingTimeRepository.findAllByOpenIsTrueAndStartDateIsAfter(new Date());
+    }
+
+    public BookingTime findById(Long bookingTimeId) {
+        return bookingTimeRepository.findById(bookingTimeId).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
+    }
+
+    public BookingTime findByAvailableId(Long bookingTimeId) {
+        return bookingTimeRepository.findByIdAndOpenIsTrueAndStartDateIsAfter(bookingTimeId, new Date()).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
     }
 }
