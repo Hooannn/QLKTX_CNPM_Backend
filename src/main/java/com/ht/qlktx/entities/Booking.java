@@ -31,8 +31,8 @@ public class Booking {
     private BookingTime bookingTime;
 
     @ManyToOne
-    @JoinColumn(name = "MAQL", nullable = false)
-    private User staff;
+    @JoinColumn(name = "MAQL_NHAN", nullable = false)
+    private User checkinStaff;
 
     @ManyToOne
     @JoinColumn(name = "MAPHONG", nullable = false)
@@ -41,6 +41,10 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "MASV", nullable = false)
     private User student;
+
+    @ManyToOne
+    @JoinColumn(name = "MAQL_TRA", nullable = true)
+    private User checkoutStaff;
 
     @Column(name = "NGAYTRA", nullable = true)
     @JsonProperty("checked_out_at")
