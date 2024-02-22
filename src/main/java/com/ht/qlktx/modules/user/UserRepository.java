@@ -34,4 +34,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<User> findAllByRoleIsNotAndDeletedIsFalse(Role role);
 
     Optional<User> findByIdAndDeletedIsFalse(String userId);
+
+    Optional<User> findByEmailAndDeletedIsFalse(String email);
+
+    boolean existsByEmailAndDeletedIsFalse(String email);
 }

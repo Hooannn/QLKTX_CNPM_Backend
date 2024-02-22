@@ -1,11 +1,13 @@
 package com.ht.qlktx.filter;
 
 import com.ht.qlktx.entities.User;
+import com.ht.qlktx.utils.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +18,18 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
     @Value("${application.security.jwt.access-secret-key}")
     private String accessSecretKey;
+    @Value("${application.security.jwt.password-secret-key}")
+    private String passwordSecretKey;
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
+    @Value("${application.security.jwt.password.expiration}")
+    private long resetPasswordExpiration;
+
+    private final RedisService redisService;
 
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
@@ -50,6 +59,31 @@ public class JwtService {
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole().toString());
         return buildToken(claims, user, jwtExpiration, accessSecretKey);
+    }
+
+    public String generateResetPasswordToken(String email) {
+        var token = buildToken(new HashMap<>(), email, resetPasswordExpiration, passwordSecretKey);
+        redisService.setValue("reset_password_token:" + email, token, resetPasswordExpiration / 1000);
+        return token;
+    }
+
+    public VerificationTokenResult verifyResetPasswordToken(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey(passwordSecretKey))
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            return new VerificationTokenResult(false, null);
+        }
+        var email = claims.getSubject();
+        var expiration = claims.getExpiration();
+        var isTokenExpired = expiration.before(new Date());
+        var tokenFromRedis = redisService.getValue("reset_password_token:" + email);
+        var isTokenValid = !isTokenExpired && tokenFromRedis != null && tokenFromRedis.equals(token);
+        return new VerificationTokenResult(isTokenValid, email);
     }
 
     private Date extractExpiration(String token) {

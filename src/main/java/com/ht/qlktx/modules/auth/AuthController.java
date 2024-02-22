@@ -25,4 +25,28 @@ public class AuthController {
                         .build()
         );
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Response<String>> forgotPassword(@RequestParam String email) {
+        authService.forgotPassword(email);
+        return ResponseEntity.ok(
+                Response.<String>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Một email đã được gửi đến hòm thư của bạn")
+                        .data(null)
+                        .build()
+        );
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Response<String>> resetPassword(@RequestParam(name = "token") String token, @RequestParam(name = "newPassword") String newPassword) {
+        authService.resetPassword(token, newPassword);
+        return ResponseEntity.ok(
+                Response.<String>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Mật khẩu của bạn đã được thay đổi")
+                        .data(null)
+                        .build()
+        );
+    }
 }
