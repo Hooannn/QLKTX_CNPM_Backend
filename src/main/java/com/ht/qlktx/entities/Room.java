@@ -26,7 +26,7 @@ public class Room {
     @JoinColumn(name = "MALOAIPHONG", nullable = false)
     private RoomType type;
 
-    @Column(nullable = false, name = "XOA")
+    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @Column(nullable = false, name = "TRANGTHAI", length = 20)

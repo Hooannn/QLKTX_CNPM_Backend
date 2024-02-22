@@ -14,20 +14,22 @@ import java.util.List;
 public class RegionService {
     private final RegionRepository regionRepository;
     public Region findById(String id) {
-        return regionRepository.findById(id).orElseThrow(() -> new HttpException("Không tìm thấy dãy phòng với mã phòng này", HttpStatus.NOT_FOUND));
+        return regionRepository.findByIdAndDeletedIsFalse(id).orElseThrow(() -> new HttpException("Không tìm thấy dãy phòng với mã phòng này", HttpStatus.NOT_FOUND));
     }
 
     public List<Region> findAll() {
-        return regionRepository.findAll();
+        return regionRepository.findAllByDeletedIsFalse();
     }
 
     public Region create(CreateRegionDto createRegionDto) {
-        if (regionRepository.existsById(createRegionDto.getId())) {
-            throw new HttpException("Dãy phòng đã tồn tại", HttpStatus.BAD_REQUEST);
+        if (regionRepository.existsById(createRegionDto.getId()) || regionRepository.existsByName(createRegionDto.getName())) {
+            throw new HttpException("Dãy phòng hoặc tên phòng đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
         var region = Region.builder()
                 .id(createRegionDto.getId())
+                .name(createRegionDto.getName())
+                .sex(createRegionDto.getSex())
                 .build();
 
         return regionRepository.save(region);
@@ -38,10 +40,11 @@ public class RegionService {
         if (!region.getRooms().isEmpty()) {
             throw new HttpException("Không thể xóa dãy phòng này vì có phòng trong dãy phòng", HttpStatus.BAD_REQUEST);
         }
-        regionRepository.delete(region);
+        region.setDeleted(true);
+        regionRepository.save(region);
     }
 
     public List<Region> lookUpById(String keyword) {
-        return regionRepository.findByIdContainingIgnoreCase(keyword);
+        return regionRepository.findByIdContainingIgnoreCaseAndDeletedIsFalse(keyword);
     }
 }

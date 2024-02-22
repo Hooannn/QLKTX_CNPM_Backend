@@ -30,7 +30,7 @@
     "sex": "MALE",
     "date_of_birth": "1993-03-03",
     "address": "Address 3",
-    "phone": "0123456789",
+    "phone": "0223456789",
     "email": "n21dccn003@student.ptithcm.edu.vnn",
     "password": "password789",
     "role": "STUDENT"
@@ -42,7 +42,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1997-04-04",
     "address": "Address 4",
-    "phone": "0987654321",
+    "phone": "0287654321",
     "email": "n21dccn004@student.ptithcm.edu.vnn",
     "password": "password101",
     "role": "STUDENT"
@@ -54,7 +54,7 @@
     "sex": "MALE",
     "date_of_birth": "1991-05-05",
     "address": "Address 5",
-    "phone": "0123456789",
+    "phone": "0323456789",
     "email": "n21dccn005@student.ptithcm.edu.vnn",
     "password": "password111",
     "role": "STUDENT"
@@ -66,7 +66,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1996-06-06",
     "address": "Address 6",
-    "phone": "0987654321",
+    "phone": "0387654321",
     "email": "n21dccn006@student.ptithcm.edu.vnn",
     "password": "password121",
     "role": "STUDENT"
@@ -78,7 +78,7 @@
     "sex": "MALE",
     "date_of_birth": "1992-07-07",
     "address": "Address 7",
-    "phone": "0123456789",
+    "phone": "0423456789",
     "email": "n21dccn007@student.ptithcm.edu.vnn",
     "password": "password131",
     "role": "STUDENT"
@@ -90,7 +90,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1998-08-08",
     "address": "Address 8",
-    "phone": "0987654321",
+    "phone": "0487654321",
     "email": "n21dccn008@student.ptithcm.edu.vnn",
     "password": "password141",
     "role": "STUDENT"
@@ -102,7 +102,7 @@
     "sex": "MALE",
     "date_of_birth": "1994-09-09",
     "address": "Address 9",
-    "phone": "0123456789",
+    "phone": "0523456789",
     "email": "n21dccn009@student.ptithcm.edu.vnn",
     "password": "password151",
     "role": "STUDENT"
@@ -114,7 +114,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1993-10-10",
     "address": "Address 10",
-    "phone": "0987654321",
+    "phone": "0587654321",
     "email": "n21dccn010@student.ptithcm.edu.vnn",
     "password": "password161",
     "role": "STUDENT"
@@ -126,7 +126,7 @@
     "sex": "MALE",
     "date_of_birth": "1997-11-11",
     "address": "Address 11",
-    "phone": "0123456789",
+    "phone": "0623456789",
     "email": "n21dccn011@student.ptithcm.edu.vnn",
     "password": "password171",
     "role": "STUDENT"
@@ -138,7 +138,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1996-12-12",
     "address": "Address 12",
-    "phone": "0987654321",
+    "phone": "0687654321",
     "email": "n21dccn012@student.ptithcm.edu.vnn",
     "password": "password181",
     "role": "STUDENT"
@@ -150,7 +150,7 @@
     "sex": "MALE",
     "date_of_birth": "1992-01-13",
     "address": "Address 13",
-    "phone": "0123456789",
+    "phone": "0723456789",
     "email": "n21dccn013@student.ptithcm.edu.vnn",
     "password": "password191",
     "role": "STUDENT"
@@ -162,7 +162,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1995-02-14",
     "address": "Address 14",
-    "phone": "0987654321",
+    "phone": "0787654321",
     "email": "n21dccn014@student.ptithcm.edu.vnn",
     "password": "password201",
     "role": "STUDENT"
@@ -174,7 +174,7 @@
     "sex": "MALE",
     "date_of_birth": "1991-03-15",
     "address": "Address 15",
-    "phone": "0123456789",
+    "phone": "0823456789",
     "email": "n21dccn015@student.ptithcm.edu.vnn",
     "password": "password211",
     "role": "STUDENT"
@@ -186,7 +186,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1994-04-16",
     "address": "Address 16",
-    "phone": "0987654321",
+    "phone": "0887654321",
     "email": "n21dccn016@student.ptithcm.edu.vnn",
     "password": "password221",
     "role": "STUDENT"
@@ -198,7 +198,7 @@
     "sex": "MALE",
     "date_of_birth": "1993-05-17",
     "address": "Address 17",
-    "phone": "0123456789",
+    "phone": "0923456789",
     "email": "n21dccn017@student.ptithcm.edu.vnn",
     "password": "password231",
     "role": "STUDENT"
@@ -210,7 +210,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1996-06-18",
     "address": "Address 18",
-    "phone": "0987654321",
+    "phone": "0087654321",
     "email": "n21dccn018@student.ptithcm.edu.vnn",
     "password": "password241",
     "role": "STUDENT"
@@ -222,7 +222,7 @@
     "sex": "MALE",
     "date_of_birth": "1990-07-19",
     "address": "Address 19",
-    "phone": "0123456789",
+    "phone": "0123456782",
     "email": "n21dccn019@student.ptithcm.edu.vnn",
     "password": "password251",
     "role": "STUDENT"
@@ -234,7 +234,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1995-08-20",
     "address": "Address 20",
-    "phone": "0987654321",
+    "phone": "0987654322",
     "email": "n21dccn020@student.ptithcm.edu.vnn",
     "password": "password261",
     "role": "STUDENT"
@@ -246,7 +246,7 @@
     "sex": "MALE",
     "date_of_birth": "1992-09-21",
     "address": "Address 21",
-    "phone": "0123456789",
+    "phone": "0123456783",
     "email": "n21dccn021@student.ptithcm.edu.vnn",
     "password": "password271",
     "role": "STUDENT"
@@ -258,7 +258,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1997-10-22",
     "address": "Address 22",
-    "phone": "0987654321",
+    "phone": "0987654323",
     "email": "n21dccn022@student.ptithcm.edu.vnn",
     "password": "password281",
     "role": "STUDENT"
@@ -270,7 +270,7 @@
     "sex": "MALE",
     "date_of_birth": "1994-11-23",
     "address": "Address 23",
-    "phone": "0123456789",
+    "phone": "0123456784",
     "email": "n21dccn023@student.ptithcm.edu.vnn",
     "password": "password291",
     "role": "STUDENT"
@@ -282,7 +282,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1991-12-24",
     "address": "Address 24",
-    "phone": "0987654321",
+    "phone": "0987654324",
     "email": "n21dccn024@student.ptithcm.edu.vnn",
     "password": "password301",
     "role": "STUDENT"
@@ -294,7 +294,7 @@
     "sex": "MALE",
     "date_of_birth": "1996-01-25",
     "address": "Address 25",
-    "phone": "0123456789",
+    "phone": "0123456785",
     "email": "n21dccn025@student.ptithcm.edu.vnn",
     "password": "password311",
     "role": "STUDENT"
@@ -306,7 +306,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1995-02-26",
     "address": "Address 26",
-    "phone": "0987654321",
+    "phone": "0987654325",
     "email": "n21dccn026@student.ptithcm.edu.vnn",
     "password": "password321",
     "role": "STUDENT"
@@ -318,7 +318,7 @@
     "sex": "MALE",
     "date_of_birth": "1992-03-27",
     "address": "Address 27",
-    "phone": "0123456789",
+    "phone": "0123456786",
     "email": "n21dccn027@student.ptithcm.edu.vnn",
     "password": "password331",
     "role": "STUDENT"
@@ -330,7 +330,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1997-04-28",
     "address": "Address 28",
-    "phone": "0987654321",
+    "phone": "0987654326",
     "email": "n21dccn028@student.ptithcm.edu.vnn",
     "password": "password341",
     "role": "STUDENT"
@@ -342,7 +342,7 @@
     "sex": "MALE",
     "date_of_birth": "1993-05-29",
     "address": "Address 29",
-    "phone": "0123456789",
+    "phone": "0123456787",
     "email": "n21dccn029@student.ptithcm.edu.vnn",
     "password": "password351",
     "role": "STUDENT"
@@ -354,7 +354,7 @@
     "sex": "MALE",
     "date_of_birth": "1998-06-30",
     "address": "Address 30",
-    "phone": "0987654321",
+    "phone": "0987654327",
     "email": "n21dccn030@student.ptithcm.edu.vnn",
     "password": "password361",
     "role": "STUDENT"

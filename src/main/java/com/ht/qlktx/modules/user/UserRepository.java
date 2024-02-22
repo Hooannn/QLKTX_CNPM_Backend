@@ -15,13 +15,23 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     boolean existsByEmail(String email);
 
-    @Query("SELECT u FROM User u WHERE u.role != 'ADMIN' and (u.id LIKE %:keyword% OR concat(u.firstName, ' ', u.lastName) LIKE %:keyword%)")
+    @Query("SELECT u FROM User u WHERE u.role != 'ADMIN' and u.deleted = false and (u.id LIKE %:keyword% OR concat(u.firstName, ' ', u.lastName) LIKE %:keyword%)")
     List<User> lookUpByIdOrName(String keyword);
 
     List<User> findAllByRoleIs(Role role);
 
     Optional<User> findByIdAndRoleIs(String studentId, Role role);
 
-    @Query("SELECT u FROM User u WHERE u.role != 'ADMIN' and u.role = 'STUDENT' and (u.id LIKE %:keyword% OR concat(u.firstName, ' ', u.lastName) LIKE %:keyword%)")
+    @Query("SELECT u FROM User u WHERE u.role != 'ADMIN' and u.deleted = false and u.role = 'STUDENT' and (u.id LIKE %:keyword% OR concat(u.firstName, ' ', u.lastName) LIKE %:keyword%)")
     List<User> lookupStudentsByIdOrName(String keyword);
+
+    Optional<User> findByIdAndRoleIsAndDeletedIsFalse(String studentId, Role role);
+
+    List<User> findAllByRoleIsAndDeletedIsFalse(Role role);
+
+    Optional<User> findByIdAndRoleIsNotAndDeletedIsFalse(String userId, Role role);
+
+    List<User> findAllByRoleIsNotAndDeletedIsFalse(Role role);
+
+    Optional<User> findByIdAndDeletedIsFalse(String userId);
 }

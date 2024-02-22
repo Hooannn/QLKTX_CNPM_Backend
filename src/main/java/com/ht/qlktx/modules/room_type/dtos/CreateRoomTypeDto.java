@@ -17,9 +17,6 @@ public class CreateRoomTypeDto {
     @NotNull(message = "Sức chứa không được để trống")
     private int capacity;
 
-    @NotNull(message = "Giới tính không được để trống")
-    private Sex sex;
-
     @NotNull(message = "Giá không được để trống")
     private BigDecimal price;
 }

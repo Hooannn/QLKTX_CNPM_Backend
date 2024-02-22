@@ -3,6 +3,7 @@ package com.ht.qlktx.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "PHIEUTHUE")
+@Check(constraints = "NGAYLAP <= GETDATE() AND NGAYTRA >= NGAYLAP")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,4 +55,7 @@ public class Booking {
     @OneToOne
     @JoinColumn(name = "MAGG", nullable = true)
     private Discount discount;
+
+    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    private boolean deleted;
 }

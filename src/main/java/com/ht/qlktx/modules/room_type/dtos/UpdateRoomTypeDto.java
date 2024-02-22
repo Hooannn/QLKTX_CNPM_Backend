@@ -13,7 +13,5 @@ public class UpdateRoomTypeDto {
 
     private int capacity;
 
-    private Sex sex;
-
     private BigDecimal price;
 }

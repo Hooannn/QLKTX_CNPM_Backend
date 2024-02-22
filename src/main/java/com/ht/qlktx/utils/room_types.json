@@ -2,55 +2,46 @@
   {
     "name": "Nam, Dịch vụ 1",
     "capacity": 4,
-    "sex": "MALE",
     "price": 500000
   },
   {
     "name": "Nam, Dịch vụ 2",
     "capacity": 8,
-    "sex": "MALE",
     "price": 300000
   },
   {
     "name": "Nam, Thường 1",
     "capacity": 8,
-    "sex": "MALE",
     "price": 150000
   },
   {
     "name": "Nam, Thường 2",
     "capacity": 12,
-    "sex": "MALE",
     "price": 100000
   },
   {
     "name": "Nữ, Dịch vụ 1",
     "capacity": 4,
-    "sex": "FEMALE",
     "price": 500000
   },
   {
     "name": "Nữ, Dịch vụ 2",
     "capacity": 8,
-    "sex": "FEMALE",
     "price": 300000
   },
   {
     "name": "Nữ, Thường 1",
     "capacity": 8,
-    "sex": "FEMALE",
     "price": 150000
   },
   {
     "name": "Nữ, Thường 2",
     "capacity": 12,
-    "sex": "FEMALE",
     "price": 100000
   },
   {
     "name": "Khác",
     "capacity": 12,
-    "sex": "OTHER",
     "price": 200000
   }
 ]

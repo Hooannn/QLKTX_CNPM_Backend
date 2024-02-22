@@ -24,4 +24,14 @@ public class Region {
     @OneToMany(mappedBy = "region", targetEntity = Room.class)
     @JsonManagedReference
     private List<Room> rooms;
+
+    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    private boolean deleted;
+
+    @Column(name = "TENDAY", columnDefinition = "NVARCHAR(100) NOT NULL UNIQUE")
+    private String name;
+
+    @Column(nullable = false, name = "GIOITINH", length = 10)
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
 }

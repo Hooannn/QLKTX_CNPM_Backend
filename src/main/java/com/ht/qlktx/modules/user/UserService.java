@@ -44,7 +44,7 @@ public class UserService {
     }
 
     public User update(String userId, UpdateUserDto updateUserDto) {
-        var user = userRepository.findById(userId).orElseThrow(
+        var user = userRepository.findByIdAndDeletedIsFalse(userId).orElseThrow(
                 () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
         );
 
@@ -68,7 +68,7 @@ public class UserService {
     }
 
     public void delete(String userId) {
-        var user = userRepository.findById(userId).orElseThrow(
+        var user = userRepository.findByIdAndDeletedIsFalse(userId).orElseThrow(
                 () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
         );
 
@@ -76,15 +76,16 @@ public class UserService {
             throw new HttpException("Không thể xóa người dùng với quyền ADMIN", HttpStatus.FORBIDDEN);
         }
 
-        userRepository.delete(user);
+        user.setDeleted(true);
+        userRepository.save(user);
     }
 
     public List<User> findAll() {
-        return userRepository.findAllByRoleIsNot(Role.ADMIN);
+        return userRepository.findAllByRoleIsNotAndDeletedIsFalse(Role.ADMIN);
     }
 
     public User findById(String userId) {
-        return userRepository.findByIdAndRoleIsNot(userId, Role.ADMIN).orElseThrow(
+        return userRepository.findByIdAndRoleIsNotAndDeletedIsFalse(userId, Role.ADMIN).orElseThrow(
                 () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
         );
     }
@@ -94,7 +95,7 @@ public class UserService {
     }
 
     public List<User> findAllStudents() {
-        return userRepository.findAllByRoleIs(Role.STUDENT);
+        return userRepository.findAllByRoleIsAndDeletedIsFalse(Role.STUDENT);
     }
 
     public List<User> lookupStudentsByIdOrName(String keyword) {
@@ -102,6 +103,6 @@ public class UserService {
     }
 
     public User findStudentById(String studentId) {
-        return userRepository.findByIdAndRoleIs(studentId, Role.STUDENT).orElseThrow(() -> new HttpException("Người dùng không tồn tại", HttpStatus.BAD_REQUEST));
+        return userRepository.findByIdAndRoleIsAndDeletedIsFalse(studentId, Role.STUDENT).orElseThrow(() -> new HttpException("Người dùng không tồn tại", HttpStatus.BAD_REQUEST));
     }
 }

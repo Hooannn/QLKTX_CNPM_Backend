@@ -6,6 +6,7 @@ import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.enums.Sex;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Check;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "NGUOIDUNG")
+@Check(constraints = "NGAYSINH <= GETDATE()")
 public class User {
     @Id
     @Column(name = "MAND", length = 50)
@@ -34,14 +36,14 @@ public class User {
     private Sex sex;
 
     @JsonProperty("date_of_birth")
-    @Column(name = "NGAYSINH")
+    @Column(name = "NGAYSINH", nullable = false)
     private Date dateOfBirth;
 
-    @Column(name = "DIACHI", columnDefinition = "NVARCHAR(255)")
+    @Column(name = "DIACHI", columnDefinition = "NVARCHAR(255)", nullable = false)
     private String address;
 
     @JsonProperty("phone")
-    @Column(name = "SDT", length = 15)
+    @Column(name = "SDT", length = 15, unique = true)
     private String phone;
 
     @Column(nullable = false, unique = true, name = "EMAIL")
@@ -54,4 +56,7 @@ public class User {
     @Column(nullable = false, name = "ROLE", length = 20)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    private boolean deleted;
 }

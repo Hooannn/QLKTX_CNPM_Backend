@@ -3,6 +3,7 @@ package com.ht.qlktx.entities;
 import com.ht.qlktx.enums.Sex;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Check;
 
 import java.math.BigDecimal;
 
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Table(name = "LOAIPHONG")
+@Check(constraints = "SONGUOI >= 0 AND DONGIA >= 0")
 public class RoomType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +27,9 @@ public class RoomType {
     @Column(nullable = false, name = "SONGUOI")
     private int capacity;
 
-    @Column(nullable = false, name = "GIOITINH", length = 10)
-    @Enumerated(EnumType.STRING)
-    private Sex sex;
-
     @Column(nullable = false, precision = 10, scale = 2, name = "DONGIA")
     private BigDecimal price;
+
+    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    private boolean deleted;
 }

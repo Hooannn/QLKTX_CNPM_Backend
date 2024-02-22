@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -77,12 +78,6 @@ public class ServerCommandLineRunner implements CommandLineRunner {
             userRepository.saveAll(staffs);
         }
 
-        if (userRepository.count() == 0 && students != null && staffs != null) {
-            staffs.forEach(staff -> staff.setPassword(passwordEncoder.encode(staff.getId())));
-            students.forEach(student -> student.setPassword(passwordEncoder.encode(student.getId())));
-            userRepository.saveAll(students);
-            userRepository.saveAll(staffs);
-        }
         //Create default admin account
         String defaultAdminUsername = "admin001";
         String defaultAdminPassword = "123456";
@@ -94,7 +89,9 @@ public class ServerCommandLineRunner implements CommandLineRunner {
                 .password(passwordEncoder.encode(defaultAdminPassword))
                 .sex(Sex.MALE)
                 .firstName("Admin")
-                .lastName("Admin")
+                .lastName("01")
+                .dateOfBirth(new Date("01/01/2000"))
+                .address("Ho Chi Minh City")
                 .email("admin@qlktx.ptithcm.edu.vn")
                 .role(Role.ADMIN)
                 .build();

@@ -38,16 +38,18 @@ public class BookingTimeService {
     }
 
     public void delete(Long id) {
+        var bookingTime = findById(id);
         if (bookingRepository.existsByBookingTimeId(id)) {
             throw new HttpException("Không thể xóa vì đã có phiếu thuê đang sử dụng", HttpStatus.BAD_REQUEST);
         }
 
         //TODO: Check booking request, extension request
-        bookingTimeRepository.deleteById(id);
+        bookingTime.setDeleted(true);
+        bookingTimeRepository.save(bookingTime);
     }
 
     public BookingTime update(Long id, UpdateBookingTimeDto updateBookingTimeDto) {
-        var bookingTime = bookingTimeRepository.findById(id).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
+        var bookingTime = findById(id);
 
         Optional.ofNullable(updateBookingTimeDto.getDescription()).ifPresent(bookingTime::setDescription);
         Optional.ofNullable(updateBookingTimeDto.getEndDate()).ifPresent(bookingTime::setEndDate);
@@ -61,18 +63,18 @@ public class BookingTimeService {
     }
 
     public List<BookingTime> findAll() {
-        return bookingTimeRepository.findAll();
+        return bookingTimeRepository.findAllByDeletedIsFalse();
     }
 
     public List<BookingTime> findAllAvailable() {
-        return bookingTimeRepository.findAllByOpenIsTrueAndStartDateIsAfter(new Date());
+        return bookingTimeRepository.findAllByOpenIsTrueAndStartDateIsAfterAndDeletedIsFalse(new Date());
     }
 
     public BookingTime findById(Long bookingTimeId) {
-        return bookingTimeRepository.findById(bookingTimeId).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
+        return bookingTimeRepository.findByIdAndDeletedIsFalse(bookingTimeId).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
     }
 
     public BookingTime findByAvailableId(Long bookingTimeId) {
-        return bookingTimeRepository.findByIdAndOpenIsTrueAndStartDateIsAfter(bookingTimeId, new Date()).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
+        return bookingTimeRepository.findByIdAndOpenIsTrueAndStartDateIsAfterAndDeletedIsFalse(bookingTimeId, new Date()).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
     }
 }

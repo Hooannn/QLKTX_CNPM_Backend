@@ -18,14 +18,14 @@ import java.util.Date;
 public class BookingTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MA")
+    @Column(name = "MATHOIGIANTHUE")
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "MAQL", nullable = false)
     private User staff;
 
-    @Column(name = "NOIDUNG", columnDefinition = "NVARCHAR(255) NOT NULL UNIQUE")
+    @Column(name = "NOIDUNG", columnDefinition = "NVARCHAR(255)", nullable = false)
     private String description;
 
     @Column(name = "NGAYBATDAU", nullable = false)
@@ -38,4 +38,7 @@ public class BookingTime {
 
     @Column(nullable = false, name = "TRANGTHAIMO")
     private boolean open;
+
+    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    private boolean deleted;
 }

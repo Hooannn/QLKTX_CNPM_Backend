@@ -19,22 +19,25 @@ public class RoomTypeService {
     private final RoomTypeRepository roomTypeRepository;
     private final RoomRepository roomRepository;
     public RoomType create(CreateRoomTypeDto createRoomTypeDto) {
+        if (roomTypeRepository.existsByName(createRoomTypeDto.getName())) {
+            throw new HttpException("Loại phòng đã tồn tại", HttpStatus.BAD_REQUEST);
+        }
+
         var roomType = RoomType.builder()
                 .name(createRoomTypeDto.getName())
                 .price(createRoomTypeDto.getPrice())
                 .capacity(createRoomTypeDto.getCapacity())
-                .sex(createRoomTypeDto.getSex())
                 .build();
 
         return roomTypeRepository.save(roomType);
     }
 
     public List<RoomType> findAll() {
-        return roomTypeRepository.findAll();
+        return roomTypeRepository.findAllByDeletedIsFalse();
     }
 
     public RoomType findById(Long id) {
-        return roomTypeRepository.findById(id).orElseThrow(() -> new HttpException("Không tìm thấy loại phòng", HttpStatus.BAD_REQUEST));
+        return roomTypeRepository.findByIdAndDeletedIsFalse(id).orElseThrow(() -> new HttpException("Không tìm thấy loại phòng", HttpStatus.BAD_REQUEST));
     }
 
     public void delete(Long id) {
@@ -44,7 +47,8 @@ public class RoomTypeService {
             throw new HttpException("Không thể xóa loại phòng này vì có phòng đang sử dụng", HttpStatus.BAD_REQUEST);
         }
 
-        roomTypeRepository.delete(roomType);
+        roomType.setDeleted(true);
+        roomTypeRepository.save(roomType);
     }
 
     public RoomType update(Long id, UpdateRoomTypeDto updateRoomTypeDto) {
@@ -53,12 +57,15 @@ public class RoomTypeService {
         Optional.ofNullable(updateRoomTypeDto.getName()).ifPresent(roomType::setName);
         Optional.ofNullable(updateRoomTypeDto.getPrice()).ifPresent(roomType::setPrice);
         Optional.of(updateRoomTypeDto.getCapacity()).ifPresent(roomType::setCapacity);
-        Optional.ofNullable(updateRoomTypeDto.getSex()).ifPresent(roomType::setSex);
+
+        if (roomTypeRepository.existsByNameAndIdNot(updateRoomTypeDto.getName(), id)) {
+            throw new HttpException("Loại phòng đã tồn tại", HttpStatus.BAD_REQUEST);
+        }
 
         return roomTypeRepository.save(roomType);
     }
 
     public List<RoomType> lookUpByName(String keyword) {
-        return roomTypeRepository.findByNameContainingIgnoreCase(keyword);
+        return roomTypeRepository.findByNameContainingIgnoreCaseAndDeletedIsFalse(keyword);
     }
 }
