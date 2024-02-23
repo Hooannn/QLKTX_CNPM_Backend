@@ -21,10 +21,6 @@ public class Region {
     @Column(name = "MADAY", length = 20)
     private String id;
 
-    @OneToMany(mappedBy = "region", targetEntity = Room.class)
-    @JsonManagedReference
-    private List<Room> rooms;
-
     @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 

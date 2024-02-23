@@ -6,6 +6,7 @@ import com.ht.qlktx.entities.Room;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.room.dtos.CreateRoomDto;
 import com.ht.qlktx.modules.room.dtos.UpdateRoomDto;
+import com.ht.qlktx.projections.RoomWithBookingCountView;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public class RoomController {
 
     @GetMapping
     @RequiredRole({Role.STAFF})
-    public ResponseEntity<Response<Iterable<Room>>> findAll() {
+    public ResponseEntity<Response<Iterable<RoomWithBookingCountView>>> findAll() {
         var rooms = roomService.findAll();
         return ResponseEntity.ok().body(new Response<>(
                 HttpStatus.OK.value(),

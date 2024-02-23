@@ -7,6 +7,7 @@ import com.ht.qlktx.modules.region.RegionService;
 import com.ht.qlktx.modules.room.dtos.CreateRoomDto;
 import com.ht.qlktx.modules.room.dtos.UpdateRoomDto;
 import com.ht.qlktx.modules.room_type.RoomTypeService;
+import com.ht.qlktx.projections.RoomWithBookingCountView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -59,12 +60,14 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public List<Room> findAll() {
-        return roomRepository.findAllByDeletedFalse();
+    public List<RoomWithBookingCountView> findAll() {
+        return roomRepository.findAllWithBookingCount();
     }
 
     public Room findById(String roomId) {
-        return roomRepository.findByIdAndDeletedFalse(roomId).orElseThrow(() -> new HttpException("Không tìm thấy phòng", HttpStatus.BAD_REQUEST));
+        return roomRepository.findByIdWithBooking(roomId).orElseThrow(
+                () -> new HttpException("Không tìm thấy phòng", HttpStatus.BAD_REQUEST)
+        );
     }
 
     public List<Room> lookUpById(String keyword) {

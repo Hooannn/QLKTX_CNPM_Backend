@@ -1,12 +1,16 @@
 package com.ht.qlktx.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Check;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @Setter
@@ -27,16 +31,18 @@ public class Booking {
     @JsonProperty("created_at")
     private Date createdAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "MATHOIGIANTHUE", nullable = false)
     @JsonProperty("booking_time")
     private BookingTime bookingTime;
 
     @ManyToOne
     @JoinColumn(name = "MAQL_NHAN", nullable = false)
+    @JsonProperty("checkin_staff")
     private User checkinStaff;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "MAPHONG", nullable = false)
     private Room room;
 
@@ -46,6 +52,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "MAQL_TRA", nullable = true)
+    @JsonProperty("checkout_staff")
     private User checkoutStaff;
 
     @Column(name = "NGAYTRA", nullable = true)
@@ -58,4 +65,11 @@ public class Booking {
 
     @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
+
+    @JsonIgnore
+    public BigDecimal getTotalPrice() {
+        var unitPrice = room.getType().getPrice();
+        var duration = bookingTime.getDurationInMonths();
+        return unitPrice.multiply(BigDecimal.valueOf(duration));
+    }
 }

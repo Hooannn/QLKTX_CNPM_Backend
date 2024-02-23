@@ -12,10 +12,6 @@ public class CreateBookingDto {
     @JsonProperty("booking_time_id")
     private Long bookingTimeId;
 
-    @NotNull(message = "Mã nhân viên check-in không được để trống")
-    @JsonProperty("checkin_staff_id")
-    private String checkinStaffId;
-
     @NotNull(message = "Mã phòng không được để trống")
     @JsonProperty("room_id")
     private String roomId;
@@ -26,4 +22,7 @@ public class CreateBookingDto {
 
     @JsonProperty("discount_id")
     private String discountId;
+
+    @JsonProperty("auto_create_invoice")
+    private boolean autoCreateInvoice;
 }

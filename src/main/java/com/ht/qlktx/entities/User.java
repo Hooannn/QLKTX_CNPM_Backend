@@ -59,4 +59,12 @@ public class User {
 
     @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
+
+    public boolean isStaff() {
+        return this.role.equals(Role.STAFF);
+    }
+
+    public boolean isStudent() {
+        return this.role.equals(Role.STUDENT);
+    }
 }

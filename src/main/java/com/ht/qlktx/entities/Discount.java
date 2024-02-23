@@ -36,7 +36,7 @@ public class Discount {
     private Date startDate;
 
     @Column(nullable = false, name = "NGAYKETTHUC")
-    @JsonProperty("start_date")
+    @JsonProperty("end_date")
     private Date endDate;
 
     @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
