@@ -1,5 +1,6 @@
 package com.ht.qlktx.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,4 +46,9 @@ public class Invoice {
 
     @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
+
+    @JsonIgnore
+    public boolean isPaid() {
+        return paidAt != null;
+    }
 }

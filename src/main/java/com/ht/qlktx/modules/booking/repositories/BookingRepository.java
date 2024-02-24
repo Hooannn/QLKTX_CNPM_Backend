@@ -22,7 +22,13 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     Optional<Booking> findByIdAndDeletedIsFalse(Long id);
 
+    <T> Optional<T> findByIdAndDeletedIsFalse(Long id, Class<T> type);
+
     List<BookingView> findAllByRoomIdAndDeletedIsFalseAndCheckedOutAtIsNotNull(String roomId);
 
     Long countByRoomIdAndDeletedIsFalseAndCheckedOutAtIsNull(String id);
+
+    boolean existsByDiscountId(String id);
+
+    List<BookingView> findAllByStudentIdAndDeletedIsFalse(String studentId);
 }

@@ -9,6 +9,7 @@ import org.hibernate.annotations.Check;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class Booking {
     @JsonProperty("checked_out_at")
     private Date checkedOutAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "MAGG", nullable = true)
     private Discount discount;
 
@@ -70,6 +71,17 @@ public class Booking {
     public BigDecimal getTotalPrice() {
         var unitPrice = room.getType().getPrice();
         var duration = bookingTime.getDurationInMonths();
+        if (discount != null) {
+            var percentage = discount.getPercentage();
+            return unitPrice.multiply(BigDecimal.valueOf(duration))
+                    .multiply(BigDecimal.valueOf(1)
+                            .subtract(percentage.divide(BigDecimal.valueOf(100))));
+        }
         return unitPrice.multiply(BigDecimal.valueOf(duration));
+    }
+
+    @JsonIgnore
+    public boolean isCheckedOut() {
+        return checkedOutAt != null;
     }
 }

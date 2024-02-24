@@ -6,6 +6,7 @@ import com.ht.qlktx.entities.Invoice;
 import com.ht.qlktx.entities.User;
 import com.ht.qlktx.modules.booking.repositories.BookingRepository;
 import com.ht.qlktx.modules.invoice.dtos.CreateInvoiceDto;
+import com.ht.qlktx.modules.invoice.dtos.UpdateInvoiceDto;
 import com.ht.qlktx.modules.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +30,16 @@ public class InvoiceService {
         var staff = userRepository.findByIdAndDeletedIsFalse(sub).orElseThrow(
                 () -> new HttpException("Nhân viên không tồn tại", HttpStatus.BAD_REQUEST)
         );
-        return create(booking, staff, createInvoiceDto.getTotal());
+
+        var total = createInvoiceDto.getTotal();
+
+        if (booking.getDiscount() != null && booking.getDiscount().isAvailable()) {
+            var percentage = booking.getDiscount().getPercentage();
+            total = total.multiply(BigDecimal.valueOf(1)
+                    .subtract(percentage.divide(BigDecimal.valueOf(100))));
+        }
+
+        return create(booking, staff, total);
     }
 
     public Invoice create(Booking booking, User staff, BigDecimal total) {
@@ -38,5 +50,52 @@ public class InvoiceService {
                 .createdAt(new Date())
                 .build();
         return invoiceRepository.save(invoice);
+    }
+
+    public Invoice findById(Long id) {
+        return invoiceRepository.findByIdAndDeletedIsFalse(id).orElseThrow(
+                () -> new HttpException("Không tìm thấy hóa đơn", HttpStatus.BAD_REQUEST)
+        );
+    }
+
+    public List<Invoice> findAll() {
+        return invoiceRepository.findAllByDeletedIsFalse();
+    }
+
+    public List<Invoice> findAllUnpaid() {
+        return invoiceRepository.findAllByDeletedIsFalseAndPaidAtIsNull();
+    }
+
+    public List<Invoice> findAllPaid() {
+        return invoiceRepository.findAllByDeletedIsFalseAndPaidAtIsNotNull();
+    }
+
+    public Invoice update(Long id, UpdateInvoiceDto updateInvoiceDto) {
+        var invoice = findById(id);
+        if (invoice.isPaid()) {
+            throw new HttpException("Không thể cập nhật hóa đơn đã thanh toán", HttpStatus.BAD_REQUEST);
+        }
+
+        Optional.ofNullable(updateInvoiceDto.getPaidAt()).ifPresent(invoice::setPaidAt);
+        Optional.ofNullable(updateInvoiceDto.getTotal()).ifPresent(invoice::setTotal);
+
+        return invoiceRepository.save(invoice);
+    }
+
+    public List<Invoice> findAllByStudentId(String studentId) {
+        return invoiceRepository.findAllByBookingStudentIdAndDeletedIsFalse(studentId);
+    }
+
+    public List<Invoice> findAllByBookingId(Long bookingId) {
+        return invoiceRepository.findAllByBookingIdAndDeletedIsFalse(bookingId);
+    }
+
+    public void delete(Long id) {
+        var invoice = findById(id);
+        if (invoice.isPaid()) {
+            throw new HttpException("Không thể xóa hóa đơn đã thanh toán", HttpStatus.BAD_REQUEST);
+        }
+        invoice.setDeleted(true);
+        invoiceRepository.save(invoice);
     }
 }

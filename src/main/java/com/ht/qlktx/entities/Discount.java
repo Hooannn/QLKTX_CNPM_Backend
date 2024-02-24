@@ -1,5 +1,6 @@
 package com.ht.qlktx.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,4 +42,9 @@ public class Discount {
 
     @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
+
+    @JsonIgnore
+    public boolean isAvailable() {
+        return !deleted && startDate.before(new Date()) && endDate.after(new Date());
+    }
 }
