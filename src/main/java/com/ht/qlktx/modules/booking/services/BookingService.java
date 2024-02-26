@@ -12,6 +12,7 @@ import com.ht.qlktx.modules.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -26,14 +27,20 @@ public class BookingService {
     private final RoomService roomService;
     private final InvoiceService invoiceService;
     private final UserService userService;
+
     public List<BookingView> findAll() {
         return bookingRepository.findAllByDeletedIsFalse();
+    }
+
+    public List<BookingView> findAllCurrent() {
+        return bookingRepository.findAllByDeletedIsFalseAndCheckedOutAtIsNull();
     }
 
     public List<BookingView> findAllCheckedOut() {
         return bookingRepository.findAllByDeletedIsFalseAndCheckedOutAtIsNotNull();
     }
 
+    @Transactional
     public Booking create(CreateBookingDto createBookingDto, String checkinStaffId) {
         var bookingTime = bookingTimeService.findByAvailableId(createBookingDto.getBookingTimeId());
         var checkinStaff = userService.findById(checkinStaffId);
@@ -121,5 +128,9 @@ public class BookingService {
 
     public List<BookingView> findAllByStudentId(String studentId) {
         return bookingRepository.findAllByStudentIdAndDeletedIsFalse(studentId);
+    }
+
+    public List<BookingView> findAllByRoomId(String roomId) {
+        return bookingRepository.findAllByRoomIdAndDeletedIsFalse(roomId);
     }
 }

@@ -8,8 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateRoomDto {
-    private String id;
-
     @JsonProperty("region_id")
     private String regionId;
 

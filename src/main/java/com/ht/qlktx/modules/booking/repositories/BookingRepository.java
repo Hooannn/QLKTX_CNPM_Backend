@@ -3,6 +3,7 @@ package com.ht.qlktx.modules.booking.repositories;
 import com.ht.qlktx.entities.Booking;
 import com.ht.qlktx.projections.BookingView;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<BookingView> findAllByDeletedIsFalseAndCheckedOutAtIsNotNull();
 
-    List<Booking> findAllByRoomIdAndDeletedIsFalse(String id);
+    @Query("SELECT b FROM Booking b WHERE b.deleted = false AND b.room.id = :id and b.checkedOutAt is null")
+    List<BookingView> findAllByRoomIdAndDeletedIsFalse(String id);
 
     Long countByRoomIdAndDeletedIsFalse(String id);
 
@@ -31,4 +33,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     boolean existsByDiscountId(String id);
 
     List<BookingView> findAllByStudentIdAndDeletedIsFalse(String studentId);
+
+    boolean existsByRoomIdAndDeletedIsFalseAndCheckedOutAtIsNull(String roomId);
+
+    boolean existsByRoomIdAndDeletedIsFalse(String roomId);
+
+    List<BookingView> findAllByDeletedIsFalseAndCheckedOutAtIsNull();
 }

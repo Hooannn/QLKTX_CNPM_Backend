@@ -38,6 +38,19 @@ public class BookingController {
         );
     }
 
+    @GetMapping("current")
+    @RequiredRole({Role.STAFF})
+    public ResponseEntity<Response<List<BookingView>>> findAllCurrent() {
+        var bookings = bookingService.findAllCurrent();
+        return ResponseEntity.ok(
+                Response.<List<BookingView>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Lấy danh sách phiếu thuê thành công")
+                        .data(bookings)
+                        .build()
+        );
+    }
+
     @GetMapping("{id}")
     @RequiredRole({Role.STAFF})
     public ResponseEntity<Response<BookingView>> findById(@PathVariable Long id) {
@@ -55,6 +68,19 @@ public class BookingController {
     @RequiredRole({Role.STAFF})
     public ResponseEntity<Response<List<BookingView>>> findAllByStudentId(@PathVariable String studentId) {
         var bookings = bookingService.findAllByStudentId(studentId);
+        return ResponseEntity.ok(
+                Response.<List<BookingView>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Lấy danh sách phiếu thuê thành công")
+                        .data(bookings)
+                        .build()
+        );
+    }
+
+    @GetMapping("/room/{roomId}")
+    @RequiredRole({Role.STAFF})
+    public ResponseEntity<Response<List<BookingView>>> findAllByRoomId(@PathVariable String roomId) {
+        var bookings = bookingService.findAllByRoomId(roomId);
         return ResponseEntity.ok(
                 Response.<List<BookingView>>builder()
                         .status(HttpStatus.OK.value())

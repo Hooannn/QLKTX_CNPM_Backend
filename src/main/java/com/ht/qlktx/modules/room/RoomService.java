@@ -3,10 +3,12 @@ package com.ht.qlktx.modules.room;
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Room;
 import com.ht.qlktx.enums.RoomStatus;
+import com.ht.qlktx.modules.booking.repositories.BookingRepository;
 import com.ht.qlktx.modules.region.RegionService;
 import com.ht.qlktx.modules.room.dtos.CreateRoomDto;
 import com.ht.qlktx.modules.room.dtos.UpdateRoomDto;
 import com.ht.qlktx.modules.room_type.RoomTypeService;
+import com.ht.qlktx.projections.RoomDetailView;
 import com.ht.qlktx.projections.RoomWithBookingCountView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RoomService {
     private final RoomRepository roomRepository;
+    private final BookingRepository bookingRepository;
     private final RoomTypeService roomTypeService;
     private final RegionService regionService;
 
@@ -39,13 +42,22 @@ public class RoomService {
     }
 
     public void delete(String roomId) {
-        // TODO: Check if there are any bookings associated with this room still active
-    }
-
-    public Room update(String roomId, UpdateRoomDto updateRoomDto) {
         var room = findById(roomId);
 
-        Optional.ofNullable(updateRoomDto.getId()).ifPresent(room::setId);
+        if (bookingRepository.existsByRoomIdAndDeletedIsFalse(roomId)) {
+            throw new HttpException("Không thể xoá phòng đã có phiếu thuê", HttpStatus.BAD_REQUEST);
+        }
+
+        room.setDeleted(true);
+        roomRepository.save(room);
+    }
+
+    public void update(String roomId, UpdateRoomDto updateRoomDto) {
+        var room = findById(roomId);
+
+        if (bookingRepository.existsByRoomIdAndDeletedIsFalseAndCheckedOutAtIsNull(roomId)) {
+            throw new HttpException("Không thể cập nhật phòng đang có người lưu trú", HttpStatus.BAD_REQUEST);
+        }
 
         Optional.ofNullable(updateRoomDto.getRegionId()).ifPresent(regionId -> {
             room.setRegion(regionService.findById(regionId));
@@ -57,7 +69,7 @@ public class RoomService {
 
         Optional.ofNullable(updateRoomDto.getStatus()).ifPresent(room::setStatus);
 
-        return roomRepository.save(room);
+        roomRepository.save(room);
     }
 
     public List<RoomWithBookingCountView> findAll() {
@@ -65,7 +77,13 @@ public class RoomService {
     }
 
     public Room findById(String roomId) {
-        return roomRepository.findByIdWithBooking(roomId).orElseThrow(
+        return roomRepository.findByIdAndDeletedFalse(roomId).orElseThrow(
+                () -> new HttpException("Không tìm thấy phòng", HttpStatus.BAD_REQUEST)
+        );
+    }
+
+    public <T> T findById(String roomId, Class<T> tClass) {
+        return roomRepository.findByIdAndDeletedFalse(roomId, tClass).orElseThrow(
                 () -> new HttpException("Không tìm thấy phòng", HttpStatus.BAD_REQUEST)
         );
     }

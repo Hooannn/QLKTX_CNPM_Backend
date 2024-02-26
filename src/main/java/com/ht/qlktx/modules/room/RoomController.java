@@ -6,6 +6,7 @@ import com.ht.qlktx.entities.Room;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.room.dtos.CreateRoomDto;
 import com.ht.qlktx.modules.room.dtos.UpdateRoomDto;
+import com.ht.qlktx.projections.RoomDetailView;
 import com.ht.qlktx.projections.RoomWithBookingCountView;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,12 +45,12 @@ public class RoomController {
 
     @PutMapping("/{roomId}")
     @RequiredRole({Role.STAFF})
-    public ResponseEntity<Response<Room>> update(@PathVariable String roomId, @Valid @RequestBody UpdateRoomDto updateRoomDto) {
-        var room = roomService.update(roomId, updateRoomDto);
+    public ResponseEntity<Response<?>> update(@PathVariable String roomId, @Valid @RequestBody UpdateRoomDto updateRoomDto) {
+        roomService.update(roomId, updateRoomDto);
         return ResponseEntity.ok().body(new Response<>(
                 HttpStatus.OK.value(),
                 "Phòng đã được cập nhật thành công",
-                room
+                null
         ));
     }
 
@@ -66,8 +67,8 @@ public class RoomController {
 
     @GetMapping("/{roomId}")
     @RequiredRole({Role.STAFF})
-    public ResponseEntity<Response<Room>> findById(@PathVariable String roomId) {
-        var room = roomService.findById(roomId);
+    public ResponseEntity<Response<RoomDetailView>> findById(@PathVariable String roomId) {
+        var room = roomService.findById(roomId, RoomDetailView.class);
         return ResponseEntity.ok().body(new Response<>(
                 HttpStatus.OK.value(),
                 "Phòng",

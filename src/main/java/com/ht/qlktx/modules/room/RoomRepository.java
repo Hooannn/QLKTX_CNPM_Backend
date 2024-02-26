@@ -16,7 +16,7 @@ public interface RoomRepository extends JpaRepository<Room, String> {
     @Query("""
         SELECT r.id as id, r.region as region, r.type as type, r.status as status, COUNT(b.id) as bookingCount FROM Room r
         LEFT JOIN r.type
-        LEFT JOIN r.bookings b on b.room.id = r.id and b.checkedOutAt is null
+        LEFT JOIN r.bookings b on b.room.id = r.id and b.checkedOutAt is null and b.deleted = false
         WHERE r.deleted = false
         GROUP BY r, r.type, r.region
     """)
@@ -24,14 +24,10 @@ public interface RoomRepository extends JpaRepository<Room, String> {
 
     Optional<Room> findByIdAndDeletedFalse(String roomId);
 
-    @Query("""
-        SELECT r FROM Room r
-        LEFT JOIN FETCH r.bookings b
-        WHERE r.id = :roomId and r.deleted = false and b.checkedOutAt is null
-    """)
-    Optional<Room> findByIdWithBooking(String roomId);
+    <T> Optional<T> findByIdAndDeletedFalse(String roomId, Class<T> tClass);
 
     boolean existsByTypeIdAndDeletedFalse(Long roomTypeId);
 
     boolean existsByRegionIdAndDeletedIsFalse(String id);
+
 }
