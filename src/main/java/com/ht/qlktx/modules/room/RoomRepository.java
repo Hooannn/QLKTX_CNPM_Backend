@@ -1,6 +1,7 @@
 package com.ht.qlktx.modules.room;
 
 import com.ht.qlktx.entities.Room;
+import com.ht.qlktx.enums.RoomStatus;
 import com.ht.qlktx.projections.RoomWithBookingCountView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +31,7 @@ public interface RoomRepository extends JpaRepository<Room, String> {
 
     boolean existsByRegionIdAndDeletedIsFalse(String id);
 
+    Long countByDeletedIsFalse();
+
+    Long countByDeletedIsFalseAndStatusIs(RoomStatus roomStatus);
 }

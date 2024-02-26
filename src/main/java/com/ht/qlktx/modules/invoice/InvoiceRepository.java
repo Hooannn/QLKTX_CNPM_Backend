@@ -18,4 +18,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     List<Invoice> findAllByBookingStudentIdAndDeletedIsFalse(String studentId);
 
     List<Invoice> findAllByBookingIdAndDeletedIsFalse(Long bookingId);
+
+    Long countByDeletedIsFalse();
+
+    Long countByDeletedIsFalseAndPaidAtIsNull();
 }
