@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class InvoiceController {
     private final InvoiceService invoiceService;
     @GetMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<Invoice>>> findAll() {
         var invoices = invoiceService.findAll();
         return ResponseEntity.ok().body(new Response<>(
@@ -30,7 +30,7 @@ public class InvoiceController {
     }
 
     @PostMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Invoice>> create(@Valid @RequestBody CreateInvoiceDto createInvoiceDto,
                                                     @RequestAttribute("sub") String sub) {
         var invoice = invoiceService.create(createInvoiceDto, sub);
@@ -42,7 +42,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/unpaid")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<Invoice>>> findAllUnpaid() {
         var invoices = invoiceService.findAllUnpaid();
         return ResponseEntity.ok().body(new Response<>(
@@ -53,7 +53,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/paid")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<Invoice>>> findAllPaid() {
         var invoices = invoiceService.findAllPaid();
         return ResponseEntity.ok().body(new Response<>(
@@ -64,7 +64,7 @@ public class InvoiceController {
     }
 
     @PutMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Invoice>> update(@PathVariable Long id, @RequestBody UpdateInvoiceDto updateInvoiceDto) {
         var invoice = invoiceService.update(id, updateInvoiceDto);
         return ResponseEntity.ok().body(new Response<>(
@@ -75,7 +75,7 @@ public class InvoiceController {
     }
 
     @DeleteMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<String>> delete(@PathVariable Long id) {
         invoiceService.delete(id);
         return ResponseEntity.ok().body(new Response<>(
@@ -86,7 +86,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/student/{studentId}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<Invoice>>> findAllByStudentId(@PathVariable String studentId) {
         var invoices = invoiceService.findAllByStudentId(studentId);
         return ResponseEntity.ok().body(new Response<>(
@@ -97,7 +97,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/booking/{bookingId}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<Invoice>>> findByBookingId(@PathVariable Long bookingId) {
         var invoices = invoiceService.findAllByBookingId(bookingId);
         return ResponseEntity.ok().body(new Response<>(

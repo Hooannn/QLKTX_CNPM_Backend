@@ -1,6 +1,6 @@
 package com.ht.qlktx.filter;
 
-import com.ht.qlktx.entities.User;
+import com.ht.qlktx.entities.Account;
 import com.ht.qlktx.utils.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -55,10 +55,10 @@ public class JwtService {
         return extractClaim(jwt, claims -> claims.get("role")).toString();
     }
 
-    public String generateAccessToken(User user) {
+    public String generateAccessToken(Account account) {
         HashMap<String, Object> claims = new HashMap<>();
-        claims.put("role", user.getRole().toString());
-        return buildToken(claims, user, jwtExpiration, accessSecretKey);
+        claims.put("role", account.getRole().toString());
+        return buildToken(claims, account.getUsername(), jwtExpiration, accessSecretKey);
     }
 
     public String generateResetPasswordToken(String email) {
@@ -96,22 +96,6 @@ public class JwtService {
 
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
-    }
-
-    private String buildToken(
-            Map<String, Object> extraClaims,
-            User user,
-            long expiration,
-            String secret
-    ) {
-        return Jwts
-                .builder()
-                .setClaims(extraClaims)
-                .setSubject(user.getId())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSigningKey(secret), SignatureAlgorithm.HS256)
-                .compact();
     }
 
     private String buildToken(

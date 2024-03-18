@@ -20,7 +20,7 @@ public class RoomTypeController {
     private final RoomTypeService roomTypeService;
 
     @PostMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<RoomType>> create(@Valid @RequestBody CreateRoomTypeDto createRoomTypeDto) {
         var roomType = roomTypeService.create(createRoomTypeDto);
         return ResponseEntity.created(null).body(new Response<>(
@@ -51,7 +51,7 @@ public class RoomTypeController {
     }
 
     @DeleteMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<?>> delete(@PathVariable Long id) {
         roomTypeService.delete(id);
         return ResponseEntity.ok().body(new Response<>(
@@ -62,7 +62,7 @@ public class RoomTypeController {
     }
 
     @PutMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<RoomType>> update(@PathVariable Long id, @Valid @RequestBody UpdateRoomTypeDto updateRoomTypeDto) {
         var roomType = roomTypeService.update(id, updateRoomTypeDto);
         return ResponseEntity.ok().body(new Response<>(

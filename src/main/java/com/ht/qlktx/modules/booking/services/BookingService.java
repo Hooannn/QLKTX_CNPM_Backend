@@ -4,11 +4,12 @@ import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Booking;
 import com.ht.qlktx.modules.discount.DiscountService;
 import com.ht.qlktx.modules.invoice.InvoiceService;
+import com.ht.qlktx.modules.staff.StaffService;
+import com.ht.qlktx.modules.student.StudentService;
 import com.ht.qlktx.projections.BookingView;
 import com.ht.qlktx.modules.booking.dtos.CreateBookingDto;
 import com.ht.qlktx.modules.booking.repositories.BookingRepository;
 import com.ht.qlktx.modules.room.RoomService;
-import com.ht.qlktx.modules.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,8 @@ public class BookingService {
     private final BookingTimeService bookingTimeService;
     private final RoomService roomService;
     private final InvoiceService invoiceService;
-    private final UserService userService;
+    private final StaffService staffService;
+    private final StudentService studentService;
 
     public List<BookingView> findAll() {
         return bookingRepository.findAllByDeletedIsFalse();
@@ -43,13 +45,10 @@ public class BookingService {
     @Transactional
     public Booking create(CreateBookingDto createBookingDto, String checkinStaffId) {
         var bookingTime = bookingTimeService.findByAvailableId(createBookingDto.getBookingTimeId());
-        var checkinStaff = userService.findById(checkinStaffId);
+        var checkinStaff = staffService.findById(checkinStaffId);
         var room = roomService.findById(createBookingDto.getRoomId());
-        var student = userService.findById(createBookingDto.getStudentId());
+        var student = studentService.findById(createBookingDto.getStudentId());
         var bookingsInRoom = bookingRepository.countByRoomIdAndDeletedIsFalseAndCheckedOutAtIsNull(room.getId());
-
-        if (!student.isStudent())
-            throw new HttpException("Người dùng không phải là sinh viên", HttpStatus.BAD_REQUEST);
 
         if (bookingsInRoom >= room.getType().getCapacity())
             throw new HttpException("Phòng đã đầy", HttpStatus.BAD_REQUEST);
@@ -101,7 +100,7 @@ public class BookingService {
         if (booking.isCheckedOut())
             throw new HttpException("Phiếu thuê đã được trả", HttpStatus.BAD_REQUEST);
 
-        var checkOutStaff = userService.findById(checkOutStaffId);
+        var checkOutStaff = staffService.findById(checkOutStaffId);
         booking.setCheckedOutAt(checkedOutAt);
         booking.setCheckoutStaff(checkOutStaff);
         return bookingRepository.save(booking);

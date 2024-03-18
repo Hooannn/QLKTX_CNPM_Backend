@@ -1,4 +1,4 @@
-package com.ht.qlktx.modules.user.dtos;
+package com.ht.qlktx.modules.student.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ht.qlktx.enums.Sex;
@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UpdateUserDto {
+public class UpdateStudentDto {
     private String password;
 
     @JsonProperty("first_name")

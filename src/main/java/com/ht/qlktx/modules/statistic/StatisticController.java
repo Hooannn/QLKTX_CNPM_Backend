@@ -20,7 +20,7 @@ public class StatisticController {
     private final StatisticService statisticService;
 
     @GetMapping("/overview")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<StatisticOverview>> getOverview() {
         var overview = statisticService.getOverview();
         return ResponseEntity.ok(

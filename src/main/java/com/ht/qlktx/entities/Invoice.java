@@ -33,9 +33,9 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "MAQL")
-    private User staff;
+    private Staff staff;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "MAPHIEUTHUE")
     private Booking booking;
 

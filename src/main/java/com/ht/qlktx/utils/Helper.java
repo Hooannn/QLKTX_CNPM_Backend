@@ -2,9 +2,7 @@ package com.ht.qlktx.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ht.qlktx.entities.Region;
-import com.ht.qlktx.entities.RoomType;
-import com.ht.qlktx.entities.User;
+import com.ht.qlktx.entities.*;
 
 import java.io.File;
 import java.security.SecureRandom;
@@ -38,19 +36,28 @@ public class Helper {
         }
     }
 
-    public static List<User> createSeedStudents() {
+    public static List<Account> createSeedAccounts() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/students.json"), new TypeReference<List<User>>() {});
+            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/accounts.json"), new TypeReference<List<Account>>() {});
         } catch (Exception e) {
             return null;
         }
     }
 
-    public static List<User> createSeedStaffs() {
+    public static List<Student> createSeedStudents() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/staffs.json"), new TypeReference<List<User>>() {});
+            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/students.json"), new TypeReference<List<Student>>() {});
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static List<Staff> createSeedStaffs() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/staffs.json"), new TypeReference<List<Staff>>() {});
         } catch (Exception e) {
             return null;
         }

@@ -23,7 +23,7 @@ public class BookingTimeController {
     private final BookingTimeService bookingTimeService;
 
     @PostMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<BookingTime>> create(@Valid @RequestBody CreateBookingTimeDto createBookingTimeDto,
                                                         @RequestAttribute(name = "sub") String sub) {
         var bookingTime = bookingTimeService.create(createBookingTimeDto, sub);
@@ -37,7 +37,7 @@ public class BookingTimeController {
     }
 
     @GetMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<List<BookingTime>>> findAll() {
         var bookingTimes = bookingTimeService.findAll();
         return ResponseEntity.ok(
@@ -62,7 +62,7 @@ public class BookingTimeController {
     }
 
     @PutMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<BookingTime>> update(@Valid @RequestBody UpdateBookingTimeDto updateBookingTimeDto,
                                                         @PathVariable Long id) {
         var bookingTime = bookingTimeService.update(id, updateBookingTimeDto);
@@ -76,7 +76,7 @@ public class BookingTimeController {
     }
 
     @DeleteMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<?>> delete(@PathVariable Long id) {
         bookingTimeService.delete(id);
         return ResponseEntity.ok(

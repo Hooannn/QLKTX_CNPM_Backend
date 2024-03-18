@@ -40,7 +40,7 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "MAQL_NHAN", nullable = false)
     @JsonProperty("checkin_staff")
-    private User checkinStaff;
+    private Staff checkinStaff;
 
     @ManyToOne
     @JsonBackReference
@@ -49,12 +49,12 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "MASV", nullable = false)
-    private User student;
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "MAQL_TRA", nullable = true)
     @JsonProperty("checkout_staff")
-    private User checkoutStaff;
+    private Staff checkoutStaff;
 
     @Column(name = "NGAYTRA", nullable = true)
     @JsonProperty("checked_out_at")

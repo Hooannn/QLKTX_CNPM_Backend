@@ -1,16 +1,15 @@
 package com.ht.qlktx.modules.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ht.qlktx.entities.User;
 import lombok.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
+public class AuthenticationResponse<T> {
     private Credentials credentials;
-    private User user;
+    private T user;
 }
 
 @Builder

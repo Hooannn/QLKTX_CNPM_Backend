@@ -22,7 +22,7 @@ public class RoomController {
     private final RoomService roomService;
 
     @PostMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Room>> create(@Valid @RequestBody CreateRoomDto createRoomDto) {
         var room = roomService.create(createRoomDto);
         return ResponseEntity.created(null).body(new Response<>(
@@ -33,7 +33,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/{roomId}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<String>> delete(@PathVariable String roomId) {
         roomService.delete(roomId);
         return ResponseEntity.ok().body(new Response<>(
@@ -44,7 +44,7 @@ public class RoomController {
     }
 
     @PutMapping("/{roomId}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<?>> update(@PathVariable String roomId, @Valid @RequestBody UpdateRoomDto updateRoomDto) {
         roomService.update(roomId, updateRoomDto);
         return ResponseEntity.ok().body(new Response<>(
@@ -55,7 +55,7 @@ public class RoomController {
     }
 
     @GetMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<RoomWithBookingCountView>>> findAll() {
         var rooms = roomService.findAll();
         return ResponseEntity.ok().body(new Response<>(
@@ -66,7 +66,7 @@ public class RoomController {
     }
 
     @GetMapping("/{roomId}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<RoomDetailView>> findById(@PathVariable String roomId) {
         var room = roomService.findById(roomId, RoomDetailView.class);
         return ResponseEntity.ok().body(new Response<>(
@@ -77,7 +77,7 @@ public class RoomController {
     }
 
     @GetMapping("/lookup")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<Room>>> lookUpById(@RequestParam String keyword) {
         var rooms = roomService.lookUpById(keyword);
         return ResponseEntity.ok().body(new Response<>(

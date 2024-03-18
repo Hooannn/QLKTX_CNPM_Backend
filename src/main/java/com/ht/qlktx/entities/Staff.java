@@ -1,6 +1,5 @@
 package com.ht.qlktx.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.enums.Sex;
@@ -16,12 +15,17 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "NGUOIDUNG")
+@Table(name = "NhanVien")
 @Check(constraints = "NGAYSINH <= GETDATE()")
-public class User {
+public class Staff {
     @Id
-    @Column(name = "MAND", length = 50)
+    @Column(name = "MANV", length = 50)
     private String id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn(name = "MANV", referencedColumnName = "MaTaiKhoan")
+    private Account account;
 
     @JsonProperty("first_name")
     @Column(nullable = false, name = "TEN", columnDefinition = "NVARCHAR(50)")
@@ -49,22 +53,10 @@ public class User {
     @Column(nullable = false, unique = true, name = "EMAIL")
     private String email;
 
-    @Column(nullable = false, name = "MATKHAU")
-    @JsonIgnore
-    private String password;
-
-    @Column(nullable = false, name = "ROLE", length = 20)
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
-    public boolean isStaff() {
-        return this.role.equals(Role.STAFF);
-    }
-
-    public boolean isStudent() {
-        return this.role.equals(Role.STUDENT);
+    public boolean isAdmin() {
+        return this.account.getRole().equals(Role.ADMIN);
     }
 }

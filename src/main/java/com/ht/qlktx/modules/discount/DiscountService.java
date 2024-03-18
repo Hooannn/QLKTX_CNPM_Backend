@@ -5,7 +5,7 @@ import com.ht.qlktx.entities.Discount;
 import com.ht.qlktx.modules.booking.repositories.BookingRepository;
 import com.ht.qlktx.modules.discount.dtos.CreateDiscountDto;
 import com.ht.qlktx.modules.discount.dtos.UpdateDiscountDto;
-import com.ht.qlktx.modules.user.UserService;
+import com.ht.qlktx.modules.staff.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class DiscountService {
     private final DiscountRepository discountRepository;
     private final BookingRepository bookingRepository;
-    private final UserService userService;
+    private final StaffService staffService;
 
     public Discount create(CreateDiscountDto createDiscountDto, String sub) {
         if (discountRepository.existsById(createDiscountDto.getId()) || discountRepository.existsByDescription(createDiscountDto.getDescription()))
@@ -32,7 +32,7 @@ public class DiscountService {
                 .id(createDiscountDto.getId())
                 .description(createDiscountDto.getDescription())
                 .percentage(createDiscountDto.getPercentage())
-                .staff(userService.findById(sub))
+                .staff(staffService.findById(sub))
                 .startDate(createDiscountDto.getStartDate())
                 .endDate(createDiscountDto.getEndDate())
                 .build();

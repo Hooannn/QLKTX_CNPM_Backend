@@ -15,14 +15,14 @@ public interface BookingView {
     BookingTime getBookingTime();
 
     @JsonProperty("checkin_staff")
-    User getCheckinStaff();
+    Staff getCheckinStaff();
 
     RoomView getRoom();
 
-    User getStudent();
+    Student getStudent();
 
     @JsonProperty("checkout_staff")
-    User getCheckoutStaff();
+    Staff getCheckoutStaff();
 
     @JsonProperty("checked_out_at")
     Date getCheckedOutAt();

@@ -1,4 +1,4 @@
-package com.ht.qlktx.modules.user.dtos;
+package com.ht.qlktx.modules.student.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ht.qlktx.enums.Role;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class CreateUserDto {
+public class CreateStudentDto {
     @NotEmpty(message = "Mật khẩu không được để trống")
     @Length(min = 6, message = "Mật khẩu phải có ít nhất 6 ký tự")
     private String password;
@@ -43,7 +43,4 @@ public class CreateUserDto {
     @NotEmpty(message = "Email không được để trống")
     @Email(message = "Email không hợp lệ")
     private String email;
-
-    @NotNull(message = "Quyền không được để trống")
-    private Role role;
 }

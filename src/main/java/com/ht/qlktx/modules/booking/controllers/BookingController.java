@@ -26,7 +26,7 @@ public class BookingController {
     private final BookingService bookingService;
 
     @GetMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<List<BookingView>>> findAll() {
         var bookings = bookingService.findAll();
         return ResponseEntity.ok(
@@ -39,7 +39,7 @@ public class BookingController {
     }
 
     @GetMapping("current")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<List<BookingView>>> findAllCurrent() {
         var bookings = bookingService.findAllCurrent();
         return ResponseEntity.ok(
@@ -52,7 +52,7 @@ public class BookingController {
     }
 
     @GetMapping("{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<BookingView>> findById(@PathVariable Long id) {
         var booking = bookingService.findById(id, BookingView.class);
         return ResponseEntity.ok(
@@ -65,7 +65,7 @@ public class BookingController {
     }
 
     @GetMapping("/student/{studentId}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<List<BookingView>>> findAllByStudentId(@PathVariable String studentId) {
         var bookings = bookingService.findAllByStudentId(studentId);
         return ResponseEntity.ok(
@@ -78,7 +78,7 @@ public class BookingController {
     }
 
     @GetMapping("/room/{roomId}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<List<BookingView>>> findAllByRoomId(@PathVariable String roomId) {
         var bookings = bookingService.findAllByRoomId(roomId);
         return ResponseEntity.ok(
@@ -91,7 +91,7 @@ public class BookingController {
     }
 
     @GetMapping("/room/{roomId}/checked-out")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<List<BookingView>>> findAllCheckedOutByRoomId(@PathVariable String roomId) {
         var bookings = bookingService.findAllCheckedOutByRoomId(roomId);
         return ResponseEntity.ok(
@@ -104,7 +104,7 @@ public class BookingController {
     }
 
     @GetMapping("checked-out")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<List<BookingView>>> findAllCheckedOut() {
         var bookings = bookingService.findAllCheckedOut();
         return ResponseEntity.ok(
@@ -117,7 +117,7 @@ public class BookingController {
     }
 
     @PostMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Booking>> create(@Valid @RequestBody CreateBookingDto createBookingDto,
                                                     @RequestAttribute(name = "sub") String sub) {
         var booking = bookingService.create(createBookingDto, sub);
@@ -131,7 +131,7 @@ public class BookingController {
     }
 
     @GetMapping("/price")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<BigDecimal>> calculatePrice(@RequestParam(name = "booking_time_id") Long bookingTimeId,
                                                                @RequestParam(name = "room_id") String roomId,
                                                                @RequestParam(name = "discount_id", required = false) String discountId) {
@@ -146,7 +146,7 @@ public class BookingController {
     }
 
     @PostMapping("/check-out/{bookingId}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Booking>> checkOut(@Valid @RequestBody CheckoutDto checkoutDto,
                                                       @PathVariable Long bookingId,
                                                       @RequestAttribute(name = "sub") String sub) {

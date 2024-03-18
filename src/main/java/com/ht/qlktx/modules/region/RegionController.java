@@ -23,7 +23,7 @@ public class RegionController {
     private final RegionService regionService;
 
     @PostMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Region>> create(@Valid @RequestBody CreateRegionDto createRegionDto) {
         var region = regionService.create(createRegionDto);
         return ResponseEntity.created(null).body(
@@ -36,7 +36,7 @@ public class RegionController {
     }
 
     @PutMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Region>> update(@PathVariable String id, @Valid @RequestBody UpdateRegionDto updateRegionDto) {
         var region = regionService.update(id, updateRegionDto);
         return ResponseEntity.ok(
@@ -73,7 +73,7 @@ public class RegionController {
     }
 
     @DeleteMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<?>> delete(@PathVariable String id) {
         regionService.delete(id);
         return ResponseEntity.ok(

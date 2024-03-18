@@ -30,7 +30,7 @@ public class Discount {
 
     @ManyToOne
     @JoinColumn(name = "MAQL", nullable = false)
-    private User staff;
+    private Staff staff;
 
     @Column(nullable = false, name = "NGAYBATDAU")
     @JsonProperty("start_date")

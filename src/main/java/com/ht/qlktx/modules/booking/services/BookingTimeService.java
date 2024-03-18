@@ -2,11 +2,11 @@ package com.ht.qlktx.modules.booking.services;
 
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.BookingTime;
-import com.ht.qlktx.modules.booking.repositories.BookingRepository;
-import com.ht.qlktx.modules.booking.repositories.BookingTimeRepository;
 import com.ht.qlktx.modules.booking.dtos.CreateBookingTimeDto;
 import com.ht.qlktx.modules.booking.dtos.UpdateBookingTimeDto;
-import com.ht.qlktx.modules.user.UserService;
+import com.ht.qlktx.modules.booking.repositories.BookingRepository;
+import com.ht.qlktx.modules.booking.repositories.BookingTimeRepository;
+import com.ht.qlktx.modules.staff.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BookingTimeService {
-    private final UserService userService;
+    private final StaffService staffService;
     private final BookingTimeRepository bookingTimeRepository;
     private final BookingRepository bookingRepository;
 
@@ -31,7 +31,7 @@ public class BookingTimeService {
                 .endDate(createBookingTimeDto.getEndDate())
                 .description(createBookingTimeDto.getDescription())
                 .open(createBookingTimeDto.isOpen())
-                .staff(userService.findById(staffId))
+                .staff(staffService.findById(staffId))
                 .build();
 
         return bookingTimeRepository.save(bookingTime);

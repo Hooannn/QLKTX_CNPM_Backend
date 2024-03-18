@@ -20,7 +20,7 @@ public class DiscountController {
     private final DiscountService discountService;
 
     @PostMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Discount>> create(@Valid @RequestBody CreateDiscountDto createDiscountDto,
                                                      @RequestAttribute("sub") String sub) {
         var discount = discountService.create(createDiscountDto, sub);
@@ -32,7 +32,7 @@ public class DiscountController {
     }
 
     @PutMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Discount>> update(@PathVariable String id,
                                                      @Valid @RequestBody UpdateDiscountDto updateDiscountDto) {
         var discount = discountService.update(id, updateDiscountDto);
@@ -44,7 +44,7 @@ public class DiscountController {
     }
 
     @DeleteMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<String>> delete(@PathVariable String id) {
         discountService.delete(id);
         return ResponseEntity.ok().body(new Response<>(
@@ -55,7 +55,7 @@ public class DiscountController {
     }
 
     @GetMapping("/{id}")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Discount>> findById(@PathVariable String id) {
         var discount = discountService.findById(id);
         return ResponseEntity.ok().body(new Response<>(
@@ -66,7 +66,7 @@ public class DiscountController {
     }
 
     @GetMapping
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<Discount>>> findAll() {
         var discounts = discountService.findAll();
         return ResponseEntity.ok().body(new Response<>(
@@ -77,7 +77,7 @@ public class DiscountController {
     }
 
     @GetMapping("/available")
-    @RequiredRole({Role.STAFF})
+    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<Discount>>> findAllAvailable() {
         var discounts = discountService.findAllAvailable();
         return ResponseEntity.ok().body(new Response<>(

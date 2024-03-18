@@ -28,7 +28,7 @@ public class BookingTime {
 
     @ManyToOne
     @JoinColumn(name = "MAQL", nullable = false)
-    private User staff;
+    private Staff staff;
 
     @Column(name = "NOIDUNG", columnDefinition = "NVARCHAR(255)", nullable = false)
     private String description;
