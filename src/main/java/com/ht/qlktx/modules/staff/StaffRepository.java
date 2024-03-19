@@ -12,8 +12,6 @@ public interface StaffRepository extends JpaRepository<Staff, String> {
 
     Optional<Staff> findByIdAndDeletedIsFalse(String staffId);
 
-    boolean existsByEmail(String email);
-
     @Query("SELECT u FROM Staff u WHERE u.deleted = false and (u.id LIKE %:keyword% OR concat(u.firstName, ' ', u.lastName) LIKE %:keyword%)")
     List<Staff> lookUpByIdOrName(String keyword);
 }

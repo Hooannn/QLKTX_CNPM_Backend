@@ -18,33 +18,33 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "THOIGIANTHUE")
-@Check(constraints = "NGAYBATDAU < NGAYKETTHUC")
+@Table(name = "ThoiGianThue")
+@Check(constraints = "NgayBatDau < NgayKetThuc")
 public class BookingTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MATHOIGIANTHUE")
+    @Column(name = "MaThoiGianThue")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "MAQL", nullable = false)
+    @JoinColumn(name = "MaQuanLy", nullable = false)
     private Staff staff;
 
-    @Column(name = "NOIDUNG", columnDefinition = "NVARCHAR(255)", nullable = false)
+    @Column(name = "NoiDung", columnDefinition = "NVARCHAR(255)", nullable = false)
     private String description;
 
-    @Column(name = "NGAYBATDAU", nullable = false)
+    @Column(name = "NgayBatDau", nullable = false)
     @JsonProperty("start_date")
     private Date startDate;
 
-    @Column(name = "NGAYKETTHUC", nullable = false)
+    @Column(name = "NgayKetThuc", nullable = false)
     @JsonProperty("end_date")
     private Date endDate;
 
-    @Column(nullable = false, name = "TRANGTHAIMO")
+    @Column(nullable = false, name = "TrangThaiMo")
     private boolean open;
 
-    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @JsonIgnore

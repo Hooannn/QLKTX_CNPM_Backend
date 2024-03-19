@@ -13,23 +13,23 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "LOAIPHONG")
-@Check(constraints = "SONGUOI >= 0 AND DONGIA >= 0")
+@Table(name = "LoaiPhong")
+@Check(constraints = "SoNguoi >= 0 AND DonGia >= 0")
 public class RoomType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MALOAIPHONG")
+    @Column(name = "MaLoaiPhong")
     private Long id;
 
-    @Column(name = "TENLOAIPHONG", columnDefinition = "NVARCHAR(100) NOT NULL UNIQUE")
+    @Column(name = "TenLoaiPhong", columnDefinition = "NVARCHAR(100) NOT NULL UNIQUE")
     private String name;
 
-    @Column(nullable = false, name = "SONGUOI")
+    @Column(nullable = false, name = "SoNguoi")
     private int capacity;
 
-    @Column(nullable = false, precision = 10, scale = 2, name = "DONGIA")
+    @Column(nullable = false, precision = 10, scale = 2, name = "DonGia")
     private BigDecimal price;
 
-    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 }

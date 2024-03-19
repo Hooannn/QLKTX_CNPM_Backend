@@ -15,19 +15,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "DAYPHONG")
+@Table(name = "DayPhong")
 public class Region {
     @Id
-    @Column(name = "MADAY", length = 20)
+    @Column(name = "MaDay", length = 20)
     private String id;
 
-    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
-    @Column(name = "TENDAY", columnDefinition = "NVARCHAR(100) NOT NULL UNIQUE")
+    @Column(name = "TenDay", columnDefinition = "NVARCHAR(100) NOT NULL UNIQUE")
     private String name;
 
-    @Column(nullable = false, name = "GIOITINH", length = 10)
+    @Column(nullable = false, name = "GioiTinh", length = 10)
     @Enumerated(EnumType.STRING)
     private Sex sex;
 }

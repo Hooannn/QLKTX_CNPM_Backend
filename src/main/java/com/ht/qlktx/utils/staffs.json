@@ -6,8 +6,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1989-07-31",
     "address": "Staff Address 1",
-    "phone": "0955554321",
-    "email": "ql001@staff.ptithcm.edu.vnn"
+    "phone": "0955554321"
   },
   {
     "id": "QL0002",
@@ -16,8 +15,7 @@
     "sex": "MALE",
     "date_of_birth": "1988-08-01",
     "address": "Staff Address 2",
-    "phone": "0977654321",
-    "email": "ql002@staff.ptithcm.edu.vnn"
+    "phone": "0977654321"
   },
   {
     "id": "QL0003",
@@ -26,8 +24,7 @@
     "sex": "FEMALE",
     "date_of_birth": "1987-09-02",
     "address": "Staff Address 3",
-    "phone": "0399956321",
-    "email": "ql003@staff.ptithcm.edu.vnn"
+    "phone": "0399956321"
   },
   {
     "id": "QL0004",
@@ -36,8 +33,7 @@
     "sex": "MALE",
     "date_of_birth": "1986-10-03",
     "address": "Staff Address 4",
-    "phone": "0911114322",
-    "email": "ql004@staff.ptithcm.edu.vnn"
+    "phone": "0911114322"
   },
   {
     "id": "QL0005",
@@ -46,7 +42,6 @@
     "sex": "MALE",
     "date_of_birth": "1985-11-04",
     "address": "Staff Address 5",
-    "phone": "0333333321",
-    "email": "ql005@staff.ptithcm.edu.vnn"
+    "phone": "0333333321"
   }
 ]

@@ -4,6 +4,7 @@ import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Account;
 import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.enums.Role;
+import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.modules.staff.dtos.CreateStaffDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateStaffDto;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StaffService {
     private final StaffRepository staffRepository;
+    private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
     public List<Staff> findAll() {
@@ -33,7 +35,7 @@ public class StaffService {
 
     @Transactional
     public Staff create(CreateStaffDto createStaffDto) {
-        if (staffRepository.existsById(createStaffDto.getId()) || staffRepository.existsByEmail(createStaffDto.getEmail())) {
+        if (staffRepository.existsById(createStaffDto.getId()) || accountRepository.existsByEmail(createStaffDto.getEmail())) {
             throw new HttpException("Mã người dùng hoặc email đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
@@ -41,6 +43,7 @@ public class StaffService {
                 .username(createStaffDto.getId())
                 .password(passwordEncoder.encode(createStaffDto.getPassword()))
                 .role(Role.STAFF)
+                .email(createStaffDto.getEmail())
                 .build();
 
         var staff = Staff.builder()
@@ -52,7 +55,6 @@ public class StaffService {
                 .dateOfBirth(createStaffDto.getDateOfBirth())
                 .address(createStaffDto.getAddress())
                 .phone(createStaffDto.getPhone())
-                .email(createStaffDto.getEmail())
                 .build();
 
         return staffRepository.save(staff);
@@ -65,18 +67,19 @@ public class StaffService {
             staff.getAccount().setPassword(passwordEncoder.encode(password));
         });
 
+        Optional.ofNullable(updateStaffDto.getEmail()).ifPresent(email -> {
+            if (!email.equals(staff.getAccount().getEmail()) && accountRepository.existsByEmail(email)) {
+                throw new HttpException("Email đã tồn tại", HttpStatus.BAD_REQUEST);
+            }
+            staff.getAccount().setEmail(email);
+        });
+
         Optional.ofNullable(updateStaffDto.getFirstName()).ifPresent(staff::setFirstName);
         Optional.ofNullable(updateStaffDto.getLastName()).ifPresent(staff::setLastName);
         Optional.ofNullable(updateStaffDto.getSex()).ifPresent(staff::setSex);
         Optional.ofNullable(updateStaffDto.getDateOfBirth()).ifPresent(staff::setDateOfBirth);
         Optional.ofNullable(updateStaffDto.getAddress()).ifPresent(staff::setAddress);
         Optional.ofNullable(updateStaffDto.getPhone()).ifPresent(staff::setPhone);
-        Optional.ofNullable(updateStaffDto.getEmail()).ifPresent(email -> {
-            if (!email.equals(staff.getEmail()) && staffRepository.existsByEmail(email)) {
-                throw new HttpException("Email đã tồn tại", HttpStatus.BAD_REQUEST);
-            }
-            staff.setEmail(email);
-        });
 
         return staffRepository.save(staff);
     }

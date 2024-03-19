@@ -34,37 +34,33 @@ public class AuthService {
     public AuthenticationResponse<?> authenticate(AuthenticateDto authenticateDto) {
         String errorMessage = "Tài khoản hoặc mật khẩu không hợp lệ";
 
-        Account account = accountRepository.findByUsername(authenticateDto.getUsername())
+        Account account = accountRepository.findByUsernameOrEmail(authenticateDto.getUsername(), authenticateDto.getUsername())
                 .orElseThrow(() -> new HttpException(errorMessage, HttpStatus.UNAUTHORIZED));
 
         if (passwordEncoder.matches(authenticateDto.getPassword(), account.getPassword())) {
             String accessToken = jwtService.generateAccessToken(account);
 
-            Role role = account.getRole();
+            Object user;
 
-            if (role == Role.STUDENT) {
-                Student user = studentRepository.findByIdAndDeletedIsFalse(account.getUsername())
+            if (account.getRole() == Role.STUDENT) {
+                user = studentRepository.findByIdAndDeletedIsFalse(account.getUsername())
                         .orElseThrow(() -> new HttpException(errorMessage, HttpStatus.UNAUTHORIZED));
-                return new AuthenticationResponse<>(
-                        new Credentials(accessToken),
-                        user
-                );
             } else {
-                Staff user = staffRepository.findByIdAndDeletedIsFalse(account.getUsername())
+                user = staffRepository.findByIdAndDeletedIsFalse(account.getUsername())
                         .orElseThrow(() -> new HttpException(errorMessage, HttpStatus.UNAUTHORIZED));
-                return new AuthenticationResponse<>(
-                        new Credentials(accessToken),
-                        user
-                );
             }
+
+            return new AuthenticationResponse<>(
+                    new Credentials(accessToken),
+                    user
+            );
         }
 
         throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
     public void forgotPassword(String email) {
-        /*
-        if (!userRepository.existsByEmailAndDeletedIsFalse(email))
+        if (!accountRepository.existsByEmail(email))
             throw new HttpException("Tài khoản không tồn tại", HttpStatus.NOT_FOUND);
 
         var token = jwtService.generateResetPasswordToken(email);
@@ -75,11 +71,9 @@ public class AuthService {
                 logger.error("Có lỗi xảy ra khi gửi mail: {}", e.getMessage());
             }
         });
-        */
     }
 
     public void resetPassword(String token, String newPassword) {
-        /*
         var result = jwtService.verifyResetPasswordToken(token);
 
         if (!result.isTokenValid())
@@ -87,12 +81,11 @@ public class AuthService {
 
         String email = result.subject();
 
-        User user = userRepository.findByEmailAndDeletedIsFalse(email)
+        Account account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new HttpException("Tài khoản không tồn tại", HttpStatus.NOT_FOUND));
 
-        user.setPassword(passwordEncoder.encode(newPassword));
+        account.setPassword(passwordEncoder.encode(newPassword));
         redisService.deleteValue("reset_password_token:" + email);
-        userRepository.save(user);
-        */
+        accountRepository.save(account);
     }
 }

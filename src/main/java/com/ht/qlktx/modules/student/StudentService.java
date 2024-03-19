@@ -5,6 +5,7 @@ import com.ht.qlktx.entities.Account;
 import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.entities.Student;
 import com.ht.qlktx.enums.Role;
+import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.modules.student.dtos.CreateStudentDto;
 import com.ht.qlktx.modules.student.dtos.UpdateStudentDto;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
     public List<Student> findAll() {
@@ -38,7 +40,7 @@ public class StudentService {
 
     @Transactional
     public Student create(CreateStudentDto createStudentDto) {
-        if (studentRepository.existsById(createStudentDto.getId()) || studentRepository.existsByEmail(createStudentDto.getEmail())) {
+        if (studentRepository.existsById(createStudentDto.getId()) || accountRepository.existsByEmail(createStudentDto.getEmail())) {
             throw new HttpException("Mã người dùng hoặc email đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
@@ -46,6 +48,7 @@ public class StudentService {
                 .username(createStudentDto.getId())
                 .password(passwordEncoder.encode(createStudentDto.getPassword()))
                 .role(Role.STUDENT)
+                .email(createStudentDto.getEmail())
                 .build();
 
         var student = Student.builder()
@@ -57,7 +60,6 @@ public class StudentService {
                 .dateOfBirth(createStudentDto.getDateOfBirth())
                 .address(createStudentDto.getAddress())
                 .phone(createStudentDto.getPhone())
-                .email(createStudentDto.getEmail())
                 .build();
 
         return studentRepository.save(student);
@@ -70,18 +72,19 @@ public class StudentService {
             student.getAccount().setPassword(passwordEncoder.encode(password));
         });
 
+        Optional.ofNullable(updateStudentDto.getEmail()).ifPresent(email -> {
+            if (!email.equals(student.getAccount().getEmail()) && accountRepository.existsByEmail(email)) {
+                throw new HttpException("Email đã tồn tại", HttpStatus.BAD_REQUEST);
+            }
+            student.getAccount().setEmail(email);
+        });
+
         Optional.ofNullable(updateStudentDto.getFirstName()).ifPresent(student::setFirstName);
         Optional.ofNullable(updateStudentDto.getLastName()).ifPresent(student::setLastName);
         Optional.ofNullable(updateStudentDto.getSex()).ifPresent(student::setSex);
         Optional.ofNullable(updateStudentDto.getDateOfBirth()).ifPresent(student::setDateOfBirth);
         Optional.ofNullable(updateStudentDto.getAddress()).ifPresent(student::setAddress);
         Optional.ofNullable(updateStudentDto.getPhone()).ifPresent(student::setPhone);
-        Optional.ofNullable(updateStudentDto.getEmail()).ifPresent(email -> {
-            if (!email.equals(student.getEmail()) && studentRepository.existsByEmail(email)) {
-                throw new HttpException("Email đã tồn tại", HttpStatus.BAD_REQUEST);
-            }
-            student.setEmail(email);
-        });
 
         return studentRepository.save(student);
     }

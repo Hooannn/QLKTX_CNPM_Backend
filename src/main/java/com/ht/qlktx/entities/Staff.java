@@ -16,44 +16,41 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "NhanVien")
-@Check(constraints = "NGAYSINH <= GETDATE()")
+@Check(constraints = "NgaySinh <= GETDATE()")
 public class Staff {
     @Id
-    @Column(name = "MANV", length = 50)
+    @Column(name = "MaNhanVien", length = 50)
     private String id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "MANV", referencedColumnName = "MaTaiKhoan")
+    @JoinColumn(name = "MaNhanVien", referencedColumnName = "MaTaiKhoan")
     private Account account;
 
     @JsonProperty("first_name")
-    @Column(nullable = false, name = "TEN", columnDefinition = "NVARCHAR(50)")
+    @Column(nullable = false, name = "Ten", columnDefinition = "NVARCHAR(50)")
     private String firstName;
 
     @JsonProperty("last_name")
-    @Column(nullable = false, name = "HO", columnDefinition = "NVARCHAR(50)")
+    @Column(nullable = false, name = "Ho", columnDefinition = "NVARCHAR(50)")
     private String lastName;
 
-    @Column(nullable = false, name = "PHAI", length = 10)
+    @Column(nullable = false, name = "Phai", length = 10)
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
     @JsonProperty("date_of_birth")
-    @Column(name = "NGAYSINH", nullable = false)
+    @Column(name = "NgaySinh", nullable = false)
     private Date dateOfBirth;
 
-    @Column(name = "DIACHI", columnDefinition = "NVARCHAR(255)", nullable = false)
+    @Column(name = "DiaChi", columnDefinition = "NVARCHAR(255)", nullable = false)
     private String address;
 
     @JsonProperty("phone")
-    @Column(name = "SDT", length = 15, unique = true)
+    @Column(name = "Sdt", length = 15, unique = true)
     private String phone;
 
-    @Column(nullable = false, unique = true, name = "EMAIL")
-    private String email;
-
-    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     public boolean isAdmin() {

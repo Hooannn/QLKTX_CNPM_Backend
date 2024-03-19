@@ -14,24 +14,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "PHONG")
+@Table(name = "Phong")
 public class Room {
     @Id
-    @Column(name = "MAPHONG", length = 20)
+    @Column(name = "MaPhong", length = 20)
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "MADAY", nullable = false)
+    @JoinColumn(name = "MaDay", nullable = false)
     private Region region;
 
     @ManyToOne
-    @JoinColumn(name = "MALOAIPHONG", nullable = false)
+    @JoinColumn(name = "MaLoaiPhong", nullable = false)
     private RoomType type;
 
-    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
-    @Column(nullable = false, name = "TRANGTHAI", length = 20)
+    @Column(nullable = false, name = "TrangThai", length = 20)
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 

@@ -19,52 +19,52 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "PHIEUTHUE")
-@Check(constraints = "NGAYLAP <= GETDATE() AND NGAYTRA >= NGAYLAP")
+@Table(name = "PhieuThue")
+@Check(constraints = "NgayTra >= NgayLap")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MAPHIEUTHUE")
+    @Column(name = "MaPhieuThue")
     private Long id;
 
     @CreationTimestamp
-    @Column(name = "NGAYLAP", nullable = false)
+    @Column(name = "NgayLap", nullable = false)
     @JsonProperty("created_at")
     private Date createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "MATHOIGIANTHUE", nullable = false)
+    @JoinColumn(name = "MaThoiGianThue", nullable = false)
     @JsonProperty("booking_time")
     private BookingTime bookingTime;
 
     @ManyToOne
-    @JoinColumn(name = "MAQL_NHAN", nullable = false)
+    @JoinColumn(name = "MaQuanLyNhan", nullable = false)
     @JsonProperty("checkin_staff")
     private Staff checkinStaff;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "MAPHONG", nullable = false)
+    @JoinColumn(name = "MaPhong", nullable = false)
     private Room room;
 
     @ManyToOne
-    @JoinColumn(name = "MASV", nullable = false)
+    @JoinColumn(name = "MaSinhVien", nullable = false)
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "MAQL_TRA", nullable = true)
+    @JoinColumn(name = "MaQuanLyTra", nullable = true)
     @JsonProperty("checkout_staff")
     private Staff checkoutStaff;
 
-    @Column(name = "NGAYTRA", nullable = true)
+    @Column(name = "NgayTra", nullable = true)
     @JsonProperty("checked_out_at")
     private Date checkedOutAt;
 
     @ManyToOne
-    @JoinColumn(name = "MAGG", nullable = true)
+    @JoinColumn(name = "MaGiamGia", nullable = true)
     private Discount discount;
 
-    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @JsonIgnore

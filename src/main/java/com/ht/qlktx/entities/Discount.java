@@ -15,32 +15,32 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "GIAMGIA")
-@Check(constraints = "NGAYKETTHUC > NGAYBATDAU")
+@Table(name = "GiamGia")
+@Check(constraints = "NgayKetThuc > NgayBatDau")
 public class Discount {
     @Id
-    @Column(name = "MAGG", length = 20)
+    @Column(name = "MaGiamGia", length = 20)
     private String id;
 
-    @Column(nullable = false, name = "NOIDUNG", columnDefinition = "NVARCHAR(255)", unique = true)
+    @Column(nullable = false, name = "NoiDung", columnDefinition = "NVARCHAR(255)", unique = true)
     private String description;
 
-    @Column(nullable = false, precision = 10, scale = 2, name = "PHANTRAM")
+    @Column(nullable = false, precision = 10, scale = 2, name = "PhanTram")
     private BigDecimal percentage;
 
     @ManyToOne
-    @JoinColumn(name = "MAQL", nullable = false)
+    @JoinColumn(name = "MaQuanLy", nullable = false)
     private Staff staff;
 
-    @Column(nullable = false, name = "NGAYBATDAU")
+    @Column(nullable = false, name = "NgayBatDau")
     @JsonProperty("start_date")
     private Date startDate;
 
-    @Column(nullable = false, name = "NGAYKETTHUC")
+    @Column(nullable = false, name = "NgayKetThuc")
     @JsonProperty("end_date")
     private Date endDate;
 
-    @Column(nullable = false, name = "XOA", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @JsonIgnore
