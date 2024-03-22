@@ -1,5 +1,6 @@
 package com.ht.qlktx.modules.statistic.dtos;
 
+import com.ht.qlktx.projections.RoomTypeWithRoomCountView;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,5 @@ public class StatisticOverview {
     private Long totalBookedStudents;
     private Long totalInvoices;
     private Long totalUnpaidInvoices;
-    private List<RoomTypeStatistic> roomTypeStatistics;
+    private List<RoomTypeWithRoomCountView> roomTypeStatistics;
 }
-
-record RoomTypeStatistic(String roomType, Long totalRooms) {}

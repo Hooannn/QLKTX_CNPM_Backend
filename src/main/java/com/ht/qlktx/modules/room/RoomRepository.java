@@ -34,4 +34,18 @@ public interface RoomRepository extends JpaRepository<Room, String> {
     Long countByDeletedIsFalse();
 
     Long countByDeletedIsFalseAndStatusIs(RoomStatus roomStatus);
+
+    @Query(
+            value = """
+                select count(*) from (
+                    select p.MaPhong from Phong p
+                    left join PhieuThue pt on pt.MaPhong = p.MaPhong and pt.Xoa = 0 and pt.NgayTra is NULL
+                    where p.Xoa = 0
+                    group by p.MaPhong
+                    having count(pt.MaPhieuThue) = 0
+                ) as emptyRooms
+            """,
+            nativeQuery = true
+    )
+    Long countEmptyRooms();
 }

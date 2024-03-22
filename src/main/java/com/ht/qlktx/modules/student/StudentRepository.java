@@ -16,4 +16,18 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     Optional<Student> findByIdAndDeletedIsFalse(String studentId);
 
     Long countByDeletedIsFalse();
+
+    @Query(
+            value = """
+                select count(*) from (
+                    select sv.MaSinhVien from SinhVien sv
+                    left join PhieuThue pt on pt.MaSinhVien = sv.MaSinhVien and pt.Xoa = 0
+                    where sv.Xoa = 0
+                    group by sv.MaSinhVien
+                    HAVING count(pt.MaPhieuThue) > 0
+                ) as bookedStudents
+            """,
+            nativeQuery = true
+    )
+    Long countBookedStudents();
 }
