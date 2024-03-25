@@ -7,6 +7,7 @@ import com.ht.qlktx.entities.Student;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.modules.student.dtos.CreateStudentDto;
+import com.ht.qlktx.modules.student.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.student.dtos.UpdateStudentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -85,6 +86,19 @@ public class StudentService {
         Optional.ofNullable(updateStudentDto.getDateOfBirth()).ifPresent(student::setDateOfBirth);
         Optional.ofNullable(updateStudentDto.getAddress()).ifPresent(student::setAddress);
         Optional.ofNullable(updateStudentDto.getPhone()).ifPresent(student::setPhone);
+
+        return studentRepository.save(student);
+    }
+
+    public Student update(String studentId, UpdateProfileDto updateProfileDto) {
+        var student = findById(studentId);
+
+        Optional.ofNullable(updateProfileDto.getFirstName()).ifPresent(student::setFirstName);
+        Optional.ofNullable(updateProfileDto.getLastName()).ifPresent(student::setLastName);
+        Optional.ofNullable(updateProfileDto.getSex()).ifPresent(student::setSex);
+        Optional.ofNullable(updateProfileDto.getDateOfBirth()).ifPresent(student::setDateOfBirth);
+        Optional.ofNullable(updateProfileDto.getAddress()).ifPresent(student::setAddress);
+        Optional.ofNullable(updateProfileDto.getPhone()).ifPresent(student::setPhone);
 
         return studentRepository.save(student);
     }

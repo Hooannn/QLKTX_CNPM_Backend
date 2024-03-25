@@ -5,6 +5,7 @@ import com.ht.qlktx.config.Response;
 import com.ht.qlktx.entities.Student;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.student.dtos.CreateStudentDto;
+import com.ht.qlktx.modules.student.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.student.dtos.UpdateStudentDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,19 @@ public class StudentController {
                 Response.<Student>builder()
                         .status(HttpStatus.CREATED.value())
                         .message("Tạo người dùng thành công")
+                        .data(user)
+                        .build()
+        );
+    }
+
+    @PutMapping(path = "/profile")
+    @RequiredRole({Role.STUDENT})
+    public ResponseEntity<Response<Student>> update(@RequestAttribute("sub") String sub, @Valid @RequestBody UpdateProfileDto updateProfileDto) {
+        var user = studentService.update(sub, updateProfileDto);
+        return ResponseEntity.ok(
+                Response.<Student>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Cập nhật thông tin thành công")
                         .data(user)
                         .build()
         );

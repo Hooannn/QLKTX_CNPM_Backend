@@ -43,7 +43,6 @@ public class BookingTimeService {
             throw new HttpException("Không thể xóa vì đã có phiếu thuê đang sử dụng", HttpStatus.BAD_REQUEST);
         }
 
-        //TODO: Check booking request, extension request
         bookingTime.setDeleted(true);
         bookingTimeRepository.save(bookingTime);
     }
@@ -67,7 +66,7 @@ public class BookingTimeService {
     }
 
     public List<BookingTime> findAllAvailable() {
-        return bookingTimeRepository.findAllByOpenIsTrueAndStartDateIsAfterAndDeletedIsFalse(new Date());
+        return bookingTimeRepository.findAllByOpenIsTrueAndEndDateIsAfterAndDeletedIsFalse(new Date());
     }
 
     public BookingTime findById(Long bookingTimeId) {
@@ -75,6 +74,6 @@ public class BookingTimeService {
     }
 
     public BookingTime findByAvailableId(Long bookingTimeId) {
-        return bookingTimeRepository.findByIdAndOpenIsTrueAndStartDateIsAfterAndDeletedIsFalse(bookingTimeId, new Date()).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
+        return bookingTimeRepository.findByIdAndOpenIsTrueAndEndDateIsAfterAndDeletedIsFalse(bookingTimeId, new Date()).orElseThrow(() -> new HttpException("Không tìm thấy thời gian thuê", HttpStatus.BAD_REQUEST));
     }
 }

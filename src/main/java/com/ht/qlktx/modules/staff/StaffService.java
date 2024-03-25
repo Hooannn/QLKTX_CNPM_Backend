@@ -6,6 +6,7 @@ import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.modules.staff.dtos.CreateStaffDto;
+import com.ht.qlktx.modules.staff.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateStaffDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -80,6 +81,19 @@ public class StaffService {
         Optional.ofNullable(updateStaffDto.getDateOfBirth()).ifPresent(staff::setDateOfBirth);
         Optional.ofNullable(updateStaffDto.getAddress()).ifPresent(staff::setAddress);
         Optional.ofNullable(updateStaffDto.getPhone()).ifPresent(staff::setPhone);
+
+        return staffRepository.save(staff);
+    }
+
+    public Staff update(String staffId, UpdateProfileDto updateProfileDto) {
+        var staff = findById(staffId);
+
+        Optional.ofNullable(updateProfileDto.getFirstName()).ifPresent(staff::setFirstName);
+        Optional.ofNullable(updateProfileDto.getLastName()).ifPresent(staff::setLastName);
+        Optional.ofNullable(updateProfileDto.getSex()).ifPresent(staff::setSex);
+        Optional.ofNullable(updateProfileDto.getDateOfBirth()).ifPresent(staff::setDateOfBirth);
+        Optional.ofNullable(updateProfileDto.getAddress()).ifPresent(staff::setAddress);
+        Optional.ofNullable(updateProfileDto.getPhone()).ifPresent(staff::setPhone);
 
         return staffRepository.save(staff);
     }

@@ -19,4 +19,8 @@ public interface BookingTimeRepository extends JpaRepository<BookingTime, Long> 
     Optional<BookingTime> findByIdAndOpenIsTrueAndStartDateIsAfterAndDeletedIsFalse(Long bookingTimeId, Date date);
 
     List<BookingTime> findAllByDeletedIsFalse();
+
+    List<BookingTime> findAllByOpenIsTrueAndEndDateIsAfterAndDeletedIsFalse(Date date);
+
+    Optional<BookingTime> findByIdAndOpenIsTrueAndEndDateIsAfterAndDeletedIsFalse(Long bookingTimeId, Date date);
 }

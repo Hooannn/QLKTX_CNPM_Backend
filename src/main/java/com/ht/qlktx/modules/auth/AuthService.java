@@ -8,6 +8,7 @@ import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.filter.JwtService;
 import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.modules.auth.dtos.AuthenticateDto;
+import com.ht.qlktx.modules.auth.dtos.ChangePasswordDto;
 import com.ht.qlktx.modules.staff.StaffRepository;
 import com.ht.qlktx.modules.student.StudentRepository;
 import com.ht.qlktx.utils.MailService;
@@ -86,6 +87,18 @@ public class AuthService {
 
         account.setPassword(passwordEncoder.encode(newPassword));
         redisService.deleteValue("reset_password_token:" + email);
+        accountRepository.save(account);
+    }
+
+    public void changePassword(String accountId, ChangePasswordDto changePasswordDto) {
+        String errorMessage = "Tài khoản hoặc mật khẩu không hợp lệ";
+        var account = accountRepository.findById(accountId).orElseThrow(() -> new HttpException(errorMessage, HttpStatus.BAD_REQUEST));
+
+        if (!passwordEncoder.matches(changePasswordDto.getCurrentPassword(), account.getPassword()))
+            throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+
+        account.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+
         accountRepository.save(account);
     }
 }

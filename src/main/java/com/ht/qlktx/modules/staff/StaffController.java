@@ -3,9 +3,11 @@ package com.ht.qlktx.modules.staff;
 import com.ht.qlktx.annotations.RequiredRole;
 import com.ht.qlktx.config.Response;
 import com.ht.qlktx.entities.Staff;
+import com.ht.qlktx.entities.Student;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.staff.dtos.CreateStaffDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateStaffDto;
+import com.ht.qlktx.modules.staff.dtos.UpdateProfileDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,6 +54,19 @@ public class StaffController {
                 Response.<Staff>builder()
                         .status(HttpStatus.CREATED.value())
                         .message("Tạo nhân viên thành công")
+                        .data(staff)
+                        .build()
+        );
+    }
+
+    @PutMapping(path = "/profile")
+    @RequiredRole({Role.STAFF, Role.ADMIN})
+    public ResponseEntity<Response<Staff>> update(@RequestAttribute("sub") String sub, @Valid @RequestBody UpdateProfileDto updateProfileDto) {
+        var staff = staffService.update(sub, updateProfileDto);
+        return ResponseEntity.ok(
+                Response.<Staff>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Cập nhật thông tin thành công")
                         .data(staff)
                         .build()
         );
