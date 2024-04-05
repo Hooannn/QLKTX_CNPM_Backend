@@ -6,6 +6,7 @@ import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.entities.Student;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.account.AccountRepository;
+import com.ht.qlktx.modules.account.RoleRepository;
 import com.ht.qlktx.modules.student.dtos.CreateStudentDto;
 import com.ht.qlktx.modules.student.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.student.dtos.UpdateStudentDto;
@@ -22,6 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final RoleRepository roleRepository;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -45,10 +47,14 @@ public class StudentService {
             throw new HttpException("Mã người dùng hoặc email đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
+        var role = roleRepository.findByRole(Role.STUDENT.toString()).orElseThrow(
+                () -> new HttpException("Không tồn tại quyền sinh viên", HttpStatus.BAD_REQUEST)
+        );
+
         var account = Account.builder()
                 .username(createStudentDto.getId())
                 .password(passwordEncoder.encode(createStudentDto.getPassword()))
-                .role(Role.STUDENT)
+                .role(role)
                 .email(createStudentDto.getEmail())
                 .build();
 

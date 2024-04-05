@@ -3,6 +3,7 @@ package com.ht.qlktx;
 import com.ht.qlktx.entities.*;
 import com.ht.qlktx.enums.RoomStatus;
 import com.ht.qlktx.modules.account.AccountRepository;
+import com.ht.qlktx.modules.account.RoleRepository;
 import com.ht.qlktx.modules.region.RegionRepository;
 import com.ht.qlktx.modules.room.RoomRepository;
 import com.ht.qlktx.modules.room_type.RoomTypeRepository;
@@ -27,6 +28,7 @@ public class ServerCommandLineRunner implements CommandLineRunner {
     private final RoomTypeRepository roomTypeRepository;
     private final RegionRepository regionRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public void run(String... args) {
@@ -38,6 +40,15 @@ public class ServerCommandLineRunner implements CommandLineRunner {
 
         List<Region> savedRegions;
         List<RoomType> savedRoomTypes;
+
+        if (roleRepository.count() == 0) {
+            List<Role> roles = List.of(
+                    Role.builder().role(com.ht.qlktx.enums.Role.STUDENT.toString()).build(),
+                    Role.builder().role(com.ht.qlktx.enums.Role.STAFF.toString()).build(),
+                    Role.builder().role(com.ht.qlktx.enums.Role.ADMIN.toString()).build()
+            );
+            roleRepository.saveAll(roles);
+        }
 
         if (regionRepository.count() == 0 && regions != null) {
             savedRegions = regionRepository.saveAll(regions);
@@ -71,23 +82,40 @@ public class ServerCommandLineRunner implements CommandLineRunner {
         }
 
         if (accountRepository.count() == 0 && accounts != null) {
-            List<Account> transformedAccounts = accounts.stream().peek(account -> account.setPassword(passwordEncoder.encode(account.getUsername()))).toList();
+            var student = roleRepository.findByRole(com.ht.qlktx.enums.Role.STUDENT.toString()).orElse(null);
+            var staff = roleRepository.findByRole(com.ht.qlktx.enums.Role.STAFF.toString()).orElse(null);
+            var admin = roleRepository.findByRole(com.ht.qlktx.enums.Role.ADMIN.toString()).orElse(null);
+
+            if (student == null || staff == null || admin == null) {
+                System.out.println("Some roles are missing. Please check the database.");
+                return;
+            }
+
+            List<Account> transformedAccounts = accounts.stream().peek(account -> {
+                account.setPassword(passwordEncoder.encode(account.getUsername()));
+                if (account.getUsername().contains("N21")) {
+                    account.setRole(student);
+                } else {
+                    if (account.getUsername().equals("QL0001")) {
+                        account.setRole(admin);
+                    } else {
+                        account.setRole(staff);
+                    }
+                }
+            }).toList();
+
             accountRepository.saveAll(transformedAccounts);
 
             if (staffs != null) {
-                staffs.forEach(staff -> {
-                    System.out.println("[HOAN]: " + staff.getId());
-                    staff.setAccount(accountRepository.findById(staff.getId()).orElse(null));
-                    System.out.println("[HOAN] ----: " + staff.getAccount().getUsername());
+                staffs.forEach(s -> {
+                    s.setAccount(accountRepository.findById(s.getId()).orElse(null));
                 });
                 staffRepository.saveAll(staffs);
             }
 
             if (students != null) {
-                students.forEach(student -> {
-                    System.out.println("[HOAN]: " + student.getId());
-                    student.setAccount(accountRepository.findById(student.getId()).orElse(null));
-                    System.out.println(student);
+                students.forEach(s -> {
+                    s.setAccount(accountRepository.findById(s.getId()).orElse(null));
                 });
                 studentRepository.saveAll(students);
             }
