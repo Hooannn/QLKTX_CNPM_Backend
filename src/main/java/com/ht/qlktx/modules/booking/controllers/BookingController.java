@@ -159,4 +159,17 @@ public class BookingController {
                         .build()
         );
     }
+
+    @DeleteMapping("{id}")
+    @RequiredRole({Role.STAFF, Role.ADMIN})
+    public ResponseEntity<Response<?>> delete(@PathVariable Long id) {
+        bookingService.delete(id);
+        return ResponseEntity.ok(
+                Response.<Booking>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Phiếu thuê được huỷ thành công")
+                        .data(null)
+                        .build()
+        );
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -43,11 +44,16 @@ public class InvoiceService {
     }
 
     public Invoice create(Booking booking, Staff staff, BigDecimal total) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, 1);
+
         Invoice invoice = Invoice.builder()
                 .booking(booking)
                 .staff(staff)
                 .total(total)
                 .createdAt(new Date())
+                .dueDate(calendar.getTime())
                 .build();
         return invoiceRepository.save(invoice);
     }
@@ -97,5 +103,12 @@ public class InvoiceService {
         }
         invoice.setDeleted(true);
         invoiceRepository.save(invoice);
+    }
+
+    public void delete(List<Invoice> invoices) {
+        invoices.forEach(invoice -> {
+            invoice.setDeleted(true);
+        });
+        invoiceRepository.saveAll(invoices);
     }
 }

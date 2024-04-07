@@ -27,6 +27,10 @@ public class Invoice {
     @Column(nullable = false, precision = 10, scale = 2, name = "TongTienPhong")
     private BigDecimal total;
 
+    @Column(nullable = false, name = "HanThanhToan")
+    @JsonProperty("due_date")
+    private Date dueDate;
+
     @Column(nullable = true, name = "NgayThanhToan")
     @JsonProperty("paid_at")
     private Date paidAt;

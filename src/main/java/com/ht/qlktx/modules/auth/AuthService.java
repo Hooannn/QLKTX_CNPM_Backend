@@ -41,7 +41,7 @@ public class AuthService {
 
             Object user;
 
-            if (account.getRole() == Role.STUDENT) {
+            if (account.getRole().getRole().equals(Role.STUDENT.toString())) {
                 user = studentRepository.findByIdAndDeletedIsFalse(account.getUsername())
                         .orElseThrow(() -> new HttpException(errorMessage, HttpStatus.UNAUTHORIZED));
             } else {

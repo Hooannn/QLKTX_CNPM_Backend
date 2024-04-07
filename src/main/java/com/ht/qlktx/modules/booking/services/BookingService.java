@@ -2,6 +2,7 @@ package com.ht.qlktx.modules.booking.services;
 
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Booking;
+import com.ht.qlktx.entities.Invoice;
 import com.ht.qlktx.modules.discount.DiscountService;
 import com.ht.qlktx.modules.invoice.InvoiceService;
 import com.ht.qlktx.modules.staff.StaffService;
@@ -131,5 +132,23 @@ public class BookingService {
 
     public List<BookingView> findAllByRoomId(String roomId) {
         return bookingRepository.findAllByRoomIdAndDeletedIsFalse(roomId);
+    }
+
+    public void delete(Long id) {
+        var booking = findById(id);
+
+        if (booking.isCheckedOut())
+            throw new HttpException("Không thể huỷ phiếu thuê đã trả", HttpStatus.BAD_REQUEST);
+
+        var invoices = invoiceService.findAllByBookingId(booking.getId());
+
+        boolean hasPaidInvoice = invoices.stream().anyMatch(Invoice::isPaid);
+
+        if (hasPaidInvoice)
+            throw new HttpException("Không thể huỷ phiếu thuê đã thanh toán", HttpStatus.BAD_REQUEST);
+
+        booking.setDeleted(true);
+        bookingRepository.save(booking);
+        invoiceService.delete(invoices);
     }
 }

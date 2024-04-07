@@ -5,6 +5,7 @@ import com.ht.qlktx.entities.Account;
 import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.account.AccountRepository;
+import com.ht.qlktx.modules.account.RoleRepository;
 import com.ht.qlktx.modules.staff.dtos.CreateStaffDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateStaffDto;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class StaffService {
     private final StaffRepository staffRepository;
     private final AccountRepository accountRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     public List<Staff> findAll() {
@@ -40,10 +42,14 @@ public class StaffService {
             throw new HttpException("Mã người dùng hoặc email đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
+        var role = roleRepository.findByRole(Role.STAFF.toString()).orElseThrow(
+                () -> new HttpException("Không tồn tại quyền nhân viên", HttpStatus.BAD_REQUEST)
+        );
+
         var account = Account.builder()
                 .username(createStaffDto.getId())
                 .password(passwordEncoder.encode(createStaffDto.getPassword()))
-                .role(Role.STAFF)
+                .role(role)
                 .email(createStaffDto.getEmail())
                 .build();
 
@@ -101,7 +107,7 @@ public class StaffService {
     public void delete(String staffId) {
         var staff = findById(staffId);
 
-        if (staff.getAccount().getRole() == Role.ADMIN) {
+        if (staff.getAccount().getRole().getRole().equals(Role.ADMIN.toString())) {
             throw new HttpException("Không thể xóa người dùng với quyền ADMIN", HttpStatus.FORBIDDEN);
         }
 

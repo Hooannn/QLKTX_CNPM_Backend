@@ -2,7 +2,6 @@ package com.ht.qlktx.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ht.qlktx.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,8 +21,8 @@ public class Account {
     @JsonIgnore
     private String password;
 
-    @Column(nullable = false, name = "Role", length = 20)
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "MaVaiTro", nullable = false)
     private Role role;
 
     @Column(nullable = false, unique = true, name = "Email")
