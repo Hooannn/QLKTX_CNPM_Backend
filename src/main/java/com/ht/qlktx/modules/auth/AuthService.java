@@ -64,7 +64,7 @@ public class AuthService {
 
         var token = jwtService.generateResetPasswordToken(email);
         account.setResetPasswordToken(token);
-
+        accountRepository.save(account);
         CompletableFuture.runAsync(() -> {
             try {
                 mailService.sendForgotPasswordMail(email, token);

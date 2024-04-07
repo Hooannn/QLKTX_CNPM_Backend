@@ -2,7 +2,6 @@ package com.ht.qlktx.filter;
 
 import com.ht.qlktx.entities.Account;
 import com.ht.qlktx.modules.account.AccountRepository;
-import com.ht.qlktx.utils.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
