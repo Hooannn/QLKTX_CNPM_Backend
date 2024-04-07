@@ -1,6 +1,7 @@
 package com.ht.qlktx.filter;
 
 import com.ht.qlktx.entities.Account;
+import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.utils.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -29,7 +30,7 @@ public class JwtService {
     @Value("${application.security.jwt.password.expiration}")
     private long resetPasswordExpiration;
 
-    private final RedisService redisService;
+    private final AccountRepository accountRepository;
 
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
@@ -62,18 +63,16 @@ public class JwtService {
     }
 
     public String generateResetPasswordToken(String email) {
-        var token = buildToken(new HashMap<>(), email, resetPasswordExpiration, passwordSecretKey);
-        redisService.setValue("reset_password_token:" + email, token, resetPasswordExpiration / 1000);
-        return token;
+        return buildToken(new HashMap<>(), email, resetPasswordExpiration, passwordSecretKey);
     }
 
-    public VerificationTokenResult verifyResetPasswordToken(String token) {
+    public VerificationTokenResult verifyResetPasswordToken(String requestToken) {
         Claims claims;
         try {
             claims = Jwts.parserBuilder()
                     .setSigningKey(getSigningKey(passwordSecretKey))
                     .build()
-                    .parseClaimsJws(token)
+                    .parseClaimsJws(requestToken)
                     .getBody();
         } catch (Exception e) {
             return new VerificationTokenResult(false, null);
@@ -81,9 +80,18 @@ public class JwtService {
         var email = claims.getSubject();
         var expiration = claims.getExpiration();
         var isTokenExpired = expiration.before(new Date());
-        var tokenFromRedis = redisService.getValue("reset_password_token:" + email);
-        var isTokenValid = !isTokenExpired && tokenFromRedis != null && tokenFromRedis.equals(token);
-        return new VerificationTokenResult(isTokenValid, email);
+
+        if (isTokenExpired)
+            return new VerificationTokenResult(false, email);
+
+        var userToken = accountRepository.findByEmail(email)
+                .map(Account::getResetPasswordToken)
+                .orElse(null);
+
+        if (userToken == null || !userToken.equals(requestToken))
+            return new VerificationTokenResult(false, email);
+
+        return new VerificationTokenResult(true, email);
     }
 
     private Date extractExpiration(String token) {

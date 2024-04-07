@@ -1,6 +1,7 @@
 package com.ht.qlktx.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,4 +27,9 @@ public class Account {
 
     @Column(nullable = false, unique = true, name = "Email")
     private String email;
+
+    @Column(name = "MaDatLaiMatKhau")
+    @JsonIgnore
+    @JsonProperty("reset_password_token")
+    private String resetPasswordToken;
 }
