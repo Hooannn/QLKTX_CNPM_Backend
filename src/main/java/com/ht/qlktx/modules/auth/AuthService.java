@@ -12,7 +12,6 @@ import com.ht.qlktx.modules.auth.dtos.ChangePasswordDto;
 import com.ht.qlktx.modules.staff.StaffRepository;
 import com.ht.qlktx.modules.student.StudentRepository;
 import com.ht.qlktx.utils.MailService;
-import com.ht.qlktx.utils.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,6 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
-    private final RedisService redisService;
     public AuthenticationResponse<?> authenticate(AuthenticateDto authenticateDto) {
         String errorMessage = "Tài khoản hoặc mật khẩu không hợp lệ";
 
@@ -61,10 +59,12 @@ public class AuthService {
     }
 
     public void forgotPassword(String email) {
-        if (!accountRepository.existsByEmail(email))
-            throw new HttpException("Tài khoản không tồn tại", HttpStatus.NOT_FOUND);
+        var account = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new HttpException("Tài khoản không tồn tại", HttpStatus.NOT_FOUND));
 
         var token = jwtService.generateResetPasswordToken(email);
+        account.setResetPasswordToken(token);
+
         CompletableFuture.runAsync(() -> {
             try {
                 mailService.sendForgotPasswordMail(email, token);
@@ -86,7 +86,7 @@ public class AuthService {
                 .orElseThrow(() -> new HttpException("Tài khoản không tồn tại", HttpStatus.NOT_FOUND));
 
         account.setPassword(passwordEncoder.encode(newPassword));
-        redisService.deleteValue("reset_password_token:" + email);
+        account.setResetPasswordToken(null);
         accountRepository.save(account);
     }
 
