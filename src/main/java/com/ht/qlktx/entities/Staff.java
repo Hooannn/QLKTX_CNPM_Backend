@@ -22,9 +22,8 @@ public class Staff {
     @Column(name = "MaNhanVien", length = 50)
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @MapsId
-    @JoinColumn(name = "MaNhanVien", referencedColumnName = "MaTaiKhoan")
+    @ManyToOne
+    @JoinColumn(name = "MaTaiKhoan")
     private Account account;
 
     @JsonProperty("first_name")

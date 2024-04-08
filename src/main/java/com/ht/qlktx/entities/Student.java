@@ -21,9 +21,8 @@ public class Student {
     @Column(name = "MaSinhVien", length = 50)
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @MapsId
-    @JoinColumn(name = "MaSinhVien", referencedColumnName = "MaTaiKhoan")
+    @ManyToOne
+    @JoinColumn(name = "MaTaiKhoan")
     private Account account;
 
     @JsonProperty("first_name")
