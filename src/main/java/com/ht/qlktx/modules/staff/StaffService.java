@@ -53,6 +53,8 @@ public class StaffService {
                 .email(createStaffDto.getEmail())
                 .build();
 
+        accountRepository.save(account);
+
         var staff = Staff.builder()
                 .id(createStaffDto.getId())
                 .account(account)

@@ -58,6 +58,8 @@ public class StudentService {
                 .email(createStudentDto.getEmail())
                 .build();
 
+        accountRepository.save(account);
+
         var student = Student.builder()
                 .id(createStudentDto.getId())
                 .account(account)
@@ -68,6 +70,7 @@ public class StudentService {
                 .address(createStudentDto.getAddress())
                 .phone(createStudentDto.getPhone())
                 .build();
+
 
         return studentRepository.save(student);
     }
