@@ -130,6 +130,10 @@ public class BookingService {
         return bookingRepository.findAllByStudentIdAndDeletedIsFalse(studentId);
     }
 
+    public List<BookingView> findAllCurrentByStudentId(String studentId) {
+        return bookingRepository.findAllByStudentIdAndDeletedIsFalseAndCheckedOutAtIsNull(studentId);
+    }
+
     public List<BookingView> findAllByRoomId(String roomId) {
         return bookingRepository.findAllByRoomIdAndDeletedIsFalse(roomId);
     }
