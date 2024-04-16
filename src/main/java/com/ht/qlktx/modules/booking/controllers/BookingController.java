@@ -172,4 +172,30 @@ public class BookingController {
                         .build()
         );
     }
+
+    @GetMapping("/my-booking")
+    @RequiredRole({Role.STUDENT})
+    public ResponseEntity<Response<List<BookingView>>> MyBooking(@RequestAttribute(name = "sub") String studentId){
+        var bookings = bookingService.findAllCurrentByStudentId(studentId);
+        return ResponseEntity.ok(
+                Response.<List<BookingView>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Lấy danh sách phiếu thuê hiện tại thành công")
+                        .data(bookings)
+                        .build()
+        );
+    }
+
+    @GetMapping("/my-lastbooking")
+    @RequiredRole({Role.STUDENT})
+    public ResponseEntity<Response<List<BookingView>>> MyLastBooking(@RequestAttribute(name = "sub") String studentId){
+        var bookings = bookingService.findAllLastBookingByStudentId(studentId);
+        return ResponseEntity.ok(
+                Response.<List<BookingView>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Lấy danh sách các phiếu thuê cũ thành công")
+                        .data(bookings)
+                        .build()
+        );
+    }
 }

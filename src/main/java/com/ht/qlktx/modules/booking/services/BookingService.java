@@ -134,6 +134,10 @@ public class BookingService {
         return bookingRepository.findAllByStudentIdAndDeletedIsFalseAndCheckedOutAtIsNull(studentId);
     }
 
+    public List<BookingView> findAllLastBookingByStudentId(String studentId) {
+        return bookingRepository.findAllByStudentIdAndDeletedIsFalseAndCheckedOutAtIsNotNull(studentId);
+    }
+
     public List<BookingView> findAllByRoomId(String roomId) {
         return bookingRepository.findAllByRoomIdAndDeletedIsFalse(roomId);
     }
