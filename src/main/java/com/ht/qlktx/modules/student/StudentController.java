@@ -33,6 +33,19 @@ public class StudentController {
         );
     }
 
+    @GetMapping("/non-account")
+    @RequiredRole({Role.ADMIN})
+    public ResponseEntity<Response<Iterable<Student>>> findAllNonAccount() {
+        var users = studentService.findAllNonAccount();
+        return ResponseEntity.ok(
+                Response.<Iterable<Student>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Lấy danh sách người dùng chưa có tài khoản thành công")
+                        .data(users)
+                        .build()
+        );
+    }
+
     @GetMapping(path = "/lookup")
     @RequiredRole({Role.ADMIN, Role.STAFF})
     public ResponseEntity<Response<Iterable<Student>>> lookupStudentsByIdOrName(@RequestParam String keyword) {

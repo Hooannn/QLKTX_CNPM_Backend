@@ -15,10 +15,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class CreateStudentDto {
-    @NotEmpty(message = "Mật khẩu không được để trống")
-    @Length(min = 6, message = "Mật khẩu phải có ít nhất 6 ký tự")
-    private String password;
-
     @NotEmpty(message = "Mã người dùng không được để trống")
     private String id;
 
@@ -39,8 +35,4 @@ public class CreateStudentDto {
     private String address;
 
     private String phone;
-
-    @NotEmpty(message = "Email không được để trống")
-    @Email(message = "Email không hợp lệ")
-    private String email;
 }

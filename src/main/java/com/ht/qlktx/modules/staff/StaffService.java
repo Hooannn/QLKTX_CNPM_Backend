@@ -1,17 +1,13 @@
 package com.ht.qlktx.modules.staff;
 
 import com.ht.qlktx.config.HttpException;
-import com.ht.qlktx.entities.Account;
 import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.enums.Role;
-import com.ht.qlktx.modules.account.AccountRepository;
-import com.ht.qlktx.modules.account.RoleRepository;
 import com.ht.qlktx.modules.staff.dtos.CreateStaffDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateStaffDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StaffService {
     private final StaffRepository staffRepository;
-    private final AccountRepository accountRepository;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     public List<Staff> findAll() {
         return staffRepository.findAllByDeletedIsFalse();
@@ -38,26 +31,12 @@ public class StaffService {
 
     @Transactional
     public Staff create(CreateStaffDto createStaffDto) {
-        if (staffRepository.existsById(createStaffDto.getId()) || accountRepository.existsByEmail(createStaffDto.getEmail())) {
+        if (staffRepository.existsById(createStaffDto.getId())) {
             throw new HttpException("Mã người dùng hoặc email đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
-        var role = roleRepository.findByRole(Role.STAFF.toString()).orElseThrow(
-                () -> new HttpException("Không tồn tại quyền nhân viên", HttpStatus.BAD_REQUEST)
-        );
-
-        var account = Account.builder()
-                .username(createStaffDto.getId())
-                .password(passwordEncoder.encode(createStaffDto.getPassword()))
-                .role(role)
-                .email(createStaffDto.getEmail())
-                .build();
-
-        accountRepository.save(account);
-
         var staff = Staff.builder()
                 .id(createStaffDto.getId())
-                .account(account)
                 .firstName(createStaffDto.getFirstName())
                 .lastName(createStaffDto.getLastName())
                 .sex(createStaffDto.getSex())
@@ -71,17 +50,6 @@ public class StaffService {
 
     public Staff update(String staffId, UpdateStaffDto updateStaffDto) {
         var staff = findById(staffId);
-
-        Optional.ofNullable(updateStaffDto.getPassword()).ifPresent(password -> {
-            staff.getAccount().setPassword(passwordEncoder.encode(password));
-        });
-
-        Optional.ofNullable(updateStaffDto.getEmail()).ifPresent(email -> {
-            if (!email.equals(staff.getAccount().getEmail()) && accountRepository.existsByEmail(email)) {
-                throw new HttpException("Email đã tồn tại", HttpStatus.BAD_REQUEST);
-            }
-            staff.getAccount().setEmail(email);
-        });
 
         Optional.ofNullable(updateStaffDto.getFirstName()).ifPresent(staff::setFirstName);
         Optional.ofNullable(updateStaffDto.getLastName()).ifPresent(staff::setLastName);
@@ -119,5 +87,13 @@ public class StaffService {
 
     public List<Staff> lookUpByIdOrName(String keyword) {
         return staffRepository.lookUpByIdOrName(keyword);
+    }
+
+    public void save(Staff staff) {
+        staffRepository.save(staff);
+    }
+
+    public List<Staff> findAllNonAccount() {
+        return staffRepository.findAllByAccountIsNullAndDeletedIsFalse();
     }
 }

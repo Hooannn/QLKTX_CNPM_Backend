@@ -1,18 +1,12 @@
 package com.ht.qlktx.modules.student;
 
 import com.ht.qlktx.config.HttpException;
-import com.ht.qlktx.entities.Account;
-import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.entities.Student;
-import com.ht.qlktx.enums.Role;
-import com.ht.qlktx.modules.account.AccountRepository;
-import com.ht.qlktx.modules.account.RoleRepository;
 import com.ht.qlktx.modules.student.dtos.CreateStudentDto;
 import com.ht.qlktx.modules.student.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.student.dtos.UpdateStudentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +17,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final RoleRepository roleRepository;
-    private final AccountRepository accountRepository;
-    private final PasswordEncoder passwordEncoder;
 
     public List<Student> findAll() {
         return studentRepository.findAllByDeletedIsFalse();
@@ -43,26 +34,12 @@ public class StudentService {
 
     @Transactional
     public Student create(CreateStudentDto createStudentDto) {
-        if (studentRepository.existsById(createStudentDto.getId()) || accountRepository.existsByEmail(createStudentDto.getEmail())) {
+        if (studentRepository.existsById(createStudentDto.getId())) {
             throw new HttpException("Mã người dùng hoặc email đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
-        var role = roleRepository.findByRole(Role.STUDENT.toString()).orElseThrow(
-                () -> new HttpException("Không tồn tại quyền sinh viên", HttpStatus.BAD_REQUEST)
-        );
-
-        var account = Account.builder()
-                .username(createStudentDto.getId())
-                .password(passwordEncoder.encode(createStudentDto.getPassword()))
-                .role(role)
-                .email(createStudentDto.getEmail())
-                .build();
-
-        accountRepository.save(account);
-
         var student = Student.builder()
                 .id(createStudentDto.getId())
-                .account(account)
                 .firstName(createStudentDto.getFirstName())
                 .lastName(createStudentDto.getLastName())
                 .sex(createStudentDto.getSex())
@@ -77,17 +54,6 @@ public class StudentService {
 
     public Student update(String studentId, UpdateStudentDto updateStudentDto) {
         var student = findById(studentId);
-
-        Optional.ofNullable(updateStudentDto.getPassword()).ifPresent(password -> {
-            student.getAccount().setPassword(passwordEncoder.encode(password));
-        });
-
-        Optional.ofNullable(updateStudentDto.getEmail()).ifPresent(email -> {
-            if (!email.equals(student.getAccount().getEmail()) && accountRepository.existsByEmail(email)) {
-                throw new HttpException("Email đã tồn tại", HttpStatus.BAD_REQUEST);
-            }
-            student.getAccount().setEmail(email);
-        });
 
         Optional.ofNullable(updateStudentDto.getFirstName()).ifPresent(student::setFirstName);
         Optional.ofNullable(updateStudentDto.getLastName()).ifPresent(student::setLastName);
@@ -116,5 +82,13 @@ public class StudentService {
         var student = findById(studentId);
         student.setDeleted(true);
         studentRepository.save(student);
+    }
+
+    public void save(Student student) {
+        studentRepository.save(student);
+    }
+
+    public List<Student> findAllNonAccount() {
+        return studentRepository.findAllByAccountIsNullAndDeletedIsFalse();
     }
 }

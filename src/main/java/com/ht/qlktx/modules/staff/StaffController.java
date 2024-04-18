@@ -3,7 +3,6 @@ package com.ht.qlktx.modules.staff;
 import com.ht.qlktx.annotations.RequiredRole;
 import com.ht.qlktx.config.Response;
 import com.ht.qlktx.entities.Staff;
-import com.ht.qlktx.entities.Student;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.staff.dtos.CreateStaffDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateStaffDto;
@@ -28,6 +27,32 @@ public class StaffController {
                 Response.<Iterable<Staff>>builder()
                         .status(HttpStatus.OK.value())
                         .message("Lấy danh sách nhân viên thành công")
+                        .data(staffs)
+                        .build()
+        );
+    }
+
+    @GetMapping("/non-account")
+    @RequiredRole({Role.ADMIN})
+    public ResponseEntity<Response<Iterable<Staff>>> findAllNonAccount() {
+        var staffs = staffService.findAllNonAccount();
+        return ResponseEntity.ok(
+                Response.<Iterable<Staff>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Lấy danh sách nhân viên chưa có tài khoản thành công")
+                        .data(staffs)
+                        .build()
+        );
+    }
+
+    @GetMapping(path = "/lookup")
+    @RequiredRole({Role.ADMIN})
+    public ResponseEntity<Response<Iterable<Staff>>> lookUpByIdOrName(@RequestParam() String keyword) {
+        var staffs = staffService.lookUpByIdOrName(keyword);
+        return ResponseEntity.ok(
+                Response.<Iterable<Staff>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("Tìm kiếm nhân viên thành công")
                         .data(staffs)
                         .build()
         );
@@ -93,19 +118,6 @@ public class StaffController {
                 Response.<Staff>builder()
                         .status(HttpStatus.OK.value())
                         .message("Xóa nhân viên thành công")
-                        .build()
-        );
-    }
-
-    @GetMapping(path = "/lookup")
-    @RequiredRole({Role.ADMIN})
-    public ResponseEntity<Response<Iterable<Staff>>> lookUpByIdOrName(@RequestParam() String keyword) {
-        var staffs = staffService.lookUpByIdOrName(keyword);
-        return ResponseEntity.ok(
-                Response.<Iterable<Staff>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("Tìm kiếm nhân viên thành công")
-                        .data(staffs)
                         .build()
         );
     }

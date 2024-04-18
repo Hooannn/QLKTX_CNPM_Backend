@@ -30,4 +30,6 @@ public interface StudentRepository extends JpaRepository<Student, String> {
             nativeQuery = true
     )
     Long countBookedStudents();
+
+    List<Student> findAllByAccountIsNullAndDeletedIsFalse();
 }

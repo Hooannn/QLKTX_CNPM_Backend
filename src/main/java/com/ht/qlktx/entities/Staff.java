@@ -53,6 +53,9 @@ public class Staff {
     private boolean deleted;
 
     public boolean isAdmin() {
-        return this.account.getRole().equals(Role.ADMIN);
+        if (this.account != null) {
+            return this.account.getRole().equals(Role.ADMIN);
+        }
+        return false;
     }
 }

@@ -10,8 +10,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class UpdateStudentDto {
-    private String password;
-
     @JsonProperty("first_name")
     private String firstName;
 
@@ -26,6 +24,4 @@ public class UpdateStudentDto {
     private String address;
 
     private String phone;
-
-    private String email;
 }
