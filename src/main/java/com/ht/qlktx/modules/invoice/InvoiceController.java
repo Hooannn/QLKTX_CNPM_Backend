@@ -106,4 +106,16 @@ public class InvoiceController {
                 invoices
         ));
     }
+
+    @GetMapping("/student/{studentId}/invoices")
+    @RequiredRole({Role.STUDENT})
+    public ResponseEntity<Response<Iterable<Invoice>>> findInvoicesByStudentId(@PathVariable String studentId) {
+        var invoices = invoiceService.findAllByStudentId(studentId);
+        return ResponseEntity.ok().body(new Response<>(
+                HttpStatus.OK.value(),
+                "Danh sách hóa đơn của sinh viên",
+                invoices
+        ));
+    }
+
 }
