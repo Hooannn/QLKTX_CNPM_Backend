@@ -3,6 +3,7 @@ package com.ht.qlktx.modules.staff;
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.enums.Role;
+import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.modules.staff.dtos.CreateStaffDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateStaffDto;
@@ -25,6 +26,12 @@ public class StaffService {
 
     public Staff findById(String staffId) {
         return staffRepository.findByIdAndDeletedIsFalse(staffId).orElseThrow(
+                () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
+        );
+    }
+
+    public Staff findByAccount(String accountId) {
+        return staffRepository.findByAccountAndDeletedIsFalse(accountId).orElseThrow(
                 () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
         );
     }
