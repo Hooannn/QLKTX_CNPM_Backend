@@ -2,6 +2,7 @@ package com.ht.qlktx.modules.student;
 
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Student;
+import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.modules.student.dtos.CreateStudentDto;
 import com.ht.qlktx.modules.student.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.student.dtos.UpdateStudentDto;
@@ -30,6 +31,16 @@ public class StudentService {
         return studentRepository.findByIdAndDeletedIsFalse(studentId).orElseThrow(
                 () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
         );
+    }
+
+    public Student findByAccount(String accountId) {
+        return studentRepository.findByAccountAndDeletedIsFalse(accountId).orElseThrow(
+                () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
+        );
+    }
+
+    public boolean existsByAccountId(String accountId) {
+        return studentRepository.existsByAccountUsernameAndDeletedIsFalse(accountId);
     }
 
     @Transactional

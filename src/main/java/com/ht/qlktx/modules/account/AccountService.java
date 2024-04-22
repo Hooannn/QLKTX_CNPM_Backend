@@ -2,8 +2,10 @@ package com.ht.qlktx.modules.account;
 
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Account;
+import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.account.dtos.CreateAccountDto;
+import com.ht.qlktx.modules.account.dtos.UpdateAccountDto;
 import com.ht.qlktx.modules.staff.StaffService;
 import com.ht.qlktx.modules.student.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class AccountService {
     private final StaffService staffService;
     private final PasswordEncoder passwordEncoder;
 
+
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
@@ -42,6 +45,12 @@ public class AccountService {
 
     public Optional<Account> getAccountByUsernameOrEmail(String username, String email) {
         return accountRepository.findByUsernameOrEmail(username, email);
+    }
+
+    public Account findById(String accountId) {
+        return accountRepository.findByUsername(accountId).orElseThrow(
+                () -> new HttpException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST)
+        );
     }
 
     public Account create(CreateAccountDto createAccountDto) {
@@ -89,5 +98,28 @@ public class AccountService {
         return accountRepository.lookupByUsernameOrEmail(keyword);
     }
 
-    // Add methods for creating, updating, and deleting accounts if needed
+    public Account update(String accountId, UpdateAccountDto updateAccountDto) {
+        var account = findById(accountId);
+
+        if (accountRepository.existsByEmailAndUsernameIsNot(updateAccountDto.getEmail(), account.getUsername())) {
+            throw new HttpException("Email đã tồn tại", HttpStatus.BAD_REQUEST);
+        }
+
+        Optional.ofNullable(updateAccountDto.getEmail()).ifPresent(account::setEmail);
+        Optional.ofNullable(updateAccountDto.getPassword()).ifPresent(password -> {
+            account.setPassword(passwordEncoder.encode(password));
+        });
+
+        return accountRepository.save(account);
+    }
+
+    public void delete(String accountId) {
+        var isAccountLinked = staffService.existsByAccountId(accountId) || studentService.existsByAccountId(accountId);
+
+        if (isAccountLinked) {
+            throw new HttpException("Không thể xóa tài khoản vì đã được cập nhật thông tin", HttpStatus.BAD_REQUEST);
+        }
+
+        accountRepository.deleteById(accountId);
+    }
 }

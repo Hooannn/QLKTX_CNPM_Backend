@@ -3,6 +3,7 @@ package com.ht.qlktx.modules.student;
 import com.ht.qlktx.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,4 +33,9 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     Long countBookedStudents();
 
     List<Student> findAllByAccountIsNullAndDeletedIsFalse();
+
+    @Query("SELECT u FROM Student u WHERE u.account.username = :accountId AND u.deleted = false")
+    Optional<Student> findByAccountAndDeletedIsFalse(String accountId);
+
+    boolean existsByAccountUsernameAndDeletedIsFalse(String accountId);
 }
