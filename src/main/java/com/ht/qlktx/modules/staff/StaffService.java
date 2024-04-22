@@ -36,6 +36,10 @@ public class StaffService {
         );
     }
 
+    public boolean existsByAccountId(String accountId) {
+        return staffRepository.existsByAccountUsernameAndDeletedIsFalse(accountId);
+    }
+
     @Transactional
     public Staff create(CreateStaffDto createStaffDto) {
         if (staffRepository.existsById(createStaffDto.getId())) {

@@ -20,4 +20,6 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query("SELECT u FROM Account u WHERE u.username LIKE %:keyword% OR u.email LIKE %:keyword%")
     List<Account> lookupByUsernameOrEmail(String keyword);
+
+    boolean existsByEmailAndUsernameIsNot(String email, String username);
 }

@@ -34,6 +34,8 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 
     List<Student> findAllByAccountIsNullAndDeletedIsFalse();
 
-    @Query("SELECT u FROM Student u WHERE u.account = :accountId AND u.deleted = false")
+    @Query("SELECT u FROM Student u WHERE u.account.username = :accountId AND u.deleted = false")
     Optional<Student> findByAccountAndDeletedIsFalse(String accountId);
+
+    boolean existsByAccountUsernameAndDeletedIsFalse(String accountId);
 }

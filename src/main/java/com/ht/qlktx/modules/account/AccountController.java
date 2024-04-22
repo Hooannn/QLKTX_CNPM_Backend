@@ -70,7 +70,7 @@ public class AccountController {
         return ResponseEntity.ok(
                 Response.<Account>builder()
                         .status(HttpStatus.OK.value())
-                        .message("Xóa nhân viên thành công")
+                        .message("Xóa tài khoản thành công")
                         .build()
         );
     }

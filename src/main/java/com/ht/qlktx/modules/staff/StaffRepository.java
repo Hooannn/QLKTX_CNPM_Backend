@@ -18,6 +18,8 @@ public interface StaffRepository extends JpaRepository<Staff, String> {
 
     List<Staff> findAllByAccountIsNullAndDeletedIsFalse();
 
-    @Query("SELECT u FROM Staff u WHERE u.account = :accountId AND u.deleted = false")
+    @Query("SELECT u FROM Staff u WHERE u.account.username = :accountId AND u.deleted = false")
     Optional<Staff> findByAccountAndDeletedIsFalse(String accountId);
+
+    boolean existsByAccountUsernameAndDeletedIsFalse(String accountId);
 }

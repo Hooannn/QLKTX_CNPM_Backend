@@ -101,25 +101,25 @@ public class AccountService {
     public Account update(String accountId, UpdateAccountDto updateAccountDto) {
         var account = findById(accountId);
 
-        if (accountRepository.existsByEmail(updateAccountDto.getEmail())) {
+        if (accountRepository.existsByEmailAndUsernameIsNot(updateAccountDto.getEmail(), account.getUsername())) {
             throw new HttpException("Email đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
         Optional.ofNullable(updateAccountDto.getEmail()).ifPresent(account::setEmail);
-        Optional.ofNullable(updateAccountDto.getPassword()).ifPresent(account::setPassword);
+        Optional.ofNullable(updateAccountDto.getPassword()).ifPresent(password -> {
+            account.setPassword(passwordEncoder.encode(password));
+        });
 
         return accountRepository.save(account);
     }
 
     public void delete(String accountId) {
-        var staff = staffService.findByAccount(accountId);
-        var student = studentService.findByAccount(accountId);
+        var isAccountLinked = staffService.existsByAccountId(accountId) || studentService.existsByAccountId(accountId);
 
-        if (staff.getAccount() != null || student.getAccount() != null) {
+        if (isAccountLinked) {
             throw new HttpException("Không thể xóa tài khoản vì đã được cập nhật thông tin", HttpStatus.BAD_REQUEST);
         }
 
         accountRepository.deleteById(accountId);
     }
-    // Add methods for creating, updating, and deleting accounts if needed
 }

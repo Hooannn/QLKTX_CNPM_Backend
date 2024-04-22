@@ -39,6 +39,10 @@ public class StudentService {
         );
     }
 
+    public boolean existsByAccountId(String accountId) {
+        return studentRepository.existsByAccountUsernameAndDeletedIsFalse(accountId);
+    }
+
     @Transactional
     public Student create(CreateStudentDto createStudentDto) {
         if (studentRepository.existsById(createStudentDto.getId())) {
