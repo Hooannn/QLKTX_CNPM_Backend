@@ -107,10 +107,10 @@ public class InvoiceController {
         ));
     }
 
-    @GetMapping("/student/{studentId}/invoices")
+    @GetMapping("paid/student/{studentId}")
     @RequiredRole({Role.STUDENT})
-    public ResponseEntity<Response<Iterable<Invoice>>> findInvoicesByStudentId(@PathVariable String studentId) {
-        var invoices = invoiceService.findAllByStudentId(studentId);
+    public ResponseEntity<Response<Iterable<Invoice>>> findPaidInvoicesByStudentId(@PathVariable String studentId) {
+        var invoices = invoiceService.findPaidInvoicesByStudentId(studentId);
         return ResponseEntity.ok().body(new Response<>(
                 HttpStatus.OK.value(),
                 "Danh sách hóa đơn của sinh viên",
@@ -118,4 +118,14 @@ public class InvoiceController {
         ));
     }
 
+    @GetMapping("unpaid/student/{studentId}")
+    @RequiredRole({Role.STUDENT})
+    public ResponseEntity<Response<Iterable<Invoice>>> findUnpaidInvoicesByStudentId(@PathVariable String studentId) {
+        var invoices = invoiceService.findUnpaidInvoicesByStudentId(studentId);
+        return ResponseEntity.ok().body(new Response<>(
+                HttpStatus.OK.value(),
+                "Danh sách hóa đơn của sinh viên",
+                invoices
+        ));
+    }
 }

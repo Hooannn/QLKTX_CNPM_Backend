@@ -37,7 +37,7 @@ public class StaffService {
     }
 
     public boolean existsByAccountId(String accountId) {
-        return staffRepository.existsByAccountUsernameAndDeletedIsFalse(accountId);
+        return staffRepository.existsByAccountUsername(accountId);
     }
 
     @Transactional

@@ -40,7 +40,7 @@ public class StudentService {
     }
 
     public boolean existsByAccountId(String accountId) {
-        return studentRepository.existsByAccountUsernameAndDeletedIsFalse(accountId);
+        return studentRepository.existsByAccountUsername(accountId);
     }
 
     @Transactional

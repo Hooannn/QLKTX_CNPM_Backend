@@ -111,4 +111,12 @@ public class InvoiceService {
         });
         invoiceRepository.saveAll(invoices);
     }
+
+    public List<Invoice> findPaidInvoicesByStudentId(String studentId) {
+        return invoiceRepository.findAllByDeletedIsFalseAndPaidAtIsNotNullAndBookingStudentId(studentId);
+    }
+
+    public List<Invoice> findUnpaidInvoicesByStudentId(String studentId) {
+        return invoiceRepository.findAllByDeletedIsFalseAndPaidAtIsNullAndBookingStudentId(studentId);
+    }
 }

@@ -78,7 +78,6 @@ public class BookingController {
     }
 
     @GetMapping("/room/{roomId}")
-    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<List<BookingView>>> findAllByRoomId(@PathVariable String roomId) {
         var bookings = bookingService.findAllByRoomId(roomId);
         return ResponseEntity.ok(

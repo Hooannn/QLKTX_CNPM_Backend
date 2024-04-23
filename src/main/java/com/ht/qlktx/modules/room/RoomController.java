@@ -55,7 +55,6 @@ public class RoomController {
     }
 
     @GetMapping
-    @RequiredRole({Role.STAFF, Role.ADMIN})
     public ResponseEntity<Response<Iterable<RoomWithBookingCountView>>> findAll() {
         var rooms = roomService.findAll();
         return ResponseEntity.ok().body(new Response<>(

@@ -22,4 +22,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     Long countByDeletedIsFalse();
 
     Long countByDeletedIsFalseAndPaidAtIsNull();
+
+    List<Invoice> findAllByDeletedIsFalseAndPaidAtIsNotNullAndBookingStudentId(String studentId);
+
+    List<Invoice> findAllByDeletedIsFalseAndPaidAtIsNullAndBookingStudentId(String studentId);
 }

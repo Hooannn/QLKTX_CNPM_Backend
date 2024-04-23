@@ -101,6 +101,9 @@ public class BookingService {
         if (booking.isCheckedOut())
             throw new HttpException("Phiếu thuê đã được trả", HttpStatus.BAD_REQUEST);
 
+        if (checkedOutAt.before(booking.getCreatedAt()))
+            throw new HttpException("Ngày trả phòng không hợp lệ", HttpStatus.BAD_REQUEST);
+
         var checkOutStaff = staffService.findById(checkOutStaffId);
         booking.setCheckedOutAt(checkedOutAt);
         booking.setCheckoutStaff(checkOutStaff);
