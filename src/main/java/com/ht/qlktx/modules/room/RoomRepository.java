@@ -48,4 +48,6 @@ public interface RoomRepository extends JpaRepository<Room, String> {
             nativeQuery = true
     )
     Long countEmptyRooms();
+
+    boolean existsByIdAndDeletedIsFalse(String id);
 }

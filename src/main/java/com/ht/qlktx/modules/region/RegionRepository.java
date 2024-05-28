@@ -18,4 +18,8 @@ public interface RegionRepository extends JpaRepository<Region, String> {
     List<Region> findByIdContainingIgnoreCaseAndDeletedIsFalse(String keyword);
 
     Long countByDeletedIsFalse();
+
+    boolean existsByIdAndDeletedIsFalse(String id);
+
+    boolean existsByNameAndDeletedIsFalse(String name);
 }

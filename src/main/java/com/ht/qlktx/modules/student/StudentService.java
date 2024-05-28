@@ -40,13 +40,13 @@ public class StudentService {
     }
 
     public boolean existsByAccountId(String accountId) {
-        return studentRepository.existsByAccountUsername(accountId);
+        return studentRepository.existsByAccountUsernameAndDeletedIsFalse(accountId);
     }
 
     @Transactional
     public Student create(CreateStudentDto createStudentDto) {
-        if (studentRepository.existsById(createStudentDto.getId())) {
-            throw new HttpException("Mã người dùng hoặc email đã tồn tại", HttpStatus.BAD_REQUEST);
+        if (studentRepository.existsByIdAndDeletedIsFalse(createStudentDto.getId())) {
+            throw new HttpException("Mã người dùng đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
         var student = Student.builder()
@@ -92,6 +92,7 @@ public class StudentService {
     public void delete(String studentId) {
         var student = findById(studentId);
         student.setDeleted(true);
+        student.setAccount(null);
         studentRepository.save(student);
     }
 

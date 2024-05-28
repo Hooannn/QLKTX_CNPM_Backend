@@ -24,4 +24,6 @@ public interface StaffRepository extends JpaRepository<Staff, String> {
     boolean existsByAccountUsernameAndDeletedIsFalse(String accountId);
 
     boolean existsByAccountUsername(String accountId);
+
+    boolean existsByIdAndDeletedIsFalse(String id);
 }

@@ -19,8 +19,17 @@ public class RoomTypeService {
     private final RoomTypeRepository roomTypeRepository;
     private final RoomRepository roomRepository;
     public RoomType create(CreateRoomTypeDto createRoomTypeDto) {
-        if (roomTypeRepository.existsByName(createRoomTypeDto.getName())) {
+        if (roomTypeRepository.existsByNameAndDeletedIsFalse(createRoomTypeDto.getName())) {
             throw new HttpException("Loại phòng đã tồn tại", HttpStatus.BAD_REQUEST);
+        }
+
+        var deletedRoomType = roomTypeRepository.findByNameAndDeletedIsTrue(createRoomTypeDto.getName()).orElse(null);
+
+        if (deletedRoomType != null) {
+            deletedRoomType.setDeleted(false);
+            deletedRoomType.setPrice(createRoomTypeDto.getPrice());
+            deletedRoomType.setCapacity(createRoomTypeDto.getCapacity());
+            return roomTypeRepository.save(deletedRoomType);
         }
 
         var roomType = RoomType.builder()

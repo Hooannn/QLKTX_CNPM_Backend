@@ -22,7 +22,7 @@ public class DiscountService {
     private final StaffService staffService;
 
     public Discount create(CreateDiscountDto createDiscountDto, String sub) {
-        if (discountRepository.existsById(createDiscountDto.getId()) || discountRepository.existsByDescription(createDiscountDto.getDescription()))
+        if (discountRepository.existsByIdAndDeletedIsFalse(createDiscountDto.getId()) || discountRepository.existsByDescriptionAndDeletedIsFalse(createDiscountDto.getDescription()))
             throw new HttpException("Mã giảm giá hoặc mô tả đã tồn tại", HttpStatus.BAD_REQUEST);
 
         if (createDiscountDto.getStartDate().after(createDiscountDto.getEndDate()) || createDiscountDto.getStartDate().equals(createDiscountDto.getEndDate()))

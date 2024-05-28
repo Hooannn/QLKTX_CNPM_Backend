@@ -37,13 +37,13 @@ public class StaffService {
     }
 
     public boolean existsByAccountId(String accountId) {
-        return staffRepository.existsByAccountUsername(accountId);
+        return staffRepository.existsByAccountUsernameAndDeletedIsFalse(accountId);
     }
 
     @Transactional
     public Staff create(CreateStaffDto createStaffDto) {
-        if (staffRepository.existsById(createStaffDto.getId())) {
-            throw new HttpException("Mã người dùng hoặc email đã tồn tại", HttpStatus.BAD_REQUEST);
+        if (staffRepository.existsByIdAndDeletedIsFalse(createStaffDto.getId())) {
+            throw new HttpException("Mã người dùng đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
         var staff = Staff.builder()
@@ -88,11 +88,12 @@ public class StaffService {
     public void delete(String staffId) {
         var staff = findById(staffId);
 
-        if (staff.getAccount().getRole().getRole().equals(Role.ADMIN.toString())) {
+        if (staff.getAccount() != null && staff.getAccount().getRole().getRole().equals(Role.ADMIN.toString())) {
             throw new HttpException("Không thể xóa người dùng với quyền ADMIN", HttpStatus.FORBIDDEN);
         }
 
         staff.setDeleted(true);
+        staff.setAccount(null);
         staffRepository.save(staff);
     }
 

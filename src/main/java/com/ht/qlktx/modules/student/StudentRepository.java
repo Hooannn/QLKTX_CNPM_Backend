@@ -40,4 +40,6 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     boolean existsByAccountUsernameAndDeletedIsFalse(String accountId);
 
     boolean existsByAccountUsername(String accountId);
+
+    boolean existsByIdAndDeletedIsFalse(String id);
 }

@@ -26,7 +26,7 @@ public class RoomService {
     private final RegionService regionService;
 
     public Room create(CreateRoomDto createRoomDto) {
-        if (roomRepository.existsById(createRoomDto.getId())) {
+        if (roomRepository.existsByIdAndDeletedIsFalse(createRoomDto.getId())) {
             throw new HttpException("Mã phòng đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 

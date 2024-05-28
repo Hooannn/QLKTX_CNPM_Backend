@@ -28,8 +28,8 @@ public class RegionService {
     }
 
     public Region create(CreateRegionDto createRegionDto) {
-        if (regionRepository.existsById(createRegionDto.getId()) || regionRepository.existsByName(createRegionDto.getName())) {
-            throw new HttpException("Dãy phòng hoặc tên phòng đã tồn tại", HttpStatus.BAD_REQUEST);
+        if (regionRepository.existsByIdAndDeletedIsFalse(createRegionDto.getId()) || regionRepository.existsByNameAndDeletedIsFalse(createRegionDto.getName())) {
+            throw new HttpException("Dãy phòng hoặc tên dãy phòng đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
         var region = Region.builder()

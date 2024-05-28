@@ -29,4 +29,8 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Long> {
             GROUP BY rt.id, rt.name
     """)
     List<RoomTypeWithRoomCountView> findAllWithRoomCount();
+
+    boolean existsByNameAndDeletedIsFalse(String name);
+
+    Optional<RoomType> findByNameAndDeletedIsTrue(String name);
 }

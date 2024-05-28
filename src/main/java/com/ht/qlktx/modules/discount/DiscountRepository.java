@@ -17,4 +17,8 @@ public interface DiscountRepository extends JpaRepository<Discount, String>{
     Optional<Discount> findByIdAndDeletedIsFalse(String id);
 
     Optional<Discount> findByIdAndDeletedIsFalseAndStartDateBeforeAndEndDateAfter(String id, Date date, Date date1);
+
+    boolean existsByIdAndDeletedIsFalse(String id);
+
+    boolean existsByDescriptionAndDeletedIsFalse(String description);
 }
