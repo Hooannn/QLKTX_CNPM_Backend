@@ -22,8 +22,8 @@ public interface StudentRepository extends JpaRepository<Student, String> {
             value = """
                 select count(*) from (
                     select sv.MaSinhVien from SinhVien sv
-                    left join PhieuThue pt on pt.MaSinhVien = sv.MaSinhVien and pt.Xoa = 0
-                    where sv.Xoa = 0
+                    left join PhieuThue pt on pt.MaSinhVien = sv.MaSinhVien and pt.TrangThai = 0
+                    where sv.TrangThai = 0
                     group by sv.MaSinhVien
                     HAVING count(pt.MaPhieuThue) > 0
                 ) as bookedStudents

@@ -39,8 +39,8 @@ public interface RoomRepository extends JpaRepository<Room, String> {
             value = """
                 select count(*) from (
                     select p.MaPhong from Phong p
-                    left join PhieuThue pt on pt.MaPhong = p.MaPhong and pt.Xoa = 0 and pt.NgayTra is NULL
-                    where p.Xoa = 0
+                    left join PhieuThue pt on pt.MaPhong = p.MaPhong and pt.TrangThai = 0 and pt.NgayTra is NULL
+                    where p.TrangThai = 0
                     group by p.MaPhong
                     having count(pt.MaPhieuThue) = 0
                 ) as emptyRooms
