@@ -27,7 +27,7 @@ public class BookingTime {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "MaQuanLy", nullable = false)
+    @JoinColumn(name = "MaNhanVien", nullable = false)
     private Staff staff;
 
     @Column(name = "NoiDung", columnDefinition = "NVARCHAR(255)", nullable = false)
@@ -44,7 +44,7 @@ public class BookingTime {
     @Column(nullable = false, name = "TrangThaiMo")
     private boolean open;
 
-    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "TrangThai", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @JsonIgnore

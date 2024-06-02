@@ -21,7 +21,7 @@ public class Region {
     @Column(name = "MaDay", length = 20)
     private String id;
 
-    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "TrangThai", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @Column(name = "TenDay", columnDefinition = "NVARCHAR(100) NOT NULL UNIQUE")

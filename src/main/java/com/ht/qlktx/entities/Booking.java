@@ -38,7 +38,7 @@ public class Booking {
     private BookingTime bookingTime;
 
     @ManyToOne
-    @JoinColumn(name = "MaQuanLyNhan", nullable = false)
+    @JoinColumn(name = "MaNhanVienNhan", nullable = false)
     @JsonProperty("checkin_staff")
     private Staff checkinStaff;
 
@@ -52,7 +52,7 @@ public class Booking {
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "MaQuanLyTra", nullable = true)
+    @JoinColumn(name = "MaNhanVienTra", nullable = true)
     @JsonProperty("checkout_staff")
     private Staff checkoutStaff;
 
@@ -64,7 +64,7 @@ public class Booking {
     @JoinColumn(name = "MaGiamGia", nullable = true)
     private Discount discount;
 
-    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "TrangThai", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @JsonIgnore

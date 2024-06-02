@@ -28,10 +28,10 @@ public class Room {
     @JoinColumn(name = "MaLoaiPhong", nullable = false)
     private RoomType type;
 
-    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "TrangThai", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
-    @Column(nullable = false, name = "TrangThai", length = 20)
+    @Column(nullable = false, name = "TrangThaiPhong", length = 20)
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 

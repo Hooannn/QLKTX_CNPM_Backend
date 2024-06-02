@@ -36,7 +36,7 @@ public class Invoice {
     private Date paidAt;
 
     @ManyToOne
-    @JoinColumn(name = "MaQuanLy")
+    @JoinColumn(name = "MaNhanVien")
     private Staff staff;
 
     @OneToOne
@@ -48,7 +48,7 @@ public class Invoice {
     @JsonProperty("created_at")
     private Date createdAt;
 
-    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "TrangThai", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @JsonIgnore

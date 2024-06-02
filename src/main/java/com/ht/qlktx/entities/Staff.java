@@ -49,7 +49,7 @@ public class Staff {
     @Column(name = "Sdt", length = 15, unique = true)
     private String phone;
 
-    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "TrangThai", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     public boolean isAdmin() {

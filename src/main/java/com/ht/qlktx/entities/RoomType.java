@@ -30,6 +30,6 @@ public class RoomType {
     @Column(nullable = false, precision = 10, scale = 2, name = "DonGia")
     private BigDecimal price;
 
-    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "TrangThai", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 }

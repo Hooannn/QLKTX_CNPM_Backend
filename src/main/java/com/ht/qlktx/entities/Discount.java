@@ -29,7 +29,7 @@ public class Discount {
     private BigDecimal percentage;
 
     @ManyToOne
-    @JoinColumn(name = "MaQuanLy", nullable = false)
+    @JoinColumn(name = "MaNhanVien", nullable = false)
     private Staff staff;
 
     @Column(nullable = false, name = "NgayBatDau")
@@ -40,7 +40,7 @@ public class Discount {
     @JsonProperty("end_date")
     private Date endDate;
 
-    @Column(nullable = false, name = "Xoa", columnDefinition = "BIT DEFAULT 0")
+    @Column(nullable = false, name = "TrangThai", columnDefinition = "BIT DEFAULT 0")
     private boolean deleted;
 
     @JsonIgnore
