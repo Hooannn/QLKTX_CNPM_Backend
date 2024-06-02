@@ -4,6 +4,8 @@ import com.ht.qlktx.entities.*;
 import com.ht.qlktx.enums.RoomStatus;
 import com.ht.qlktx.modules.account.AccountRepository;
 import com.ht.qlktx.modules.account.RoleRepository;
+import com.ht.qlktx.modules.booking.repositories.BookingTimeRepository;
+import com.ht.qlktx.modules.discount.DiscountRepository;
 import com.ht.qlktx.modules.region.RegionRepository;
 import com.ht.qlktx.modules.room.RoomRepository;
 import com.ht.qlktx.modules.room_type.RoomTypeRepository;
@@ -11,6 +13,7 @@ import com.ht.qlktx.modules.staff.StaffRepository;
 import com.ht.qlktx.modules.student.StudentRepository;
 import com.ht.qlktx.utils.Helper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -29,6 +32,8 @@ public class ServerCommandLineRunner implements CommandLineRunner {
     private final RegionRepository regionRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final BookingTimeRepository bookingTimeRepository;
+    private final DiscountRepository discountRepository;
 
     @Override
     public void run(String... args) {
@@ -37,6 +42,8 @@ public class ServerCommandLineRunner implements CommandLineRunner {
         List<Account> accounts = Helper.createSeedAccounts();
         List<RoomType> roomTypes = Helper.createSeedRoomTypes();
         List<Region> regions = Helper.createSeedRegions();
+        List<BookingTime> bookingTimes = Helper.createSeedBookingTimes();
+        List<Discount> discounts = Helper.createSeedDiscounts();
 
         List<Region> savedRegions;
         List<RoomType> savedRoomTypes;
@@ -119,6 +126,12 @@ public class ServerCommandLineRunner implements CommandLineRunner {
                 });
                 studentRepository.saveAll(students);
             }
+        }
+        if (bookingTimeRepository.count() == 0 && bookingTimes != null) {
+            bookingTimeRepository.saveAll(bookingTimes);
+        }
+        if (discountRepository.count() == 0 && discounts != null) {
+            discountRepository.saveAll(discounts);
         }
     }
 }

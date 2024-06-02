@@ -1,0 +1,92 @@
+[
+  {
+    "staff": {
+      "id": "QL0001",
+      "first_name": "Thảo",
+      "last_name": "Vũ",
+      "sex": "FEMALE",
+      "date_of_birth": "1989-07-31",
+      "address": "Staff Address 1",
+      "phone": "0955554321"
+    },
+    "description": "HK1",
+    "startDate": "2023-8-15",
+    "endDate": "2023-12-15",
+    "open": false
+  },
+  {
+    "staff": {
+      "id": "QL0001",
+      "first_name": "Thảo",
+      "last_name": "Vũ",
+      "sex": "FEMALE",
+      "date_of_birth": "1989-07-31",
+      "address": "Staff Address 1",
+      "phone": "0955554321"
+    },
+    "description": "HK2",
+    "startDate": "2023-12-16",
+    "endDate": "2024-4-30",
+    "open": false
+  },
+  {
+    "staff": {
+      "id": "QL0001",
+      "first_name": "Thảo",
+      "last_name": "Vũ",
+      "sex": "FEMALE",
+      "date_of_birth": "1989-07-31",
+      "address": "Staff Address 1",
+      "phone": "0955554321"
+    },
+    "description": "HK1+HK2",
+    "startDate": "2023-8-15",
+    "endDate": "2024-4-30",
+    "open": false
+  },
+  {
+    "staff": {
+      "id": "QL0001",
+      "first_name": "Thảo",
+      "last_name": "Vũ",
+      "sex": "FEMALE",
+      "date_of_birth": "1989-07-31",
+      "address": "Staff Address 1",
+      "phone": "0955554321"
+    },
+    "description": "HK hè",
+    "startDate": "2024-5-1",
+    "endDate": "2024-8-14",
+    "open": true
+  },
+  {
+    "staff": {
+      "id": "QL0001",
+      "first_name": "Thảo",
+      "last_name": "Vũ",
+      "sex": "FEMALE",
+      "date_of_birth": "1989-07-31",
+      "address": "Staff Address 1",
+      "phone": "0955554321"
+    },
+    "description": "HK1 + HK2 + HK hè",
+    "startDate": "2023-8-15",
+    "endDate": "2024-8-14",
+    "open": false
+  },
+  {
+    "staff": {
+      "id": "QL0001",
+      "first_name": "Thảo",
+      "last_name": "Vũ",
+      "sex": "FEMALE",
+      "date_of_birth": "1989-07-31",
+      "address": "Staff Address 1",
+      "phone": "0955554321"
+    },
+    "description": "HK2 + HK hè",
+    "startDate": "2023-12-16",
+    "endDate": "2024-8-14",
+    "open": false
+  }
+]

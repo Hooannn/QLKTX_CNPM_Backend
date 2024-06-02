@@ -1,0 +1,50 @@
+[
+  {
+    "id": "MAGG001",
+    "description": "HK1 + HK2 giảm 5%",
+    "percentage": 5,
+    "staff": {
+      "id": "QL0002",
+      "first_name": "Quân",
+      "last_name": "Lê",
+      "sex": "MALE",
+      "date_of_birth": "1988-08-01",
+      "address": "Staff Address 2",
+      "phone": "0977654321"
+    },
+    "startDate": "2023-7-15",
+    "endDate": "2023-8-1"
+  },
+  {
+    "id": "MAGG002",
+    "description": "HK2 + HK hè giảm 7%",
+    "percentage": 7,
+    "staff": {
+      "id": "QL0002",
+      "first_name": "Quân",
+      "last_name": "Lê",
+      "sex": "MALE",
+      "date_of_birth": "1988-08-01",
+      "address": "Staff Address 2",
+      "phone": "0977654321"
+    },
+    "startDate": "2023-11-15",
+    "endDate": "2023-12-1"
+  },
+  {
+    "id": "MAGG001",
+    "description": "HK1 + HK2 + HK hè giảm 10%",
+    "percentage": 10,
+    "staff": {
+      "id": "QL0002",
+      "first_name": "Quân",
+      "last_name": "Lê",
+      "sex": "MALE",
+      "date_of_birth": "1988-08-01",
+      "address": "Staff Address 2",
+      "phone": "0977654321"
+    },
+    "startDate": "2023-7-15",
+    "endDate": "2023-8-1"
+  }
+]

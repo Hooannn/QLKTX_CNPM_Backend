@@ -62,4 +62,22 @@ public class Helper {
             return null;
         }
     }
+
+    public static List<BookingTime> createSeedBookingTimes() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/bookingtimes.json"), new TypeReference<List<BookingTime>>() {});
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static List<Discount> createSeedDiscounts() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(new File("src/main/java/com/ht/qlktx/utils/discounts.json"), new TypeReference<List<Discount>>() {});
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
