@@ -127,9 +127,11 @@ public class ServerCommandLineRunner implements CommandLineRunner {
                 studentRepository.saveAll(students);
             }
         }
+
         if (bookingTimeRepository.count() == 0 && bookingTimes != null) {
             bookingTimeRepository.saveAll(bookingTimes);
         }
+
         if (discountRepository.count() == 0 && discounts != null) {
             discountRepository.saveAll(discounts);
         }

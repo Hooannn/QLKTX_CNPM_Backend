@@ -10,8 +10,8 @@
       "phone": "0955554321"
     },
     "description": "HK1",
-    "startDate": "2023-8-15",
-    "endDate": "2023-12-15",
+    "start_date": "2023-08-15",
+    "end_date": "2023-12-15",
     "open": false
   },
   {
@@ -25,8 +25,8 @@
       "phone": "0955554321"
     },
     "description": "HK2",
-    "startDate": "2023-12-16",
-    "endDate": "2024-4-30",
+    "start_date": "2023-12-16",
+    "end_date": "2024-04-30",
     "open": false
   },
   {
@@ -40,8 +40,8 @@
       "phone": "0955554321"
     },
     "description": "HK1+HK2",
-    "startDate": "2023-8-15",
-    "endDate": "2024-4-30",
+    "start_date": "2023-08-15",
+    "end_date": "2024-04-30",
     "open": false
   },
   {
@@ -55,8 +55,8 @@
       "phone": "0955554321"
     },
     "description": "HK hè",
-    "startDate": "2024-5-1",
-    "endDate": "2024-8-14",
+    "start_date": "2024-05-01",
+    "end_date": "2024-08-14",
     "open": true
   },
   {
@@ -70,8 +70,8 @@
       "phone": "0955554321"
     },
     "description": "HK1 + HK2 + HK hè",
-    "startDate": "2023-8-15",
-    "endDate": "2024-8-14",
+    "start_date": "2023-08-15",
+    "end_date": "2024-08-14",
     "open": false
   },
   {
@@ -85,8 +85,8 @@
       "phone": "0955554321"
     },
     "description": "HK2 + HK hè",
-    "startDate": "2023-12-16",
-    "endDate": "2024-8-14",
+    "start_date": "2023-12-16",
+    "end_date": "2024-08-14",
     "open": false
   }
 ]

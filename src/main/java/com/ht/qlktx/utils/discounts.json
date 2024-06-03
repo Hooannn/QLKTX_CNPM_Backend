@@ -12,8 +12,8 @@
       "address": "Staff Address 2",
       "phone": "0977654321"
     },
-    "startDate": "2023-7-15",
-    "endDate": "2023-8-1"
+    "start_date": "2023-07-15",
+    "end_date": "2023-08-01"
   },
   {
     "id": "MAGG002",
@@ -28,11 +28,11 @@
       "address": "Staff Address 2",
       "phone": "0977654321"
     },
-    "startDate": "2023-11-15",
-    "endDate": "2023-12-1"
+    "start_date": "2023-11-15",
+    "end_date": "2023-12-01"
   },
   {
-    "id": "MAGG001",
+    "id": "MAGG003",
     "description": "HK1 + HK2 + HK hè giảm 10%",
     "percentage": 10,
     "staff": {
@@ -44,7 +44,7 @@
       "address": "Staff Address 2",
       "phone": "0977654321"
     },
-    "startDate": "2023-7-15",
-    "endDate": "2023-8-1"
+    "start_date": "2023-07-15",
+    "end_date": "2023-08-01"
   }
 ]
