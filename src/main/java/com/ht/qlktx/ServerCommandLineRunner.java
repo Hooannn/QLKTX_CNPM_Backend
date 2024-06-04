@@ -72,12 +72,12 @@ public class ServerCommandLineRunner implements CommandLineRunner {
         if (savedRegions != null && savedRoomTypes != null) {
             List<Room> generatedRooms = new ArrayList<>();
             savedRegions.forEach(region -> {
-                for (int i = 0; i < roomTypes.size(); i++) {
+                for (int i = 0; i < roomTypes.size() * 2; i++) {
                     String roomId = region.getId() + (i + 1);
                     Room room = Room.builder()
                             .id(roomId)
                             .region(region)
-                            .type(roomTypes.get(i))
+                            .type(roomTypes.get(i % roomTypes.size()))
                             .deleted(false)
                             .status(RoomStatus.AVAILABLE)
                             .build();

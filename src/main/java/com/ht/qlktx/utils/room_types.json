@@ -1,47 +1,22 @@
 [
   {
-    "name": "Nam, Dịch vụ 1",
+    "name": "Dịch vụ 1",
     "capacity": 4,
     "price": 500000
   },
   {
-    "name": "Nam, Dịch vụ 2",
+    "name": "Dịch vụ 2",
     "capacity": 8,
     "price": 300000
   },
   {
-    "name": "Nam, Thường 1",
+    "name": "Thường 1",
     "capacity": 8,
     "price": 150000
   },
   {
-    "name": "Nam, Thường 2",
+    "name": "Thường 2",
     "capacity": 12,
     "price": 100000
-  },
-  {
-    "name": "Nữ, Dịch vụ 1",
-    "capacity": 4,
-    "price": 500000
-  },
-  {
-    "name": "Nữ, Dịch vụ 2",
-    "capacity": 8,
-    "price": 300000
-  },
-  {
-    "name": "Nữ, Thường 1",
-    "capacity": 8,
-    "price": 150000
-  },
-  {
-    "name": "Nữ, Thường 2",
-    "capacity": 12,
-    "price": 100000
-  },
-  {
-    "name": "Khác",
-    "capacity": 12,
-    "price": 200000
   }
 ]
