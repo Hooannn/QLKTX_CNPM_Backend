@@ -3,6 +3,7 @@ package com.ht.qlktx.modules.booking.services;
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Booking;
 import com.ht.qlktx.entities.Invoice;
+import com.ht.qlktx.enums.RoomStatus;
 import com.ht.qlktx.modules.discount.DiscountService;
 import com.ht.qlktx.modules.invoice.InvoiceService;
 import com.ht.qlktx.modules.staff.StaffService;
@@ -50,6 +51,9 @@ public class BookingService {
         var room = roomService.findById(createBookingDto.getRoomId());
         var student = studentService.findById(createBookingDto.getStudentId());
         var bookingsInRoom = bookingRepository.countByRoomIdAndDeletedIsFalseAndCheckedOutAtIsNull(room.getId());
+
+        if (room.getStatus().equals(RoomStatus.MAINTAINING))
+            throw new HttpException("Phòng hiện đang bảo trì", HttpStatus.BAD_REQUEST);
 
         if (bookingsInRoom >= room.getType().getCapacity())
             throw new HttpException("Phòng đã đầy", HttpStatus.BAD_REQUEST);
