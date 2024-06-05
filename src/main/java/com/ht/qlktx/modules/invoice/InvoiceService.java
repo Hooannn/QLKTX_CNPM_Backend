@@ -82,7 +82,12 @@ public class InvoiceService {
             throw new HttpException("Không thể cập nhật hóa đơn đã thanh toán", HttpStatus.BAD_REQUEST);
         }
 
-        Optional.ofNullable(updateInvoiceDto.getPaidAt()).ifPresent(invoice::setPaidAt);
+        Optional.ofNullable(updateInvoiceDto.getPaidAt()).ifPresent(paidAt -> {
+            if (invoice.getCreatedAt().after(paidAt))
+                throw new HttpException("Ngày thanh toán không hợp lệ", HttpStatus.BAD_REQUEST);
+            invoice.setPaidAt(paidAt);
+        });
+
         Optional.ofNullable(updateInvoiceDto.getTotal()).ifPresent(invoice::setTotal);
 
         return invoiceRepository.save(invoice);
