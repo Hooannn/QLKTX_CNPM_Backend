@@ -3,6 +3,7 @@ package com.ht.qlktx.modules.student;
 import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Student;
 import com.ht.qlktx.modules.account.AccountRepository;
+import com.ht.qlktx.modules.booking.repositories.BookingRepository;
 import com.ht.qlktx.modules.student.dtos.CreateStudentDto;
 import com.ht.qlktx.modules.student.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.student.dtos.UpdateStudentDto;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final BookingRepository bookingRepository;
 
     public List<Student> findAll() {
         return studentRepository.findAllByDeletedIsFalse();
@@ -91,6 +93,12 @@ public class StudentService {
 
     public void delete(String studentId) {
         var student = findById(studentId);
+
+        var hasBooking = bookingRepository.existsByStudentId(studentId);
+
+        if (hasBooking)
+            throw new HttpException("Không thể xoá vì sinh viên đã có phiếu thuê", HttpStatus.BAD_REQUEST);
+
         student.setDeleted(true);
         student.setAccount(null);
         studentRepository.save(student);

@@ -4,6 +4,9 @@ import com.ht.qlktx.config.HttpException;
 import com.ht.qlktx.entities.Staff;
 import com.ht.qlktx.enums.Role;
 import com.ht.qlktx.modules.account.AccountRepository;
+import com.ht.qlktx.modules.booking.repositories.BookingRepository;
+import com.ht.qlktx.modules.booking.repositories.BookingTimeRepository;
+import com.ht.qlktx.modules.discount.DiscountRepository;
 import com.ht.qlktx.modules.staff.dtos.CreateStaffDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateProfileDto;
 import com.ht.qlktx.modules.staff.dtos.UpdateStaffDto;
@@ -19,6 +22,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StaffService {
     private final StaffRepository staffRepository;
+    private final BookingRepository bookingRepository;
+    private final BookingTimeRepository bookingTimeRepository;
+    private final DiscountRepository discountRepository;
 
     public List<Staff> findAll() {
         return staffRepository.findAllByDeletedIsFalse();
@@ -87,6 +93,21 @@ public class StaffService {
 
     public void delete(String staffId) {
         var staff = findById(staffId);
+
+        var hasBooking = bookingRepository.existsByCheckinStaffIdOrCheckoutStaffId(staffId, staffId);
+
+        if (hasBooking)
+            throw new HttpException("Không thể xóa vì nhân viên đã tiếp nhận phiếu thuê", HttpStatus.BAD_REQUEST);
+
+        var hasBookingTime = bookingTimeRepository.existsByStaffId(staffId);
+
+        if (hasBookingTime)
+            throw new HttpException("Không thể xóa vì nhân viên đã tạo thời gian thuê", HttpStatus.BAD_REQUEST);
+
+        var hasDiscount = discountRepository.existsByStaffId(staffId);
+
+        if (hasDiscount)
+            throw new HttpException("Không thể xóa vì nhân viên đã tạo mã giảm giá", HttpStatus.BAD_REQUEST);
 
         if (staff.getAccount() != null && staff.getAccount().getRole().getRole().equals(Role.ADMIN.toString())) {
             throw new HttpException("Không thể xóa người dùng với quyền ADMIN", HttpStatus.FORBIDDEN);

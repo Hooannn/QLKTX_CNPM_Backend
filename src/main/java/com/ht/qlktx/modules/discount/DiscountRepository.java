@@ -21,4 +21,6 @@ public interface DiscountRepository extends JpaRepository<Discount, String>{
     boolean existsByIdAndDeletedIsFalse(String id);
 
     boolean existsByDescriptionAndDeletedIsFalse(String description);
+
+    boolean existsByStaffId(String staffId);
 }

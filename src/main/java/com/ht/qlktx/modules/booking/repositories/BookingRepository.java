@@ -45,4 +45,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query("SELECT b FROM Booking b WHERE b.student.id = :studentId AND b.deleted = false AND b.checkedOutAt is not null")
     List<BookingView> findAllByStudentIdAndDeletedIsFalseAndCheckedOutAtIsNotNull(String studentId);
+
+    boolean existsByStudentId(String studentId);
+
+    boolean existsByCheckinStaffIdOrCheckoutStaffId(String checkinStaffId, String checkoutStaffId);
 }
